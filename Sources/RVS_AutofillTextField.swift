@@ -158,5 +158,5 @@ open class RVS_AutofillTextField: UITextField {
     /* ################################################################## */
     /**
      */
-    public var dataSource: RVS_AutofillTextFieldDataSource? = nil
+    public var dataSource: RVS_AutofillTextFieldDataSource?
 }

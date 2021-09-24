@@ -1,0 +1,41 @@
+disabled_rules:
+- identifier_name
+- nesting
+- function_parameter_count
+- trailing_whitespace
+- type_name
+- todo
+- inert_defer
+- reduce_boolean
+- syntactic_sugar
+
+opt_in_rules:
+- control_statement
+- empty_count
+- trailing_newline
+- colon
+- comma
+
+function_body_length:
+- 60 # warning
+- 61 #error
+
+file_length:
+- 1500 # warning
+- 1501 # error
+
+type_body_length:
+- 500 # warning
+- 501 # error
+
+line_length:
+- 269 # warning
+- 270 # error
+
+cyclomatic_complexity:
+- 9 # warning
+- 10 # error
+
+excluded:
+- Pods
+- Carthage
