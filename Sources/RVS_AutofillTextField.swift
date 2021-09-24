@@ -25,20 +25,29 @@ import UIKit
 // MARK: - One Element of the Data Source Array -
 /* ###################################################################################################################################### */
 /**
+ This is what the protocol needs to provide to the widget.
+ It is one element of an Array.
+ The purpose of this type, is to allow data context to be attached to a value, and to allow the Array type to be extended.
  */
 public class RVS_AutofillTextFieldDataSourceType {
     /* ################################################################## */
     /**
+     The actual String value of this element. Comparisons will happen within this.
      */
     let value: String
 
     /* ################################################################## */
     /**
+     This is an arbitrary associated data type. It can be anything, and will be associated with the String value. It should be noted that this will be a strong reference to classes.
      */
     let refCon: Any?
 
     /* ################################################################## */
     /**
+     Standard initializer
+     
+     - parameter value: Required (and must be non-blank). The String value.
+     - parameter refCon: Optional (default is nil). This is an arbitrary data item that is associated with this instance. It should be noted that this will be a strong reference to classes.
      */
     init(value inValue: String, refCon inRefCon: Any? = nil) {
         precondition(!inValue.isEmpty, "Value Must Be Non-Blank!")
@@ -48,13 +57,47 @@ public class RVS_AutofillTextFieldDataSourceType {
 }
 
 /* ###################################################################################################################################### */
+// MARK: Equatable Conformance
+/* ###################################################################################################################################### */
+extension RVS_AutofillTextFieldDataSourceType: Equatable {
+    /* ################################################################## */
+    /**
+     Equality tester
+     - parameter lhs: Left-hand side of the comparison.
+     - parameter rhs: Right-hand side of the comparison.
+     - returns: True, if the the two parameters are equal.
+     */
+    public static func == (lhs: RVS_AutofillTextFieldDataSourceType, rhs: RVS_AutofillTextFieldDataSourceType) -> Bool { lhs.value == rhs.value }
+}
+
+/* ###################################################################################################################################### */
+// MARK: Comparable Conformance
+/* ###################################################################################################################################### */
+extension RVS_AutofillTextFieldDataSourceType: Comparable {
+    /* ################################################################## */
+    /**
+     Comparison tester
+     - parameter lhs: Left-hand side of the comparison.
+     - parameter rhs: Right-hand side of the comparison.
+     - returns: True, if the lhs is less than rhs
+     */
+    public static func < (lhs: RVS_AutofillTextFieldDataSourceType, rhs: RVS_AutofillTextFieldDataSourceType) -> Bool { lhs.value < rhs.value }
+}
+
+/* ###################################################################################################################################### */
 // MARK: - Array Extension, for Getting Values by Key -
 /* ###################################################################################################################################### */
 /**
+ This Array extension adds some fairly basic subscript specializations, that allow the match testing to happen.
  */
 extension Array where Element == RVS_AutofillTextFieldDataSourceType {
     /* ################################################################## */
     /**
+     This looks for an exact match. It can be case-blind (by default).
+     
+     - parameter is: This is the String to test against. The entire value must match, but can be case-blind.
+     - parameter isCaseSensitive: Default is false. If true, then the match needs to take case into account.
+     - returns: An Array of all elements that match.
      */
     subscript(is inKey: String, isCaseSensitive inIsCaseSensitive: Bool = false) -> [RVS_AutofillTextFieldDataSourceType] {
         let lowercasedKey = inKey.lowercased()
@@ -100,6 +143,7 @@ extension Array where Element == RVS_AutofillTextFieldDataSourceType {
 public protocol RVS_AutofillTextFieldDataSource {
     /* ################################################################## */
     /**
+     This is an Array of structs, that are the searchable data collection for the text field.
      */
     var textDictionary: [RVS_AutofillTextFieldDataSourceType] { get }
     
@@ -115,6 +159,7 @@ public protocol RVS_AutofillTextFieldDataSource {
 extension RVS_AutofillTextFieldDataSource {
     /* ################################################################## */
     /**
+     Default is an empty Array.
      */
     var textDictionary: [RVS_AutofillTextFieldDataSourceType] { [] }
     
