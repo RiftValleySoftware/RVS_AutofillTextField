@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D422DFA826FE253600D638EF /* RVS-GeneralObserver in Frameworks */ = {isa = PBXBuildFile; productRef = D422DFA726FE253600D638EF /* RVS-GeneralObserver */; };
 		D4897E9826FD009C00555EB6 /* RVS_AutofillTextField_Test_Harness_AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4897E9726FD009C00555EB6 /* RVS_AutofillTextField_Test_Harness_AppDelegate.swift */; };
 		D4897E9C26FD009C00555EB6 /* RVS_AutofillTextField_Test_Harness_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4897E9B26FD009C00555EB6 /* RVS_AutofillTextField_Test_Harness_ViewController.swift */; };
 		D4897E9F26FD009C00555EB6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D4897E9D26FD009C00555EB6 /* Main.storyboard */; };
@@ -31,6 +32,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D422DFA826FE253600D638EF /* RVS-GeneralObserver in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -124,6 +126,9 @@
 			dependencies = (
 			);
 			name = RVS_AutofillTextField_Test_Harness;
+			packageProductDependencies = (
+				D422DFA726FE253600D638EF /* RVS-GeneralObserver */,
+			);
 			productName = RVS_AutofillTextField;
 			productReference = D4897E9426FD009C00555EB6 /* RVS_AutofillTextField_Test_Harness.app */;
 			productType = "com.apple.product-type.application";
@@ -152,6 +157,9 @@
 				Base,
 			);
 			mainGroup = D4897E8B26FD009C00555EB6;
+			packageReferences = (
+				D422DFA626FE253600D638EF /* XCRemoteSwiftPackageReference "RVS_GeneralObserver" */,
+			);
 			productRefGroup = D4897E9526FD009C00555EB6 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -425,6 +433,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		D422DFA626FE253600D638EF /* XCRemoteSwiftPackageReference "RVS_GeneralObserver" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RiftValleySoftware/RVS_GeneralObserver";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.5;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		D422DFA726FE253600D638EF /* RVS-GeneralObserver */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D422DFA626FE253600D638EF /* XCRemoteSwiftPackageReference "RVS_GeneralObserver" */;
+			productName = "RVS-GeneralObserver";
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = D4897E8C26FD009C00555EB6 /* Project object */;
 }

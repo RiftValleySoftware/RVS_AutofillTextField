@@ -20,17 +20,102 @@
  */
 
 import UIKit
+import RVS_GeneralObserver
 
 /* ###################################################################################################################################### */
 /* ###################################################################################################################################### */
 /**
  
  */
-class RVS_AutofillTextField_Test_Harness_ViewController: UIViewController {
+class RVS_AutofillTextField_Test_Harness_ViewController_TableCell: UITableViewCell, RVS_GeneralObservableProtocol {
+    /* ################################################################## */
+    /**
+     */
+    static let textCellReuseID = "sample-text-cell"
+    
+    /* ################################################################## */
+    /**
+     */
+    var uuid: UUID = UUID()
+    
+    /* ################################################################## */
+    /**
+     */
+    var observers: [RVS_GeneralObserverProtocol] = []
+    
+    /* ################################################################## */
+    /**
+     */
+    @IBOutlet var sampleTextField: UITextField!
+}
+
+/* ###################################################################################################################################### */
+/* ###################################################################################################################################### */
+/**
+ 
+ */
+class RVS_AutofillTextField_Test_Harness_ViewController: UIViewController, RVS_GeneralObserverProtocol, RVS_AutofillTextFieldDataSource {
+    /* ################################################################## */
+    /**
+     */
+    var uuid: UUID = UUID()
+    
+    /* ################################################################## */
+    /**
+     This is an Array of structs, that are the searchable data collection for the text field.
+     If this is empty, then no searches will return any results.
+     */
+    var textDictionary: [RVS_AutofillTextFieldDataSourceType] = []
+
+    /* ################################################################## */
+    /**
+     */
+    @IBOutlet var autofillTextField: RVS_AutofillTextField!
+    
+    /* ################################################################## */
+    /**
+     */
+    @IBOutlet var sampleTable: UITableView!
+
     /* ################################################################## */
     /**
      */
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    /* ################################################################## */
+    /**
+     Called to close the keyboard.
+     
+     - parameter: ignored (can also be omitted)
+     */
+    @IBAction func closeKeyboard(_: Any! = nil) {
+        #if DEBUG
+            print("Closing the keyboard.")
+        #endif
+        autofillTextField?.resignFirstResponder()
+    }
+}
+
+/* ###################################################################################################################################### */
+/* ###################################################################################################################################### */
+extension RVS_AutofillTextField_Test_Harness_ViewController: UITableViewDataSource {
+    /* ################################################################## */
+    /**
+     */
+    func tableView(_ inTableView: UITableView, numberOfRowsInSection inSection: Int) -> Int { 100 }
+    
+    /* ################################################################## */
+    /**
+     */
+    func tableView(_ inTableView: UITableView, cellForRowAt inIndexPath: IndexPath) -> UITableViewCell {
+        if let ret = inTableView.dequeueReusableCell(withIdentifier: RVS_AutofillTextField_Test_Harness_ViewController_TableCell.textCellReuseID, for: inIndexPath) as? RVS_AutofillTextField_Test_Harness_ViewController_TableCell {
+            ret.subscribe(self)
+            
+            return ret
+        } else {
+            return UITableViewCell()
+        }
     }
 }

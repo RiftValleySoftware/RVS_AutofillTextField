@@ -1,8 +1,11 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.16" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.12"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -11,10 +14,33 @@
             <objects>
                 <viewController id="01J-lp-oVM" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background-gradient" translatesAutoresizingMaskIntoConstraints="NO" id="uSG-DA-no0">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CenterImage" translatesAutoresizingMaskIntoConstraints="NO" id="NjG-Jm-PAq">
+                                <rect key="frame" x="83" y="324" width="248" height="248"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="NjG-Jm-PAq" secondAttribute="height" multiplier="1:1" id="rbT-57-I94"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="NjG-Jm-PAq" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="9PE-B2-xGN"/>
+                            <constraint firstItem="NjG-Jm-PAq" firstAttribute="height" secondItem="uSG-DA-no0" secondAttribute="height" priority="750" id="GRY-82-HXX"/>
+                            <constraint firstItem="NjG-Jm-PAq" firstAttribute="width" relation="lessThanOrEqual" secondItem="uSG-DA-no0" secondAttribute="width" multiplier="0.6" id="QIW-kD-akx"/>
+                            <constraint firstItem="NjG-Jm-PAq" firstAttribute="width" secondItem="uSG-DA-no0" secondAttribute="width" priority="750" id="UVH-K1-0ok"/>
+                            <constraint firstItem="uSG-DA-no0" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="bVu-G3-phV"/>
+                            <constraint firstItem="NjG-Jm-PAq" firstAttribute="height" relation="lessThanOrEqual" secondItem="uSG-DA-no0" secondAttribute="height" multiplier="0.6" id="biR-of-evb"/>
+                            <constraint firstItem="uSG-DA-no0" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="ePA-hg-FEx"/>
+                            <constraint firstAttribute="trailing" secondItem="uSG-DA-no0" secondAttribute="trailing" id="fAF-kI-SrQ"/>
+                            <constraint firstItem="NjG-Jm-PAq" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="fCN-JT-xxL"/>
+                            <constraint firstAttribute="bottom" secondItem="uSG-DA-no0" secondAttribute="bottom" id="wWW-Sx-Y74"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -22,4 +48,11 @@
             <point key="canvasLocation" x="53" y="375"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="CenterImage" width="920" height="913"/>
+        <image name="background-gradient" width="1" height="1000"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
 </document>

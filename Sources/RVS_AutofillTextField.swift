@@ -22,6 +22,59 @@
 import UIKit
 
 /* ###################################################################################################################################### */
+// MARK: - UIView Extension -
+/* ###################################################################################################################################### */
+/**
+ We can round the corners, and add auto-layout-prescribed views.
+ */
+extension UIView {
+    /* ################################################################## */
+    /**
+     This gives us access to the corner radius, so we can give the view rounded corners.
+     
+     > **NOTE:** This requires that `clipsToBounds` be set.
+     */
+    @IBInspectable var cornerRadius: CGFloat {
+        get { layer.cornerRadius }
+        set {
+            layer.cornerRadius = newValue
+            setNeedsDisplay()
+        }
+    }
+    
+    /* ################################################################## */
+    /**
+     This allows us to add a subview, and set it up with auto-layout constraints to fill the superview.
+     
+     - parameter inSubview: The subview we want to add.
+     - parameter underThis: If supplied, this is a Y-axis anchor to use as the attachment of the top anchor. Default is nil (can be omitted, which will simply attach to the top of the container).
+     - parameter andGiveMeABottomHook: If this is true, then the bottom anchor of the subview will not be attached to anything, and will simply be returned. Default is false, which means that the bottom anchor will simply be attached to the bottom of the view.
+     - returns: The bottom hook, if requested. Can be ignored.
+     */
+    @discardableResult
+    func addContainedView(_ inSubView: UIView, underThis inUpperConstraint: NSLayoutYAxisAnchor? = nil, andGiveMeABottomHook inBottomLoose: Bool = false) -> NSLayoutYAxisAnchor? {
+        addSubview(inSubView)
+        
+        inSubView.translatesAutoresizingMaskIntoConstraints = false
+        if let underConstraint = inUpperConstraint {
+            inSubView.topAnchor.constraint(equalTo: underConstraint, constant: 0).isActive = true
+        } else {
+            inSubView.topAnchor.constraint(equalTo: topAnchor, constant: 0).isActive = true
+        }
+        inSubView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0).isActive = true
+        inSubView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0).isActive = true
+        
+        if inBottomLoose {
+            return inSubView.bottomAnchor
+        } else {
+            inSubView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0).isActive = true
+        }
+        
+        return nil
+    }
+}
+
+/* ###################################################################################################################################### */
 // MARK: - One Element of the Data Source Array -
 /* ###################################################################################################################################### */
 /**
@@ -193,7 +246,7 @@ extension RVS_AutofillTextFieldDataSource {
      */
     func getTextDictionaryFromThis(string inString: String, isCaseSensitive inIsCaseSensitive: Bool = false, isWildcardBefore inIsWildcardBefore: Bool = false, isWildcardAfter inIsWildcardAfter: Bool = true, maximumAutofillCount inMaximumAutofillCount: Int = 5) -> [RVS_AutofillTextFieldDataSourceType] {
         
-        var ret = [RVS_AutofillTextFieldDataSourceType]()
+        let ret: [RVS_AutofillTextFieldDataSourceType]
         
         if !inIsWildcardBefore,
            !inIsWildcardAfter {
@@ -208,9 +261,7 @@ extension RVS_AutofillTextFieldDataSource {
             ret = textDictionary[contains: inString, isCaseSensitive: inIsCaseSensitive]
         }
         
-        let maxCount = max(0, min(ret.count, inMaximumAutofillCount))
-        
-        return [RVS_AutofillTextFieldDataSourceType](ret[0..<maxCount])
+        return [RVS_AutofillTextFieldDataSourceType](ret[0..<max(0, min(ret.count, inMaximumAutofillCount))])
     }
 }
 
@@ -254,6 +305,7 @@ open class RVS_AutofillTextField: UITextField {
     /* ################################################################## */
     /**
      This is the data source for this widget. Be aware that this is a strong reference.
+     This is not inspectable, and must be assigned programmatically.
      */
     public var dataSource: RVS_AutofillTextFieldDataSource?
 }
