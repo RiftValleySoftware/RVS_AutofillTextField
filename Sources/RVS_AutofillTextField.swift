@@ -41,6 +41,7 @@ public class RVS_AutofillTextFieldDataSourceType {
     /**
      */
     init(value inValue: String, refCon inRefCon: Any? = nil) {
+        precondition(!inValue.isEmpty, "Value Must Be Non-Blank!")
         value = inValue
         refCon = inRefCon
     }
@@ -52,18 +53,6 @@ public class RVS_AutofillTextFieldDataSourceType {
 /**
  */
 extension Array where Element == RVS_AutofillTextFieldDataSourceType {
-    /* ################################################################## */
-    /**
-     */
-    var allValues: [String] { map { $0.value } }
-    
-    /* ################################################################## */
-    /**
-     */
-    var allRefCons: [Any] { compactMap { $0.refCon } }
-    
-    // MARK: Specialized Subscripts
-    
     /* ################################################################## */
     /**
      */
@@ -112,7 +101,12 @@ public protocol RVS_AutofillTextFieldDataSource {
     /* ################################################################## */
     /**
      */
-    func getTextDictionaryFromThis(string: String) -> [RVS_AutofillTextFieldDataSourceType]
+    var textDictionary: [RVS_AutofillTextFieldDataSourceType] { get }
+    
+    /* ################################################################## */
+    /**
+     */
+    func getTextDictionaryFromThis(string: String, isCaseSensitive: Bool, isWildcardBefore: Bool, isWildcardAfter: Bool, maximumAutofillCount: Int) -> [RVS_AutofillTextFieldDataSourceType]
 }
 
 /* ###################################################################################################################################### */
@@ -122,7 +116,12 @@ extension RVS_AutofillTextFieldDataSource {
     /* ################################################################## */
     /**
      */
-    func getTextDictionaryFromThis(string: String) -> [RVS_AutofillTextFieldDataSourceType] { [] }
+    var textDictionary: [RVS_AutofillTextFieldDataSourceType] { [] }
+    
+    /* ################################################################## */
+    /**
+     */
+    func getTextDictionaryFromThis(string: String, isCaseSensitive: Bool = false, isWildcardBefore: Bool = false, isWildcardAfter: Bool = true, maximumAutofillCount: Int = 5) -> [RVS_AutofillTextFieldDataSourceType] { [] }
 }
 
 /* ###################################################################################################################################### */
@@ -154,7 +153,7 @@ open class RVS_AutofillTextField: UITextField {
     /**
      */
     @IBInspectable
-    public var maximumCount: Int = 5
+    public var maximumAutofillCount: Int = 5
 
     /* ################################################################## */
     /**
