@@ -22,16 +22,107 @@
 import UIKit
 
 /* ###################################################################################################################################### */
+// MARK: - One Element of the Data Source Array -
 /* ###################################################################################################################################### */
 /**
- 
  */
-protocol RVS_AutofillTextFieldDelegate: AnyObject {
+public class RVS_AutofillTextFieldDataSourceType {
+    /* ################################################################## */
+    /**
+     */
+    let value: String
+
+    /* ################################################################## */
+    /**
+     */
+    let refCon: Any?
+
+    /* ################################################################## */
+    /**
+     */
+    init(value inValue: String, refCon inRefCon: Any? = nil) {
+        value = inValue
+        refCon = inRefCon
+    }
 }
 
 /* ###################################################################################################################################### */
+// MARK: - Array Extension, for Getting Values by Key -
 /* ###################################################################################################################################### */
-extension RVS_AutofillTextFieldDelegate {
+/**
+ */
+extension Array where Element == RVS_AutofillTextFieldDataSourceType {
+    /* ################################################################## */
+    /**
+     */
+    var allValues: [String] { map { $0.value } }
+    
+    /* ################################################################## */
+    /**
+     */
+    var allRefCons: [Any] { compactMap { $0.refCon } }
+    
+    // MARK: Specialized Subscripts
+    
+    /* ################################################################## */
+    /**
+     */
+    subscript(is inKey: String, isCaseSensitive inIsCaseSensitive: Bool = false) -> [RVS_AutofillTextFieldDataSourceType] {
+        let lowercasedKey = inKey.lowercased()
+        
+        return compactMap { !inIsCaseSensitive ? (lowercasedKey == $0.value.lowercased() ? $0 : nil) : (inKey == $0.value ? $0 : nil) }
+    }
+    
+    /* ################################################################## */
+    /**
+     */
+    subscript(endsWith inKey: String, isCaseSensitive inIsCaseSensitive: Bool = false) -> [RVS_AutofillTextFieldDataSourceType] {
+        let lowercasedKey = inKey.lowercased()
+        
+        return compactMap { !inIsCaseSensitive ? ($0.value.lowercased().hasSuffix(lowercasedKey) ? $0 : nil) : ($0.value.hasSuffix(inKey) ? $0 : nil) }
+    }
+    
+    /* ################################################################## */
+    /**
+     */
+    subscript(beginsWith inKey: String, isCaseSensitive inIsCaseSensitive: Bool = false) -> [RVS_AutofillTextFieldDataSourceType] {
+        let lowercasedKey = inKey.lowercased()
+        
+        return compactMap { !inIsCaseSensitive ? ($0.value.lowercased().hasPrefix(lowercasedKey) ? $0 : nil) : ($0.value.hasPrefix(inKey) ? $0 : nil) }
+    }
+    
+    /* ################################################################## */
+    /**
+     */
+    subscript(contains inKey: String, isCaseSensitive inIsCaseSensitive: Bool = false) -> [RVS_AutofillTextFieldDataSourceType] {
+        let lowercasedKey = inKey.lowercased()
+        
+        return compactMap { !inIsCaseSensitive ? ($0.value.lowercased().contains(lowercasedKey) ? $0 : nil) : ($0.value.contains(inKey) ? $0 : nil) }
+    }
+}
+
+/* ###################################################################################################################################### */
+// MARK: - Data Source Protocol -
+/* ###################################################################################################################################### */
+/**
+ The text field class will require an instance of a class that conforms to this protocol. It will supply the data to be displayed in the autofill table.
+ If the data source does not supply any data, then the text field acts just like any other text field.
+ */
+public protocol RVS_AutofillTextFieldDataSource {
+    /* ################################################################## */
+    /**
+     */
+    func getTextDictionaryFromThis(string: String) -> [RVS_AutofillTextFieldDataSourceType]
+}
+
+/* ###################################################################################################################################### */
+// MARK: Defaults
+/* ###################################################################################################################################### */
+extension RVS_AutofillTextFieldDataSource {
+    /* ################################################################## */
+    /**
+     */
+    func getTextDictionaryFromThis(string: String) -> [RVS_AutofillTextFieldDataSourceType] { [] }
 }
 
 /* ###################################################################################################################################### */
@@ -39,5 +130,34 @@ extension RVS_AutofillTextFieldDelegate {
 /* ###################################################################################################################################### */
 /**
  */
-class RVS_AutofillTextField: UITextField {
+@IBDesignable
+open class RVS_AutofillTextField: UITextField {
+    /* ################################################################## */
+    /**
+     */
+    @IBInspectable
+    public var isCaseSensitive: Bool = false
+    
+    /* ################################################################## */
+    /**
+     */
+    @IBInspectable
+    public var isWildcardBefore: Bool = false
+    
+    /* ################################################################## */
+    /**
+     */
+    @IBInspectable
+    public var isWildcardAfter: Bool = true
+    
+    /* ################################################################## */
+    /**
+     */
+    @IBInspectable
+    public var maximumCount: Int = 5
+
+    /* ################################################################## */
+    /**
+     */
+    public var dataSource: RVS_AutofillTextFieldDataSource? = nil
 }
