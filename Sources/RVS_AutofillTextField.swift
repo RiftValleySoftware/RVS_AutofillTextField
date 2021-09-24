@@ -276,11 +276,63 @@ extension RVS_AutofillTextFieldDataSource {
 open class RVS_AutofillTextField: UITextField {
     /* ################################################################## */
     /**
+     The table background will be the system background, at this transparency.
+     */
+    private static let _tableBackgroundAlpha: CGFloat = 0.25
+    
+    /* ################################################################## */
+    /**
+     The height of each table row.
+     */
+    private static let _tableRowHeightInDisplayUnits: CGFloat = 40
+    
+    /* ################################################################## */
+    /**
+     The corner rounding of the displayed table.
+     */
+    private static let _tableRoundedCornerInDisplayUnits: CGFloat = 16
+
+    /* ################################################################## */
+    /**
+     The padding between the edges of the table, and the displays.
+     */
+    private static let _tablePaddingInDisplayUnits: CGFloat = RVS_AutofillTextField._tableRoundedCornerInDisplayUnits / 2.0
+    
+    /* ################################################################## */
+    /**
+     The table will display above or below the text item, and will be separated by this many display units.
+     The leading edge of the table will be aligned with the edit field's leading edge.
+     */
+    private static let _gapInDisplayUnitsBetweenTextItemAndTable: CGFloat = 8
+    
+    /* ################################################################## */
+    /**
+     This will contain a Table View, that will display our autocompletes.
+     */
+    private var _autoCompleteTable: UITableView?
+
+    /* ################################################################## */
+    /**
+     When the table comes up, this will be the color. The default is the standard system color, with a 0.25 alpha.
+     */
+    @IBInspectable
+    public var tableBackgroundColor: UIColor = .systemBackground.withAlphaComponent(RVS_AutofillTextField._tableBackgroundAlpha)
+
+    /* ################################################################## */
+    /**
+     The minimum width of the table. It will be at least this wide, and will follow the width of the edit text item, if it is bigger.
+     It will also never go beyond the trailing edge of the screen.
+     */
+    @IBInspectable
+    public var minimumTableWidthInDisplayUnits: CGFloat = 100
+
+    /* ################################################################## */
+    /**
      This specifies whether or not matches are case-blind (default), or case-sensitive (true).
      */
     @IBInspectable
     public var isCaseSensitive: Bool = false
-    
+
     /* ################################################################## */
     /**
      If true (default is false), then the match is made at the end of the string.
@@ -308,4 +360,114 @@ open class RVS_AutofillTextField: UITextField {
      This is not inspectable, and must be assigned programmatically.
      */
     public var dataSource: RVS_AutofillTextFieldDataSource?
+}
+
+/* ###################################################################################################################################### */
+// MARK: Computed Properties
+/* ###################################################################################################################################### */
+extension RVS_AutofillTextField {
+    /* ################################################################## */
+    /**
+     This is the current response of what needs to be displayed in the autofill.
+     */
+    private var _currentAutoFill: [RVS_AutofillTextFieldDataSourceType] { dataSource?.getTextDictionaryFromThis(string: text ?? "", isCaseSensitive: isCaseSensitive, isWildcardBefore: isWildcardBefore, isWildcardAfter: isWildcardAfter, maximumAutofillCount: maximumAutofillCount) ?? [] }
+}
+
+/* ###################################################################################################################################### */
+// MARK: Instance Methods
+/* ###################################################################################################################################### */
+extension RVS_AutofillTextField {
+    /* ################################################################## */
+    /**
+     This will create a new instance of the display table, if it does not already exist.
+     It may move the table, if it does exist, but the location should be changed.
+     */
+    private func _createAutoCompleteTable() {
+        if let containerView = window?.rootViewController?.view {
+            let maxTableHeight = CGFloat(maximumAutofillCount) * Self._tableRowHeightInDisplayUnits
+            let maxTableWidth = max(bounds.size.width, minimumTableWidthInDisplayUnits)
+            let numberOfRows = CGFloat(_currentAutoFill.count)
+            let currentTableHeight = numberOfRows * Self._tableRowHeightInDisplayUnits
+            let aboveOrigin = convert(CGPoint(x: 0, y: -(Self._gapInDisplayUnitsBetweenTextItemAndTable + maxTableHeight)), to: containerView)
+            let belowOrigin = convert(CGPoint(x: 0, y: bounds.size.height + Self._gapInDisplayUnitsBetweenTextItemAndTable), to: containerView)
+            let tableWidth = min(containerView.bounds.width - belowOrigin.x, maxTableWidth)
+            let above = (belowOrigin.y + maxTableHeight) > containerView.bounds.size.height
+            let tableFrame = CGRect(origin: above ? aboveOrigin : belowOrigin, size: CGSize(width: tableWidth, height: currentTableHeight))
+            #if DEBUG
+                print("View bounds: \(containerView.bounds)")
+                print("Number of rows: \(numberOfRows)")
+                print("Maximum Table Height: \(maxTableHeight)")
+                print("Table Frame: \(tableFrame)")
+                print("Table will\(above ? " " : " not " )display above the text item.")
+            #endif
+        }
+    }
+}
+
+/* ###################################################################################################################################### */
+// MARK: Callbacks
+/* ###################################################################################################################################### */
+extension RVS_AutofillTextField {
+    /* ################################################################## */
+    /**
+     This callback is triggered whenever the text in the edit field has changed. This is where we test the auto-complete dictionary.
+     
+     - parameter inTextField: The text field (us).
+     */
+    @objc private func _textHasChanged(_ inTextField: UITextField) {
+        #if DEBUG
+            print("Text Field Changed: \(String(describing: inTextField.text))")
+        #endif
+        
+        _createAutoCompleteTable()
+    }
+}
+
+/* ###################################################################################################################################### */
+// MARK: Base Class Overrides
+/* ###################################################################################################################################### */
+extension RVS_AutofillTextField {
+    /* ################################################################## */
+    /**
+     Called when we trigger a layout. We use this to register our callback.
+     */
+    public override func layoutSubviews() {
+        super.layoutSubviews()
+        addTarget(self, action: #selector(_textHasChanged(_:)), for: .editingChanged)
+    }
+    
+    /* ################################################################## */
+    /**
+     Called when we are being removed from our superview. We remove the callback (just to be sure -belt and suspenders).
+     */
+    public override func removeFromSuperview() {
+        removeTarget(self, action: #selector(_textHasChanged(_:)), for: .editingChanged)
+        super.removeFromSuperview()
+    }
+}
+
+/* ###################################################################################################################################### */
+// MARK: UITableViewDataSource Conformance
+/* ###################################################################################################################################### */
+extension RVS_AutofillTextField: UITableViewDataSource {
+    /* ################################################################## */
+    /**
+     This returns the number of rows to display in the autofill table.
+     - parameter: The table view. Ignored.
+     - parameter: The section (0-based index). Ignored
+     - returns: The number of rows to display.
+     */
+    public func tableView(_: UITableView, numberOfRowsInSection: Int) -> Int { _currentAutoFill.count }
+    
+    /* ################################################################## */
+    /**
+     This returns one cell of the table, with the specific autofill suggestion.
+     */
+    public func tableView(_ inTableView: UITableView, cellForRowAt inIndexPath: IndexPath) -> UITableViewCell {
+        let ret = UITableViewCell()
+        
+        ret.textLabel?.text = _currentAutoFill[inIndexPath.row].value
+        
+        return ret
+    }
 }
