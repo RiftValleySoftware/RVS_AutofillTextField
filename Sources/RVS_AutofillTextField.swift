@@ -107,6 +107,11 @@ extension Array where Element == RVS_AutofillTextFieldDataSourceType {
     
     /* ################################################################## */
     /**
+     This looks for a string that is "wildcarded" in front, but ends with the exact String. It can be case-blind (by default).
+     
+     - parameter endsWith: This is the String to test against. The entire value must match (but can be preceded by other characters), but can be case-blind.
+     - parameter isCaseSensitive: Default is false. If true, then the match needs to take case into account.
+     - returns: An Array of all elements that match.
      */
     subscript(endsWith inKey: String, isCaseSensitive inIsCaseSensitive: Bool = false) -> [RVS_AutofillTextFieldDataSourceType] {
         let lowercasedKey = inKey.lowercased()
@@ -116,6 +121,11 @@ extension Array where Element == RVS_AutofillTextFieldDataSourceType {
     
     /* ################################################################## */
     /**
+     This looks for a string that is "wildcarded" after, but begins with the exact String. It can be case-blind (by default).
+     
+     - parameter beginsWith: This is the String to test against. The entire value must match (but can be followed by other characters), but can be case-blind.
+     - parameter isCaseSensitive: Default is false. If true, then the match needs to take case into account.
+     - returns: An Array of all elements that match.
      */
     subscript(beginsWith inKey: String, isCaseSensitive inIsCaseSensitive: Bool = false) -> [RVS_AutofillTextFieldDataSourceType] {
         let lowercasedKey = inKey.lowercased()
@@ -125,6 +135,11 @@ extension Array where Element == RVS_AutofillTextFieldDataSourceType {
     
     /* ################################################################## */
     /**
+     This lsees if the element contains the exact String. It can be case-blind (by default).
+     
+     - parameter contains: This is the String to test against. The entire value must match (but can be preceded and followed by other characters), but can be case-blind.
+     - parameter isCaseSensitive: Default is false. If true, then the match needs to take case into account.
+     - returns: An Array of all elements that match.
      */
     subscript(contains inKey: String, isCaseSensitive inIsCaseSensitive: Bool = false) -> [RVS_AutofillTextFieldDataSourceType] {
         let lowercasedKey = inKey.lowercased()
@@ -144,11 +159,20 @@ public protocol RVS_AutofillTextFieldDataSource {
     /* ################################################################## */
     /**
      This is an Array of structs, that are the searchable data collection for the text field.
+     If this is not implemented, or is empty, then no searches will return any results.
      */
     var textDictionary: [RVS_AutofillTextFieldDataSourceType] { get }
     
     /* ################################################################## */
     /**
+     This searches the Array, for strings that match the given String, according to the parameters included with the invocation.
+     The protocol default does a rather naive comparison that is likely to be sufficient for most purposes.
+     - parameter string: The String to search for
+     - parameter isCaseSensitive: False, by default. If true, the String must match case, as well as content.
+     - parameter isWildcardBefore: False, by default. If true, then the String can be preceded by other characters. If false, the given String must start the value being tested.
+     - parameter isWildcardAfter: True, by default. If true, then the String can be followed by other characters. If false, the given String must end the value being tested.
+     - parameter maximumAutofillCount: 5, by default. This is the maximum number of results to return. The return can contain fewer elements.
+     - returns: An Array of elements that conform to the `RVS_AutofillTextFieldDataSourceType` protocol.
      */
     func getTextDictionaryFromThis(string: String, isCaseSensitive: Bool, isWildcardBefore: Bool, isWildcardAfter: Bool, maximumAutofillCount: Int) -> [RVS_AutofillTextFieldDataSourceType]
 }
@@ -165,43 +189,71 @@ extension RVS_AutofillTextFieldDataSource {
     
     /* ################################################################## */
     /**
+     Default uses the Array extension subscripts to search the Array.
      */
-    func getTextDictionaryFromThis(string: String, isCaseSensitive: Bool = false, isWildcardBefore: Bool = false, isWildcardAfter: Bool = true, maximumAutofillCount: Int = 5) -> [RVS_AutofillTextFieldDataSourceType] { [] }
+    func getTextDictionaryFromThis(string inString: String, isCaseSensitive inIsCaseSensitive: Bool = false, isWildcardBefore inIsWildcardBefore: Bool = false, isWildcardAfter inIsWildcardAfter: Bool = true, maximumAutofillCount inMaximumAutofillCount: Int = 5) -> [RVS_AutofillTextFieldDataSourceType] {
+        
+        var ret = [RVS_AutofillTextFieldDataSourceType]()
+        
+        if !inIsWildcardBefore,
+           !inIsWildcardAfter {
+            ret = textDictionary[is: inString, isCaseSensitive: inIsCaseSensitive]
+        } else if inIsWildcardBefore,
+                  !inIsWildcardAfter {
+            ret = textDictionary[endsWith: inString, isCaseSensitive: inIsCaseSensitive]
+        } else if !inIsWildcardBefore,
+                  inIsWildcardAfter {
+            ret = textDictionary[beginsWith: inString, isCaseSensitive: inIsCaseSensitive]
+        } else {
+            ret = textDictionary[contains: inString, isCaseSensitive: inIsCaseSensitive]
+        }
+        
+        let maxCount = max(0, min(ret.count, inMaximumAutofillCount))
+        
+        return [RVS_AutofillTextFieldDataSourceType](ret[0..<maxCount])
+    }
 }
 
 /* ###################################################################################################################################### */
 // MARK: - Special Text Field Class That Displays An AutoComplete Table, As You Type -
 /* ###################################################################################################################################### */
 /**
+ This class overloads the standard UITextField widget to provide a realtime "dropdown" menu of possible autocomplete choices (in a table and modal-style screen).
+ If the user selects a value from the table, that entire string is entered into the text field, and the dropdown is dismissed.
  */
 @IBDesignable
 open class RVS_AutofillTextField: UITextField {
     /* ################################################################## */
     /**
+     This specifies whether or not matches are case-blind (default), or case-sensitive (true).
      */
     @IBInspectable
     public var isCaseSensitive: Bool = false
     
     /* ################################################################## */
     /**
+     If true (default is false), then the match is made at the end of the string.
      */
     @IBInspectable
     public var isWildcardBefore: Bool = false
     
     /* ################################################################## */
     /**
+     If true (default is true), then the match is made at the beginning of the string.
      */
     @IBInspectable
     public var isWildcardAfter: Bool = true
     
     /* ################################################################## */
     /**
+     This is the maximum number of results to be returned. Default is 5.
      */
     @IBInspectable
     public var maximumAutofillCount: Int = 5
 
     /* ################################################################## */
     /**
+     This is the data source for this widget. Be aware that this is a strong reference.
      */
     public var dataSource: RVS_AutofillTextFieldDataSource?
 }
