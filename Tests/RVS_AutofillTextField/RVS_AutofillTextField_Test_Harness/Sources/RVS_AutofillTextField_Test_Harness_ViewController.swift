@@ -147,8 +147,13 @@ class RVS_AutofillTextField_Test_Harness_ViewController: UIViewController, RVS_G
     /* ################################################################## */
     /**
      */
-    @IBOutlet weak var isWildcardBeforeCheckbox: RVS_Checkbox!
+    @IBOutlet weak var isOnCheckbox: RVS_Checkbox!
     
+    /* ################################################################## */
+    /**
+     */
+    @IBOutlet weak var isWildcardBeforeCheckbox: RVS_Checkbox!
+
     /* ################################################################## */
     /**
      */
@@ -174,6 +179,7 @@ extension RVS_AutofillTextField_Test_Harness_ViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         autofillTextField?.dataSource = self
+        autofillTextField?.isAutoFillOn = isOnCheckbox?.isOn ?? false
         autofillTextField?.isWildcardBefore = isWildcardBeforeCheckbox?.isOn ?? false
         autofillTextField?.isWildcardAfter = isWildcardAfterCheckbox?.isOn ?? false
         autofillTextField?.isCaseSensitive = isCaseSensitiveCheckbox?.isOn ?? false
@@ -218,6 +224,18 @@ extension RVS_AutofillTextField_Test_Harness_ViewController {
      */
     func textChanged(_ inText: String, row inRow: Int) {
         currentTextDictionary[inRow] = inText
+    }
+    
+    /* ################################################################## */
+    /**
+     */
+    @IBAction func isOnChanged(_ inSender: Any) {
+        if let sender = inSender as? RVS_Checkbox {
+            autofillTextField?.isAutoFillOn = sender.isOn
+        } else {
+            isOnCheckbox?.setOn(!(isOnCheckbox?.isOn ?? true), animated: true)
+            isOnCheckbox?.sendActions(for: .valueChanged)
+        }
     }
     
     /* ################################################################## */

@@ -271,17 +271,18 @@ open class RVS_AutofillTextField: UITextField {
 
     /* ################################################################## */
     /**
-     This is the font to use. It must be set programmatically.
-     */
-    public var tableFont: UIFont = .systemFont(ofSize: 20)
-
-    /* ################################################################## */
-    /**
      The minimum width of the table. It will be at least this wide, and will follow the width of the edit text item, if it is bigger.
      It will also never go beyond the trailing edge of the screen.
      */
     @IBInspectable
     public var minimumTableWidthInDisplayUnits: CGFloat = 100
+
+    /* ################################################################## */
+    /**
+     This is a "circuit breaker" for the autofill capability. Default is on. If Off, the autofill will not be shown.
+     */
+    @IBInspectable
+    public var isAutoFillOn: Bool = true
 
     /* ################################################################## */
     /**
@@ -317,6 +318,12 @@ open class RVS_AutofillTextField: UITextField {
      This is not inspectable, and must be assigned programmatically.
      */
     public var dataSource: RVS_AutofillTextFieldDataSource?
+
+    /* ################################################################## */
+    /**
+     This is the font to use. It must be set programmatically.
+     */
+    public var tableFont: UIFont = .systemFont(ofSize: 20)
 }
 
 /* ###################################################################################################################################### */
@@ -344,7 +351,8 @@ extension RVS_AutofillTextField {
      It may move the table, if it does exist, but the location should be changed.
      */
     private func _createAutoCompleteTable() {
-        guard 0 < _currentAutoFill.count else {
+        guard isAutoFillOn,
+              0 < _currentAutoFill.count else {
             closeTableView()
             return
         }
