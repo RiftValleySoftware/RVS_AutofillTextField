@@ -366,7 +366,11 @@ extension RVS_AutofillTextField {
     /**
      This is the current response of what needs to be displayed in the autofill.
      */
-    private var _currentAutoFill: [RVS_AutofillTextFieldDataSourceType] { dataSource?.getTextDictionaryFromThis(string: text ?? "", isCaseSensitive: isCaseSensitive, isWildcardBefore: isWildcardBefore, isWildcardAfter: isWildcardAfter, maximumAutofillCount: maximumAutofillCount) ?? [] }
+    private var _currentAutoFill: [RVS_AutofillTextFieldDataSourceType] {
+        !(text?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true)
+            ? dataSource?.getTextDictionaryFromThis(string: text ?? "", isCaseSensitive: isCaseSensitive, isWildcardBefore: isWildcardBefore, isWildcardAfter: isWildcardAfter, maximumAutofillCount: maximumAutofillCount) ?? []
+            : []
+    }
 }
 
 /* ###################################################################################################################################### */
@@ -379,11 +383,15 @@ extension RVS_AutofillTextField {
      It may move the table, if it does exist, but the location should be changed.
      */
     private func _createAutoCompleteTable() {
+        guard 0 < _currentAutoFill.count else {
+            closeTableView()
+            return
+        }
+        
         if let containerView = window?.rootViewController?.view {
-            let currentAutoFill = _currentAutoFill
             let maxTableHeight = CGFloat(maximumAutofillCount) * Self._tableRowHeightInDisplayUnits
             let maxTableWidth = max(bounds.size.width, minimumTableWidthInDisplayUnits)
-            let numberOfRows = CGFloat(currentAutoFill.count)
+            let numberOfRows = CGFloat(_currentAutoFill.count)
             let currentTableHeight = numberOfRows * Self._tableRowHeightInDisplayUnits
             let tableOrigin = convert(CGPoint(x: 0, y: bounds.size.height + Self._gapInDisplayUnitsBetweenTextItemAndTable), to: containerView)
             let tableWidth = min(containerView.bounds.width - (tableOrigin.x + Self._gapInDisplayUnitsBetweenTextItemAndTable), maxTableWidth)
@@ -404,11 +412,14 @@ extension RVS_AutofillTextField {
                         print("One does not yet exist, so we will create it.")
                     #endif
                     _autoCompleteTable = UITableView(frame: tableFrame)
-                    _autoCompleteTable?.dataSource = self
-                    _autoCompleteTable?.backgroundColor = tableBackgroundColor
-                    _autoCompleteTable?.rowHeight = Self._tableRowHeightInDisplayUnits
-                    _autoCompleteTable?.layer.cornerRadius = Self._tableRoundedCornerInDisplayUnits
-                    _autoCompleteTable?.clipsToBounds = true
+                    if let autoCompleteTable = _autoCompleteTable {
+                        autoCompleteTable.dataSource = self
+                        autoCompleteTable.backgroundColor = tableBackgroundColor
+                        autoCompleteTable.rowHeight = Self._tableRowHeightInDisplayUnits
+                        autoCompleteTable.layer.cornerRadius = Self._tableRoundedCornerInDisplayUnits
+                        autoCompleteTable.clipsToBounds = true
+                        containerView.addSubview(autoCompleteTable)
+                    }
                 }
                 
                 if let autoCompleteTable = _autoCompleteTable {
@@ -450,9 +461,43 @@ extension RVS_AutofillTextField {
 }
 
 /* ###################################################################################################################################### */
+// MARK: Instance Methods
+/* ###################################################################################################################################### */
+extension RVS_AutofillTextField {
+    /* ################################################################## */
+    /**
+     Called to close the table view.
+     */
+    public func closeTableView() {
+        _autoCompleteTable?.removeFromSuperview()
+        _autoCompleteTable = nil
+    }
+}
+
+/* ###################################################################################################################################### */
 // MARK: Base Class Overrides
 /* ###################################################################################################################################### */
 extension RVS_AutofillTextField {
+    /* ################################################################## */
+    /**
+     This makes sure that we remove the table, if we are no longer the focus.
+     */
+    @discardableResult
+    public override func becomeFirstResponder() -> Bool {
+        _createAutoCompleteTable()
+        return super.becomeFirstResponder()
+    }
+    
+    /* ################################################################## */
+    /**
+     This makes sure that we remove the table, if we are no longer the focus.
+     */
+    @discardableResult
+    public override func resignFirstResponder() -> Bool {
+        closeTableView()
+        return super.resignFirstResponder()
+    }
+    
     /* ################################################################## */
     /**
      Called when we trigger a layout. We use this to register our callback.
@@ -460,6 +505,7 @@ extension RVS_AutofillTextField {
     public override func layoutSubviews() {
         super.layoutSubviews()
         addTarget(self, action: #selector(_textHasChanged(_:)), for: .editingChanged)
+        _createAutoCompleteTable()
     }
     
     /* ################################################################## */
@@ -467,6 +513,7 @@ extension RVS_AutofillTextField {
      Called when we are being removed from our superview. We remove the callback (just to be sure -belt and suspenders).
      */
     public override func removeFromSuperview() {
+        closeTableView()
         removeTarget(self, action: #selector(_textHasChanged(_:)), for: .editingChanged)
         super.removeFromSuperview()
     }
