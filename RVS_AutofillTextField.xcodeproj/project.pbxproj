@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D40DF4DC26FFC2960054A0F5 /* RVS-Checkbox in Frameworks */ = {isa = PBXBuildFile; productRef = D40DF4DB26FFC2960054A0F5 /* RVS-Checkbox */; };
 		D422DFA826FE253600D638EF /* RVS-GeneralObserver in Frameworks */ = {isa = PBXBuildFile; productRef = D422DFA726FE253600D638EF /* RVS-GeneralObserver */; };
 		D4897E9826FD009C00555EB6 /* RVS_AutofillTextField_Test_Harness_AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4897E9726FD009C00555EB6 /* RVS_AutofillTextField_Test_Harness_AppDelegate.swift */; };
 		D4897E9C26FD009C00555EB6 /* RVS_AutofillTextField_Test_Harness_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4897E9B26FD009C00555EB6 /* RVS_AutofillTextField_Test_Harness_ViewController.swift */; };
@@ -33,6 +34,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D422DFA826FE253600D638EF /* RVS-GeneralObserver in Frameworks */,
+				D40DF4DC26FFC2960054A0F5 /* RVS-Checkbox in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -128,6 +130,7 @@
 			name = RVS_AutofillTextField_Test_Harness;
 			packageProductDependencies = (
 				D422DFA726FE253600D638EF /* RVS-GeneralObserver */,
+				D40DF4DB26FFC2960054A0F5 /* RVS-Checkbox */,
 			);
 			productName = RVS_AutofillTextField;
 			productReference = D4897E9426FD009C00555EB6 /* RVS_AutofillTextField_Test_Harness.app */;
@@ -159,6 +162,7 @@
 			mainGroup = D4897E8B26FD009C00555EB6;
 			packageReferences = (
 				D422DFA626FE253600D638EF /* XCRemoteSwiftPackageReference "RVS_GeneralObserver" */,
+				D40DF4DA26FFC2960054A0F5 /* XCRemoteSwiftPackageReference "RVS_Checkbox" */,
 			);
 			productRefGroup = D4897E9526FD009C00555EB6 /* Products */;
 			projectDirPath = "";
@@ -435,6 +439,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		D40DF4DA26FFC2960054A0F5 /* XCRemoteSwiftPackageReference "RVS_Checkbox" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RiftValleySoftware/RVS_Checkbox";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.1.6;
+			};
+		};
 		D422DFA626FE253600D638EF /* XCRemoteSwiftPackageReference "RVS_GeneralObserver" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/RiftValleySoftware/RVS_GeneralObserver";
@@ -446,6 +458,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		D40DF4DB26FFC2960054A0F5 /* RVS-Checkbox */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D40DF4DA26FFC2960054A0F5 /* XCRemoteSwiftPackageReference "RVS_Checkbox" */;
+			productName = "RVS-Checkbox";
+		};
 		D422DFA726FE253600D638EF /* RVS-GeneralObserver */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = D422DFA626FE253600D638EF /* XCRemoteSwiftPackageReference "RVS_GeneralObserver" */;

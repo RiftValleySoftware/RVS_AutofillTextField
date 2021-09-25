@@ -229,7 +229,7 @@ open class RVS_AutofillTextField: UITextField {
     /**
      The table background will be the system background, at this transparency.
      */
-    private static let _tableBackgroundAlpha: CGFloat = 0.5
+    private static let _tableBackgroundAlpha: CGFloat = 0.75
     
     /* ################################################################## */
     /**
@@ -501,6 +501,8 @@ extension RVS_AutofillTextField: UITableViewDataSource {
     public func tableView(_ inTableView: UITableView, cellForRowAt inIndexPath: IndexPath) -> UITableViewCell {
         let ret = UITableViewCell()
         ret.backgroundColor = .clear
+        ret.textLabel?.adjustsFontSizeToFitWidth = true
+        ret.textLabel?.minimumScaleFactor = 0.25
         ret.textLabel?.font = tableFont
         ret.textLabel?.text = _currentAutoFill[inIndexPath.row].value
         
