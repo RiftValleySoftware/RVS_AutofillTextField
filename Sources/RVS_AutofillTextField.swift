@@ -22,45 +22,6 @@
 import UIKit
 
 /* ###################################################################################################################################### */
-// MARK: - UIView Extension -
-/* ###################################################################################################################################### */
-/**
- We can add auto-layout-prescribed views.
- */
-extension UIView {
-    /* ################################################################## */
-    /**
-     This allows us to add a subview, and set it up with auto-layout constraints to fill the superview.
-     
-     - parameter inSubview: The subview we want to add.
-     - parameter underThis: If supplied, this is a Y-axis anchor to use as the attachment of the top anchor. Default is nil (can be omitted, which will simply attach to the top of the container).
-     - parameter andGiveMeABottomHook: If this is true, then the bottom anchor of the subview will not be attached to anything, and will simply be returned. Default is false, which means that the bottom anchor will simply be attached to the bottom of the view.
-     - returns: The bottom hook, if requested. Can be ignored.
-     */
-    @discardableResult
-    func addContainedView(_ inSubView: UIView, underThis inUpperConstraint: NSLayoutYAxisAnchor? = nil, andGiveMeABottomHook inBottomLoose: Bool = false) -> NSLayoutYAxisAnchor? {
-        addSubview(inSubView)
-        
-        inSubView.translatesAutoresizingMaskIntoConstraints = false
-        if let underConstraint = inUpperConstraint {
-            inSubView.topAnchor.constraint(equalTo: underConstraint, constant: 0).isActive = true
-        } else {
-            inSubView.topAnchor.constraint(equalTo: topAnchor, constant: 0).isActive = true
-        }
-        inSubView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0).isActive = true
-        inSubView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0).isActive = true
-        
-        if inBottomLoose {
-            return inSubView.bottomAnchor
-        } else {
-            inSubView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0).isActive = true
-        }
-        
-        return nil
-    }
-}
-
-/* ###################################################################################################################################### */
 // MARK: - One Element of the Data Source Array -
 /* ###################################################################################################################################### */
 /**
@@ -268,7 +229,7 @@ open class RVS_AutofillTextField: UITextField {
     /**
      The table background will be the system background, at this transparency.
      */
-    private static let _tableBackgroundAlpha: CGFloat = 0.25
+    private static let _tableBackgroundAlpha: CGFloat = 0.5
     
     /* ################################################################## */
     /**
@@ -414,6 +375,7 @@ extension RVS_AutofillTextField {
                     _autoCompleteTable = UITableView(frame: tableFrame)
                     if let autoCompleteTable = _autoCompleteTable {
                         autoCompleteTable.dataSource = self
+                        autoCompleteTable.delegate = self
                         autoCompleteTable.backgroundColor = tableBackgroundColor
                         autoCompleteTable.rowHeight = Self._tableRowHeightInDisplayUnits
                         autoCompleteTable.layer.cornerRadius = Self._tableRoundedCornerInDisplayUnits
@@ -543,5 +505,17 @@ extension RVS_AutofillTextField: UITableViewDataSource {
         ret.textLabel?.text = _currentAutoFill[inIndexPath.row].value
         
         return ret
+    }
+}
+
+/* ###################################################################################################################################### */
+// MARK: UITableViewDelegate Conformance
+/* ###################################################################################################################################### */
+extension RVS_AutofillTextField: UITableViewDelegate {
+    public func tableView(_ inTableView: UITableView, didSelectRowAt inIndexPath: IndexPath) {
+        inTableView.deselectRow(at: inIndexPath, animated: true)
+        guard let textValue = tableView(inTableView, cellForRowAt: inIndexPath).textLabel?.text,
+              !textValue.isEmpty else { return }
+        text = textValue
     }
 }
