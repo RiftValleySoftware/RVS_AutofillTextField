@@ -23,6 +23,28 @@ import UIKit
 import RVS_GeneralObserver
 
 /* ###################################################################################################################################### */
+// MARK: - UIView Extension -
+/* ###################################################################################################################################### */
+/**
+ We can round the corners, and add auto-layout-prescribed views.
+ */
+extension UIView {
+    /* ################################################################## */
+    /**
+     This gives us access to the corner radius, so we can give the view rounded corners.
+     
+     > **NOTE:** This requires that `clipsToBounds` be set.
+     */
+    @IBInspectable var cornerRadius: CGFloat {
+        get { layer.cornerRadius }
+        set {
+            layer.cornerRadius = newValue
+            setNeedsDisplay()
+        }
+    }
+}
+
+/* ###################################################################################################################################### */
 /* ###################################################################################################################################### */
 /**
  
@@ -54,7 +76,7 @@ class RVS_AutofillTextField_Test_Harness_ViewController_TableCell: UITableViewCe
 /**
  
  */
-class RVS_AutofillTextField_Test_Harness_ViewController: UIViewController, RVS_GeneralObserverProtocol, RVS_AutofillTextFieldDataSource {
+class RVS_AutofillTextField_Test_Harness_ViewController: UIViewController, RVS_GeneralObserverProtocol {
     /* ################################################################## */
     /**
      */
@@ -62,11 +84,21 @@ class RVS_AutofillTextField_Test_Harness_ViewController: UIViewController, RVS_G
     
     /* ################################################################## */
     /**
-     This is an Array of structs, that are the searchable data collection for the text field.
-     If this is empty, then no searches will return any results.
+     This will contain the strings that we will use for comparison.
      */
-    var textDictionary: [RVS_AutofillTextFieldDataSourceType] = []
-
+    var currentTextDictionary: [String] = [ "How now, brown cow?",
+                                            "Mrs. O'Leary's Cow",
+                                            "Cow Harbor",
+                                            "cow harbor",
+                                            "COW HARBOR",
+                                            "Seacows are seals.",
+                                            "Today's cow is tomorrow's burger.",
+                                            "Today's COW is tomorrow's burger.",
+                                            "Holy COW",
+                                            "Holy cow",
+                                            "Holy cow, Batman!"
+    ]
+        
     /* ################################################################## */
     /**
      */
@@ -82,6 +114,7 @@ class RVS_AutofillTextField_Test_Harness_ViewController: UIViewController, RVS_G
      */
     override func viewDidLoad() {
         super.viewDidLoad()
+        autofillTextField?.dataSource = self
     }
     
     /* ################################################################## */
@@ -100,11 +133,27 @@ class RVS_AutofillTextField_Test_Harness_ViewController: UIViewController, RVS_G
 
 /* ###################################################################################################################################### */
 /* ###################################################################################################################################### */
+extension RVS_AutofillTextField_Test_Harness_ViewController: RVS_AutofillTextFieldDataSource {
+    /* ################################################################## */
+    /**
+     This is an Array of structs, that are the searchable data collection for the text field.
+     If this is empty, then no searches will return any results.
+     */
+    var textDictionary: [RVS_AutofillTextFieldDataSourceType] {
+        currentTextDictionary.compactMap {
+            let currentStr = $0.trimmingCharacters(in: .whitespacesAndNewlines)
+            return !currentStr.isEmpty ? RVS_AutofillTextFieldDataSourceType(value: currentStr) : nil
+        }
+    }
+}
+
+/* ###################################################################################################################################### */
+/* ###################################################################################################################################### */
 extension RVS_AutofillTextField_Test_Harness_ViewController: UITableViewDataSource {
     /* ################################################################## */
     /**
      */
-    func tableView(_ inTableView: UITableView, numberOfRowsInSection inSection: Int) -> Int { 100 }
+    func tableView(_ inTableView: UITableView, numberOfRowsInSection inSection: Int) -> Int { currentTextDictionary.count }
     
     /* ################################################################## */
     /**
@@ -112,7 +161,9 @@ extension RVS_AutofillTextField_Test_Harness_ViewController: UITableViewDataSour
     func tableView(_ inTableView: UITableView, cellForRowAt inIndexPath: IndexPath) -> UITableViewCell {
         if let ret = inTableView.dequeueReusableCell(withIdentifier: RVS_AutofillTextField_Test_Harness_ViewController_TableCell.textCellReuseID, for: inIndexPath) as? RVS_AutofillTextField_Test_Harness_ViewController_TableCell {
             ret.subscribe(self)
-            
+            if currentTextDictionary.count > inIndexPath.row {
+                ret.sampleTextField?.text = currentTextDictionary[inIndexPath.row]
+            }
             return ret
         } else {
             return UITableViewCell()

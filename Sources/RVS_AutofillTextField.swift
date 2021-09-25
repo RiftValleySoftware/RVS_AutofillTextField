@@ -25,23 +25,9 @@ import UIKit
 // MARK: - UIView Extension -
 /* ###################################################################################################################################### */
 /**
- We can round the corners, and add auto-layout-prescribed views.
+ We can add auto-layout-prescribed views.
  */
 extension UIView {
-    /* ################################################################## */
-    /**
-     This gives us access to the corner radius, so we can give the view rounded corners.
-     
-     > **NOTE:** This requires that `clipsToBounds` be set.
-     */
-    @IBInspectable var cornerRadius: CGFloat {
-        get { layer.cornerRadius }
-        set {
-            layer.cornerRadius = newValue
-            setNeedsDisplay()
-        }
-    }
-    
     /* ################################################################## */
     /**
      This allows us to add a subview, and set it up with auto-layout constraints to fill the superview.
@@ -246,19 +232,23 @@ extension RVS_AutofillTextFieldDataSource {
      */
     func getTextDictionaryFromThis(string inString: String, isCaseSensitive inIsCaseSensitive: Bool = false, isWildcardBefore inIsWildcardBefore: Bool = false, isWildcardAfter inIsWildcardAfter: Bool = true, maximumAutofillCount inMaximumAutofillCount: Int = 5) -> [RVS_AutofillTextFieldDataSourceType] {
         
+        let localTextDictionary = textDictionary
+        
+        guard !localTextDictionary.isEmpty else { return [] }
+        
         let ret: [RVS_AutofillTextFieldDataSourceType]
         
         if !inIsWildcardBefore,
            !inIsWildcardAfter {
-            ret = textDictionary[is: inString, isCaseSensitive: inIsCaseSensitive]
+            ret = localTextDictionary[is: inString, isCaseSensitive: inIsCaseSensitive]
         } else if inIsWildcardBefore,
                   !inIsWildcardAfter {
-            ret = textDictionary[endsWith: inString, isCaseSensitive: inIsCaseSensitive]
+            ret = localTextDictionary[endsWith: inString, isCaseSensitive: inIsCaseSensitive]
         } else if !inIsWildcardBefore,
                   inIsWildcardAfter {
-            ret = textDictionary[beginsWith: inString, isCaseSensitive: inIsCaseSensitive]
+            ret = localTextDictionary[beginsWith: inString, isCaseSensitive: inIsCaseSensitive]
         } else {
-            ret = textDictionary[contains: inString, isCaseSensitive: inIsCaseSensitive]
+            ret = localTextDictionary[contains: inString, isCaseSensitive: inIsCaseSensitive]
         }
         
         return [RVS_AutofillTextFieldDataSourceType](ret[0..<max(0, min(ret.count, inMaximumAutofillCount))])
@@ -317,6 +307,12 @@ open class RVS_AutofillTextField: UITextField {
      */
     @IBInspectable
     public var tableBackgroundColor: UIColor = .systemBackground.withAlphaComponent(RVS_AutofillTextField._tableBackgroundAlpha)
+
+    /* ################################################################## */
+    /**
+     This is the font to use. It must be set programmatically.
+     */
+    public var tableFont: UIFont = .systemFont(ofSize: 20)
 
     /* ################################################################## */
     /**
@@ -384,22 +380,52 @@ extension RVS_AutofillTextField {
      */
     private func _createAutoCompleteTable() {
         if let containerView = window?.rootViewController?.view {
+            let currentAutoFill = _currentAutoFill
             let maxTableHeight = CGFloat(maximumAutofillCount) * Self._tableRowHeightInDisplayUnits
             let maxTableWidth = max(bounds.size.width, minimumTableWidthInDisplayUnits)
-            let numberOfRows = CGFloat(_currentAutoFill.count)
+            let numberOfRows = CGFloat(currentAutoFill.count)
             let currentTableHeight = numberOfRows * Self._tableRowHeightInDisplayUnits
-            let aboveOrigin = convert(CGPoint(x: 0, y: -(Self._gapInDisplayUnitsBetweenTextItemAndTable + maxTableHeight)), to: containerView)
-            let belowOrigin = convert(CGPoint(x: 0, y: bounds.size.height + Self._gapInDisplayUnitsBetweenTextItemAndTable), to: containerView)
-            let tableWidth = min(containerView.bounds.width - belowOrigin.x, maxTableWidth)
-            let above = (belowOrigin.y + maxTableHeight) > containerView.bounds.size.height
-            let tableFrame = CGRect(origin: above ? aboveOrigin : belowOrigin, size: CGSize(width: tableWidth, height: currentTableHeight))
+            let tableOrigin = convert(CGPoint(x: 0, y: bounds.size.height + Self._gapInDisplayUnitsBetweenTextItemAndTable), to: containerView)
+            let tableWidth = min(containerView.bounds.width - (tableOrigin.x + Self._gapInDisplayUnitsBetweenTextItemAndTable), maxTableWidth)
+            let tableFrame = CGRect(origin: tableOrigin, size: CGSize(width: tableWidth, height: currentTableHeight))
             #if DEBUG
                 print("View bounds: \(containerView.bounds)")
                 print("Number of rows: \(numberOfRows)")
                 print("Maximum Table Height: \(maxTableHeight)")
-                print("Table Frame: \(tableFrame)")
-                print("Table will\(above ? " " : " not " )display above the text item.")
+                print("Current Table Frame: \(tableFrame)")
             #endif
+            
+            if !tableFrame.isEmpty {
+                #if DEBUG
+                    print("We have a table to be displayed.")
+                #endif
+                if nil == _autoCompleteTable {
+                    #if DEBUG
+                        print("One does not yet exist, so we will create it.")
+                    #endif
+                    _autoCompleteTable = UITableView(frame: tableFrame)
+                    _autoCompleteTable?.dataSource = self
+                    _autoCompleteTable?.backgroundColor = tableBackgroundColor
+                    _autoCompleteTable?.rowHeight = Self._tableRowHeightInDisplayUnits
+                    _autoCompleteTable?.layer.cornerRadius = Self._tableRoundedCornerInDisplayUnits
+                    _autoCompleteTable?.clipsToBounds = true
+                }
+                
+                if let autoCompleteTable = _autoCompleteTable {
+                    autoCompleteTable.frame = tableFrame
+                    autoCompleteTable.reloadData()
+                }
+            } else if let autoCompleteTable = _autoCompleteTable {
+                #if DEBUG
+                    print("We have a table to be removed.")
+                #endif
+                autoCompleteTable.removeFromSuperview()
+                _autoCompleteTable = nil
+            } else {
+                #if DEBUG
+                    print("We do not have a table, and we won't make one.")
+                #endif
+            }
         }
     }
 }
@@ -465,7 +491,8 @@ extension RVS_AutofillTextField: UITableViewDataSource {
      */
     public func tableView(_ inTableView: UITableView, cellForRowAt inIndexPath: IndexPath) -> UITableViewCell {
         let ret = UITableViewCell()
-        
+        ret.backgroundColor = .clear
+        ret.textLabel?.font = tableFont
         ret.textLabel?.text = _currentAutoFill[inIndexPath.row].value
         
         return ret
