@@ -157,6 +157,11 @@ class RVS_AutofillTextField_Test_Harness_ViewController: UIViewController, RVS_G
     /* ################################################################## */
     /**
      */
+    @IBOutlet weak var isCaseSensitiveCheckbox: RVS_Checkbox!
+
+    /* ################################################################## */
+    /**
+     */
     @IBOutlet weak var maximumResultCount: UITextField!
 }
 
@@ -171,6 +176,7 @@ extension RVS_AutofillTextField_Test_Harness_ViewController {
         autofillTextField?.dataSource = self
         autofillTextField?.isWildcardBefore = isWildcardBeforeCheckbox?.isOn ?? false
         autofillTextField?.isWildcardAfter = isWildcardAfterCheckbox?.isOn ?? false
+        autofillTextField?.isCaseSensitive = isCaseSensitiveCheckbox?.isOn ?? false
         autofillTextField?.maximumAutofillCount = Int(maximumResultCount?.text ?? "0") ?? 0
     }
     
@@ -235,6 +241,18 @@ extension RVS_AutofillTextField_Test_Harness_ViewController {
         } else {
             isWildcardBeforeCheckbox?.setOn(!(isWildcardBeforeCheckbox?.isOn ?? true), animated: true)
             isWildcardBeforeCheckbox?.sendActions(for: .valueChanged)
+        }
+    }
+
+    /* ################################################################## */
+    /**
+     */
+    @IBAction func caseSensitiveChanged(_ inSender: Any) {
+        if let sender = inSender as? RVS_Checkbox {
+            autofillTextField?.isCaseSensitive = sender.isOn
+        } else {
+            isCaseSensitiveCheckbox?.setOn(!(isCaseSensitiveCheckbox?.isOn ?? true), animated: true)
+            isCaseSensitiveCheckbox?.sendActions(for: .valueChanged)
         }
     }
 
