@@ -21,6 +21,7 @@
 		D43CCC222700A03E00131C62 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D4897EA026FD009E00555EB6 /* Assets.xcassets */; };
 		D43CCC232700A03E00131C62 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D4897E9D26FD009C00555EB6 /* Main.storyboard */; };
 		D43CCC262700A03E00131C62 /* RVS_AutofillTextField.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D43CCC0527009D0B00131C62 /* RVS_AutofillTextField.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D43CCC372700A3E600131C62 /* RVS-AutofillTextField in Frameworks */ = {isa = PBXBuildFile; productRef = D43CCC362700A3E600131C62 /* RVS-AutofillTextField */; };
 		D4897E9826FD009C00555EB6 /* RVS_AutofillTextField_Test_Harness_AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4897E9726FD009C00555EB6 /* RVS_AutofillTextField_Test_Harness_AppDelegate.swift */; };
 		D4897E9C26FD009C00555EB6 /* RVS_AutofillTextField_Test_Harness_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4897E9B26FD009C00555EB6 /* RVS_AutofillTextField_Test_Harness_ViewController.swift */; };
 		D4897E9F26FD009C00555EB6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D4897E9D26FD009C00555EB6 /* Main.storyboard */; };
@@ -98,6 +99,7 @@
 			files = (
 				D43CCC1D2700A03E00131C62 /* RVS_AutofillTextField.framework in Frameworks */,
 				D43CCC1E2700A03E00131C62 /* RVS-GeneralObserver in Frameworks */,
+				D43CCC372700A3E600131C62 /* RVS-AutofillTextField in Frameworks */,
 				D43CCC1F2700A03E00131C62 /* RVS-Checkbox in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -123,12 +125,20 @@
 			path = RVS_AutofillTextField;
 			sourceTree = "<group>";
 		};
+		D43CCC352700A3E600131C62 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		D4897E8B26FD009C00555EB6 = {
 			isa = PBXGroup;
 			children = (
 				D4E68A5D26FD101D002B6451 /* Sources */,
 				D491CC4126FD0D560005817A /* Tests */,
 				D4897E9526FD009C00555EB6 /* Products */,
+				D43CCC352700A3E600131C62 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -223,6 +233,8 @@
 			dependencies = (
 			);
 			name = RVS_AutofillTextField;
+			packageProductDependencies = (
+			);
 			productName = RVS_AutofillTextField;
 			productReference = D43CCC0527009D0B00131C62 /* RVS_AutofillTextField.framework */;
 			productType = "com.apple.product-type.framework";
@@ -246,6 +258,7 @@
 			packageProductDependencies = (
 				D43CCC152700A03E00131C62 /* RVS-GeneralObserver */,
 				D43CCC172700A03E00131C62 /* RVS-Checkbox */,
+				D43CCC362700A3E600131C62 /* RVS-AutofillTextField */,
 			);
 			productName = RVS_AutofillTextField;
 			productReference = D43CCC2A2700A03E00131C62 /* RVS_AutofillTextField_Test_Harness (SPM).app */;
@@ -305,6 +318,7 @@
 			packageReferences = (
 				D422DFA626FE253600D638EF /* XCRemoteSwiftPackageReference "RVS_GeneralObserver" */,
 				D40DF4DA26FFC2960054A0F5 /* XCRemoteSwiftPackageReference "RVS_Checkbox" */,
+				D43CCC322700A3D800131C62 /* XCRemoteSwiftPackageReference "RVS_AutofillTextField" */,
 			);
 			productRefGroup = D4897E9526FD009C00555EB6 /* Products */;
 			projectDirPath = "";
@@ -824,6 +838,14 @@
 				minimumVersion = 1.1.6;
 			};
 		};
+		D43CCC322700A3D800131C62 /* XCRemoteSwiftPackageReference "RVS_AutofillTextField" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RiftValleySoftware/RVS_AutofillTextField";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -846,6 +868,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D43CCC182700A03E00131C62 /* XCRemoteSwiftPackageReference "RVS_Checkbox" */;
 			productName = "RVS-Checkbox";
+		};
+		D43CCC362700A3E600131C62 /* RVS-AutofillTextField */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D43CCC322700A3D800131C62 /* XCRemoteSwiftPackageReference "RVS_AutofillTextField" */;
+			productName = "RVS-AutofillTextField";
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
