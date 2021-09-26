@@ -121,16 +121,19 @@ class RVS_AutofillTextField_Test_Harness_ViewController: UIViewController, RVS_G
                                             "Cow Harbor",
                                             "cow harbor",
                                             "COW HARBOR",
-                                            "Large horned ungulate",
+                                            "A Rhino is A Large Horned Ungulate.",
                                             "A rhino is not a cow, however.",
                                             "Neither is a steer.",
                                             "What about a bison?",
                                             "Seacows are seals.",
+                                            "Buffalo Buffalo Buffalo Buffalo Buffalo",
                                             "The quick brown fox jumped over the lazy dog.",
                                             "Today's cow is tomorrow's burger.",
                                             "Today's COW is tomorrow's burger.",
+                                            "WHOLLY COW",
                                             "Holy COW",
                                             "Holy cow",
+                                            "holly cow",
                                             "Holy cow, Batman!"
     ]
         
