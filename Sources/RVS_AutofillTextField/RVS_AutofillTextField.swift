@@ -219,17 +219,12 @@ extension RVS_AutofillTextField {
                         autoCompleteTable.clipsToBounds = true
                         autoCompleteTable.frame = CGRect(origin: autoCompleteTable.frame.origin, size: CGSize(width: autoCompleteTable.frame.size.width, height: 0))
                         containerView.addSubview(autoCompleteTable)
-                        autoCompleteTable.layoutIfNeeded()
-
-                        UIView.animate(withDuration: Self._animationDurationInSeconds, animations: {
-                            autoCompleteTable.frame = tableFrame
-                            autoCompleteTable.layoutIfNeeded()
-                        })
                     }
                 }
                 
                 if let autoCompleteTable = _autoCompleteTable {
                     if tableFrame != autoCompleteTable.frame {
+                        autoCompleteTable.layoutIfNeeded()
                         UIView.animate(withDuration: Self._animationDurationInSeconds, animations: {
                             autoCompleteTable.frame = tableFrame
                             autoCompleteTable.layoutIfNeeded()
