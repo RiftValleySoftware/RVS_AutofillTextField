@@ -22,25 +22,32 @@
 import UIKit
 
 /* ###################################################################################################################################### */
+// MARK: - Main Application Delegate -
 /* ###################################################################################################################################### */
 /**
- 
+ We don't do much, here. Just a framework for a simple, classic, UIKit app.
  */
 @main
 class RVS_AutofillTextField_Test_Harness_AppDelegate: UIResponder {
     /* ################################################################## */
     /**
+     This is required for the "classic" variety of UIKit app (`UIApplicationDelegate` Conformance)
      */
     var window: UIWindow?
 }
 
 /* ###################################################################################################################################### */
+// MARK: UIApplicationDelegate Conformance
 /* ###################################################################################################################################### */
 extension RVS_AutofillTextField_Test_Harness_AppDelegate: UIApplicationDelegate {
     /* ################################################################## */
     /**
+     Called when the application has set things up, and is about to launch.
+     - parameter: The application instance. Ignored.
+     - parameter didFinishLaunchingWithOptions: The launch options. Also ignored.
+     - returns: true, always.
      */
-    func application(_ inApplication: UIApplication, didFinishLaunchingWithOptions inLaunchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+    func application(_: UIApplication, didFinishLaunchingWithOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         return true
     }
 }

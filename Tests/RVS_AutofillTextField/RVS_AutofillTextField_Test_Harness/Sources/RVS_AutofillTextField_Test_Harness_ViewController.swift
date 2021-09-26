@@ -30,7 +30,7 @@ import RVS_AutofillTextField
 /**
  We can round the corners, and add auto-layout-prescribed views.
  */
-extension UIView {
+fileprivate extension UIView {
     /* ################################################################## */
     /**
      This gives us access to the corner radius, so we can give the view rounded corners.
@@ -47,40 +47,52 @@ extension UIView {
 }
 
 /* ###################################################################################################################################### */
+// MARK: - Custom Table Cell Class With Editable Display -
 /* ###################################################################################################################################### */
 /**
- 
+ We use a custom table cell view, so we can have the text be editable.
  */
 class RVS_AutofillTextField_Test_Harness_ViewController_TableCell: UITableViewCell, RVS_GeneralObservableProtocol {
     /* ################################################################## */
     /**
+     The reuse ID for this class.
      */
     static let textCellReuseID = "sample-text-cell"
     
     /* ################################################################## */
     /**
+     This is for `RVS_GeneralObservableProtocol` conformance. We never use it, ourselves.
      */
     var uuid: UUID = UUID()
     
     /* ################################################################## */
     /**
+     This is also for `RVS_GeneralObservableProtocol` conformance, but we do use this.
+     This is an Array that has all our subscribers listed.
      */
     var observers: [RVS_GeneralObserverProtocol] = []
     
     /* ################################################################## */
     /**
+     This will return the data Array/table row index that corresponds to this instance.
      */
     var index: Int = -1
     
     /* ################################################################## */
     /**
+     This is an editable text field, so we can change the sample text.
      */
     @IBOutlet var sampleTextField: UITextField!
 }
 
 /* ###################################################################################################################################### */
+// MARK: Base Class Overrides
 /* ###################################################################################################################################### */
 extension RVS_AutofillTextField_Test_Harness_ViewController_TableCell {
+    /* ################################################################## */
+    /**
+     Called when the layout happens. We use this to subscribe to the text field, for editing changes.
+     */
     override func layoutSubviews() {
         super.layoutSubviews()
         sampleTextField?.addTarget(self, action: #selector(_textHasChanged(_:)), for: .editingChanged)
@@ -88,8 +100,14 @@ extension RVS_AutofillTextField_Test_Harness_ViewController_TableCell {
 }
 
 /* ###################################################################################################################################### */
+// MARK: Callbacks
 /* ###################################################################################################################################### */
 extension RVS_AutofillTextField_Test_Harness_ViewController_TableCell {
+    /* ################################################################## */
+    /**
+     Called when text in the editable text field changes. We broadcast the new text to the observers.
+     - parameter inTextField: The text field that was changed.
+     */
     @objc private func _textHasChanged(_ inTextField: UITextField) {
         observers.forEach {
             if let observer = $0 as? RVS_AutofillTextField_Test_Harness_ViewController,
@@ -102,9 +120,10 @@ extension RVS_AutofillTextField_Test_Harness_ViewController_TableCell {
 }
 
 /* ###################################################################################################################################### */
+// MARK: - The Main Test Harness Screen View Controller -
 /* ###################################################################################################################################### */
 /**
- 
+ The test harness app is a very simple app, with only one screen. This screen presents a "dashboard" to test the edit text field.
  */
 class RVS_AutofillTextField_Test_Harness_ViewController: UIViewController, RVS_GeneralObserverProtocol {
     /* ################################################################## */
@@ -116,7 +135,7 @@ class RVS_AutofillTextField_Test_Harness_ViewController: UIViewController, RVS_G
     
     /* ################################################################## */
     /**
-     This will contain the strings that we will use for comparison.
+     This will contain the strings that we will use for comparison. They will be in the table, below the "dashboard."
      */
     var testingTextDictionary: [String] = [ "How now, brown cow?",
                                             "Mrs. O'Leary's Cow",
@@ -156,45 +175,54 @@ class RVS_AutofillTextField_Test_Harness_ViewController: UIViewController, RVS_G
         
     /* ################################################################## */
     /**
+     This is the CuT (Code Under Test). It is the test target instance of `RVS_AutofillTextField`.
      */
     @IBOutlet weak var autofillTextField: RVS_AutofillTextField!
     
     /* ################################################################## */
     /**
+     This is a table of editable text entities. It has the strings that appear in the dropdown.
      */
     @IBOutlet weak var sampleTable: UITableView!
     
     /* ################################################################## */
     /**
+     This checkbox is the main "circuit breaker." If it is off (default is on), then the text field will be just a text field.
      */
     @IBOutlet weak var isOnCheckbox: RVS_Checkbox!
-    
-    /* ################################################################## */
-    /**
-     */
-    @IBOutlet weak var isWildcardBeforeCheckbox: RVS_Checkbox!
 
     /* ################################################################## */
     /**
+     If this checkbox is on (default is on), then we will ignore non-matching characters after the match.
      */
     @IBOutlet weak var isWildcardAfterCheckbox: RVS_Checkbox!
     
     /* ################################################################## */
     /**
+     If this checkbox is on (default is off), then we will ignore non-matching characters leading up to the match.
+     */
+    @IBOutlet weak var isWildcardBeforeCheckbox: RVS_Checkbox!
+
+    /* ################################################################## */
+    /**
+     If this checkbox is on (default is off), then case and diacriticals will be counted in the match.
      */
     @IBOutlet weak var isCaseSensitiveCheckbox: RVS_Checkbox!
 
     /* ################################################################## */
     /**
+     This is the maximum number of results edit field. If set to -1, then we will display all possible matches in the dropdown.
      */
     @IBOutlet weak var maximumResultCount: UITextField!
 }
 
 /* ###################################################################################################################################### */
+// MARK: Base Class Overrides
 /* ###################################################################################################################################### */
 extension RVS_AutofillTextField_Test_Harness_ViewController {
     /* ################################################################## */
     /**
+     Called when the view hierarchy has been loded. We use this to synct the CuT with the UX.
      */
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -205,22 +233,10 @@ extension RVS_AutofillTextField_Test_Harness_ViewController {
         autofillTextField?.isCaseSensitive = isCaseSensitiveCheckbox?.isOn ?? false
         autofillTextField?.maximumAutofillCount = Int(maximumResultCount?.text ?? "0") ?? 0
     }
-    
-    /* ################################################################## */
-    /**
-     Called to close the keyboard.
-     
-     - parameter: ignored (can also be omitted)
-     */
-    @IBAction func closeKeyboard(_: Any! = nil) {
-        #if DEBUG
-            print("Closing the keyboard.")
-        #endif
-        autofillTextField?.resignFirstResponder()
-    }
 }
 
 /* ###################################################################################################################################### */
+// MARK: RVS_AutofillTextFieldDataSource Conformance
 /* ###################################################################################################################################### */
 extension RVS_AutofillTextField_Test_Harness_ViewController: RVS_AutofillTextFieldDataSource {
     /* ################################################################## */
@@ -237,17 +253,26 @@ extension RVS_AutofillTextField_Test_Harness_ViewController: RVS_AutofillTextFie
 }
 
 /* ###################################################################################################################################### */
+// MARK: Callbacks
 /* ###################################################################################################################################### */
 extension RVS_AutofillTextField_Test_Harness_ViewController {
     /* ################################################################## */
     /**
+     Called to close the keyboard.
+     
+     - parameter: ignored (can also be omitted)
      */
-    func textChanged(_ inText: String, row inRow: Int) {
-        testingTextDictionary[inRow] = inText
+    @IBAction func closeKeyboard(_: Any! = nil) {
+        #if DEBUG
+            print("Closing the keyboard.")
+        #endif
+        autofillTextField?.resignFirstResponder()
     }
     
     /* ################################################################## */
     /**
+     Called when either the checkbox changes state, or its associated label button is hit (toggles the value).
+     - parameter inSender: The instance that triggered this. It is either an instance of `RVS_Checkbox`, or UIButton (the label).
      */
     @IBAction func isOnChanged(_ inSender: Any) {
         if let sender = inSender as? RVS_Checkbox {
@@ -260,6 +285,8 @@ extension RVS_AutofillTextField_Test_Harness_ViewController {
     
     /* ################################################################## */
     /**
+     Called when either the checkbox changes state, or its associated label button is hit (toggles the value).
+     - parameter inSender: The instance that triggered this. It is either an instance of `RVS_Checkbox`, or UIButton (the label).
      */
     @IBAction func wildcardAfterChanged(_ inSender: Any) {
         if let sender = inSender as? RVS_Checkbox {
@@ -272,6 +299,8 @@ extension RVS_AutofillTextField_Test_Harness_ViewController {
 
     /* ################################################################## */
     /**
+     Called when either the checkbox changes state, or its associated label button is hit (toggles the value).
+     - parameter inSender: The instance that triggered this. It is either an instance of `RVS_Checkbox`, or UIButton (the label).
      */
     @IBAction func wildcardBeforeChanged(_ inSender: Any) {
         if let sender = inSender as? RVS_Checkbox {
@@ -284,6 +313,8 @@ extension RVS_AutofillTextField_Test_Harness_ViewController {
 
     /* ################################################################## */
     /**
+     Called when either the checkbox changes state, or its associated label button is hit (toggles the value).
+     - parameter inSender: The instance that triggered this. It is either an instance of `RVS_Checkbox`, or UIButton (the label).
      */
     @IBAction func caseSensitiveChanged(_ inSender: Any) {
         if let sender = inSender as? RVS_Checkbox {
@@ -296,22 +327,46 @@ extension RVS_AutofillTextField_Test_Harness_ViewController {
 
     /* ################################################################## */
     /**
+     Called when either the checkbox changes state, or its associated label button is hit (toggles the value).
+     - parameter inSender: The instance that triggered this. It is either an instance of `RVS_Checkbox`, or UIButton (the label).
      */
     @IBAction func maximumCountChanged(_ inSender: UITextField) {
         autofillTextField?.maximumAutofillCount = Int(inSender.text ?? "0") ?? 0
     }
+
+    /* ################################################################## */
+    /**
+     Called when text changes in one of the table rows. This is an observer callback, from the table rows.
+     
+     - parameter inText: The new text.
+     - parameter row: The 0-based row index of the changed text
+     */
+    func textChanged(_ inText: String, row inRow: Int) {
+        testingTextDictionary[inRow] = inText
+    }
 }
 
 /* ###################################################################################################################################### */
+// MARK: UITableViewDataSource Conformance
 /* ###################################################################################################################################### */
 extension RVS_AutofillTextField_Test_Harness_ViewController: UITableViewDataSource {
     /* ################################################################## */
     /**
+     This just tells the table how many rows to display.
+     
+     - parameter inTableView: The table view instance.
+     - parameter numberOfRowsInSection: The 0-based section index (always ignored).
+     - returns: The number of strings to display.
      */
-    func tableView(_ inTableView: UITableView, numberOfRowsInSection inSection: Int) -> Int { testingTextDictionary.count }
+    func tableView(_ inTableView: UITableView, numberOfRowsInSection: Int) -> Int { testingTextDictionary.count }
     
     /* ################################################################## */
     /**
+     This creates one row for our test string table.
+     
+     - parameter inTableView: The table view instance.
+     - parameter cellForRowAt: The 0-based cell index (section is ignored, and assumed to be 0).
+     - returns: A new table row instance.
      */
     func tableView(_ inTableView: UITableView, cellForRowAt inIndexPath: IndexPath) -> UITableViewCell {
         if let ret = inTableView.dequeueReusableCell(withIdentifier: RVS_AutofillTextField_Test_Harness_ViewController_TableCell.textCellReuseID, for: inIndexPath) as? RVS_AutofillTextField_Test_Harness_ViewController_TableCell {

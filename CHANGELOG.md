@@ -2,4 +2,6 @@
 
 ## 1.0.0
 
-- **TBD**
+- **September 26, 2021**
+
+- Initial release

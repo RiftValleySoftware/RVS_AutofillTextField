@@ -639,6 +639,7 @@ extension RVS_AutofillTextField: UITableViewDelegate {
         guard let textValue = tableView(inTableView, cellForRowAt: inIndexPath).textLabel?.text,
               !textValue.isEmpty else { return }
         text = textValue
+        sendActions(for: .editingChanged)
         closeTableViewAndResignFirstResponder()
     }
 }
