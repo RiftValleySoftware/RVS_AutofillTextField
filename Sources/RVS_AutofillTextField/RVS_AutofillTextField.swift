@@ -232,9 +232,8 @@ extension RVS_AutofillTextField {
                     }
                     autoCompleteTable.reloadData()
                 }
-            } else if let autoCompleteTable = _autoCompleteTable {
-                autoCompleteTable.removeFromSuperview()
-                _autoCompleteTable = nil
+            } else {
+                _closeTableView()
             }
         }
     }
