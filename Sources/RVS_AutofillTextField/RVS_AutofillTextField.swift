@@ -190,6 +190,7 @@ extension RVS_AutofillTextField {
     /**
      This will create a new instance of the display table, if it does not already exist.
      It may move the table, if it does exist, but the location should be changed.
+     The move/open is animated.
      */
     private func _createAutoCompleteTable() {
         guard isAutoFillOn,
@@ -222,16 +223,16 @@ extension RVS_AutofillTextField {
                     }
                 }
                 
-                if let autoCompleteTable = _autoCompleteTable {
-                    if tableFrame != autoCompleteTable.frame {
+                if let autoCompleteTable = _autoCompleteTable,
+                   tableFrame != autoCompleteTable.frame {
+                    autoCompleteTable.layoutIfNeeded()
+                    UIView.animate(withDuration: Self._animationDurationInSeconds, animations: {
+                        autoCompleteTable.frame = tableFrame
                         autoCompleteTable.layoutIfNeeded()
-                        UIView.animate(withDuration: Self._animationDurationInSeconds, animations: {
-                            autoCompleteTable.frame = tableFrame
-                            autoCompleteTable.layoutIfNeeded()
-                        })
-                    }
-                    autoCompleteTable.reloadData()
+                    })
                 }
+                
+                _autoCompleteTable?.reloadData()
             } else {
                 _closeTableView()
             }
