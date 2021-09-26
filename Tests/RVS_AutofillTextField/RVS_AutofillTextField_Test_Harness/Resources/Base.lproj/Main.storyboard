@@ -58,10 +58,11 @@
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xhF-hN-zjH">
                                         <rect key="frame" x="48" y="50" width="318" height="40"/>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="Is On" titleAlignment="leading">
-                                            <fontDescription key="titleFontDescription" type="system" pointSize="30"/>
-                                        </buttonConfiguration>
+                                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" title="Is On">
+                                            <color key="titleColor" name="Tint-6"/>
+                                        </state>
                                         <connections>
                                             <action selector="isOnChanged:" destination="BYZ-38-t0r" eventType="touchUpInside" id="0FX-FN-bbp"/>
                                         </connections>
@@ -84,10 +85,11 @@
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wQ1-al-QHm">
                                         <rect key="frame" x="48" y="98" width="318" height="40"/>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="Wildcard After" titleAlignment="leading">
-                                            <fontDescription key="titleFontDescription" type="system" pointSize="30"/>
-                                        </buttonConfiguration>
+                                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" title="Wildcard After">
+                                            <color key="titleColor" name="Tint-6"/>
+                                        </state>
                                         <connections>
                                             <action selector="wildcardAfterChanged:" destination="BYZ-38-t0r" eventType="touchUpInside" id="6I1-06-3Zg"/>
                                         </connections>
@@ -110,10 +112,11 @@
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tTv-mn-jE4">
                                         <rect key="frame" x="48" y="146" width="318" height="40"/>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="Wildcard Before" titleAlignment="leading">
-                                            <fontDescription key="titleFontDescription" type="system" pointSize="30"/>
-                                        </buttonConfiguration>
+                                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" title="Wildcard Before">
+                                            <color key="titleColor" name="Tint-6"/>
+                                        </state>
                                         <connections>
                                             <action selector="wildcardBeforeChanged:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Sdc-s3-jsb"/>
                                         </connections>
@@ -136,10 +139,11 @@
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eS4-GP-6kq">
                                         <rect key="frame" x="48" y="194" width="318" height="40"/>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="Case Sensitive" titleAlignment="leading">
-                                            <fontDescription key="titleFontDescription" type="system" pointSize="30"/>
-                                        </buttonConfiguration>
+                                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" title="Case Sensitive">
+                                            <color key="titleColor" name="Tint-6"/>
+                                        </state>
                                         <connections>
                                             <action selector="caseSensitiveChanged:" destination="BYZ-38-t0r" eventType="touchUpInside" id="4Gb-l9-gxR"/>
                                         </connections>
@@ -316,7 +320,7 @@
         </designable>
     </designables>
     <resources>
-        <image name="CenterImage" width="919" height="912"/>
+        <image name="CenterImage" width="920" height="913"/>
         <image name="background-gradient" width="1" height="1000"/>
         <namedColor name="Tint-6">
             <color red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

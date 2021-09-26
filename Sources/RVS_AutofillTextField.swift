@@ -508,11 +508,24 @@ extension RVS_AutofillTextField: UITableViewDataSource {
      */
     public func tableView(_ inTableView: UITableView, cellForRowAt inIndexPath: IndexPath) -> UITableViewCell {
         let ret = UITableViewCell()
-        ret.backgroundColor = .clear
-        ret.textLabel?.adjustsFontSizeToFitWidth = true
-        ret.textLabel?.minimumScaleFactor = 0.25
-        ret.textLabel?.font = tableFont
-        ret.textLabel?.text = _currentAutoFill[inIndexPath.row].value
+        if let text = text {
+            // What we do here, is pick out the matched text from the main string, and make the part that will be autofilled a bit more transparent, so that means we need to figure out what we've matched.
+            let searchableText = _currentAutoFill[inIndexPath.row].value
+            let options = String.CompareOptions(isCaseSensitive ? [.literal] : [.caseInsensitive, .diacriticInsensitive])
+            let focusedTextAttribute = [NSAttributedString.Key.foregroundColor: UIColor.label]
+            let unfocusedTextAttribute = [NSAttributedString.Key.foregroundColor: UIColor.label.withAlphaComponent(0.5)]
+            if let matchRange = searchableText.range(of: text, options: options) {
+                let unmatchRange = matchRange.upperBound..<searchableText.endIndex
+                let attributedText = NSMutableAttributedString(string: searchableText)
+                attributedText.setAttributes(focusedTextAttribute, range: NSRange(matchRange, in: searchableText))
+                attributedText.setAttributes(unfocusedTextAttribute, range: NSRange(unmatchRange, in: searchableText))
+                ret.backgroundColor = .clear
+                ret.textLabel?.adjustsFontSizeToFitWidth = true
+                ret.textLabel?.minimumScaleFactor = 0.25
+                ret.textLabel?.font = tableFont
+                ret.textLabel?.attributedText = attributedText
+            }
+        }
         
         return ret
     }
