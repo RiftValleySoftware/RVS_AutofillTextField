@@ -135,7 +135,7 @@ But we also have the traditional Text Field controls.
 
 The dropdown menu attaches to the main root screen view, so it "floats" above everything else. **It is not modal.** You can still access everything behind it.
 
-Also, the dropdown only appears when the widget has focus, and has text in it that matches the selections.
+Also, **the dropdown only appears when the widget has focus, and contains text that matches the selections**. Just giving it a list of strings is not enough to make the dropdown appear. It also has to have text in the field that  will trigger a match in one or more of the strings.
 
 ---
 
@@ -205,7 +205,7 @@ If you want to have a way to optimize or otherwise filter/interpret the data bei
 
 This is called by the widget repeatedly, with a String, containing the current text contents, and returns a filtered and searched Array of elements.
 
-You must implement at least one of the above methods. If you don't then you just have a normal `UITextField` instance.
+You must implement at least one of the above methods. If you don't, then you just have a normal `UITextField` instance.
 
 ### The Widget Options
 

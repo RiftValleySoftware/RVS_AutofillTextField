@@ -206,7 +206,7 @@
 
 <p>The dropdown menu attaches to the main root screen view, so it &ldquo;floats&rdquo; above everything else. <strong>It is not modal.</strong> You can still access everything behind it.</p>
 
-<p>Also, the dropdown only appears when the widget has focus, and has text in it that matches the selections.</p>
+<p>Also, <strong>the dropdown only appears when the widget has focus, and contains text that matches the selections</strong>. Just giving it a list of strings is not enough to make the dropdown appear. It also has to have text in the field that  will trigger a match in one or more of the strings.</p>
 
 <hr>
 <h3 id='setting-up-the-data-source' class='heading'>Setting Up the Data Source</h3>
@@ -270,7 +270,7 @@ var textDictionary: [RVS_AutofillTextFieldDataSourceType] {
 
 <p>This is called by the widget repeatedly, with a String, containing the current text contents, and returns a filtered and searched Array of elements.</p>
 
-<p>You must implement at least one of the above methods. If you don&rsquo;t then you just have a normal <code>UITextField</code> instance.</p>
+<p>You must implement at least one of the above methods. If you don&rsquo;t, then you just have a normal <code>UITextField</code> instance.</p>
 <h3 id='the-widget-options' class='heading'>The Widget Options</h3>
 
 <p>The widget has a few optional fields that are available via the storyboard (Figure 6).</p>
