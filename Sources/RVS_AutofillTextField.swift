@@ -402,7 +402,7 @@ extension RVS_AutofillTextField {
     private func _createAutoCompleteTable() {
         guard isAutoFillOn,
               0 < _currentAutoFill.count else {
-            closeTableView()
+            _closeTableView()
             return
         }
         
@@ -499,9 +499,21 @@ extension RVS_AutofillTextField {
     /**
      Called to close the table view.
      */
+    private func _closeTableView() {
+        _autoCompleteTable?.removeFromSuperview()
+        _autoCompleteTable = nil
+    }
+    
+    /* ################################################################## */
+    /**
+     Called to close the table view.
+     */
     public func closeTableView() {
         _autoCompleteTable?.removeFromSuperview()
         _autoCompleteTable = nil
+        if isFirstResponder {
+            resignFirstResponder()
+        }
     }
 }
 
@@ -525,7 +537,7 @@ extension RVS_AutofillTextField {
      */
     @discardableResult
     public override func resignFirstResponder() -> Bool {
-        closeTableView()
+        _closeTableView()
         return super.resignFirstResponder()
     }
     
@@ -536,7 +548,6 @@ extension RVS_AutofillTextField {
     public override func layoutSubviews() {
         super.layoutSubviews()
         addTarget(self, action: #selector(_textHasChanged(_:)), for: .editingChanged)
-        _createAutoCompleteTable()
     }
     
     /* ################################################################## */
@@ -544,7 +555,7 @@ extension RVS_AutofillTextField {
      Called when we are being removed from our superview. We remove the callback (just to be sure -belt and suspenders).
      */
     public override func removeFromSuperview() {
-        closeTableView()
+        _closeTableView()
         removeTarget(self, action: #selector(_textHasChanged(_:)), for: .editingChanged)
         super.removeFromSuperview()
     }
@@ -598,10 +609,14 @@ extension RVS_AutofillTextField: UITableViewDataSource {
 // MARK: UITableViewDelegate Conformance
 /* ###################################################################################################################################### */
 extension RVS_AutofillTextField: UITableViewDelegate {
+    /* ################################################################## */
+    /**
+     */
     public func tableView(_ inTableView: UITableView, didSelectRowAt inIndexPath: IndexPath) {
         inTableView.deselectRow(at: inIndexPath, animated: true)
         guard let textValue = tableView(inTableView, cellForRowAt: inIndexPath).textLabel?.text,
               !textValue.isEmpty else { return }
         text = textValue
+        closeTableView()
     }
 }

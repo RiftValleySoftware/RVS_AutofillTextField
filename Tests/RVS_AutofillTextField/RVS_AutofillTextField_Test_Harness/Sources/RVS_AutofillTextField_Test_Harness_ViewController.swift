@@ -125,6 +125,7 @@ class RVS_AutofillTextField_Test_Harness_ViewController: UIViewController, RVS_G
                                             "çow harbor",
                                             "çöé harbor",
                                             "COW HARBOR",
+                                            "Kow Harbour",
                                             "A Rhino is A Large Horned Ungulate.",
                                             "A rhino is not a cow, however.",
                                             "Neither is a steer.",
@@ -135,6 +136,13 @@ class RVS_AutofillTextField_Test_Harness_ViewController: UIViewController, RVS_G
                                             "The quick brown fox jumped over the lazy dog.",
                                             "Tomorrow's COW is yesterday's calf.",
                                             "Today's cow is tomorrow's burger.",
+                                            "oberman",
+                                            "öberman",
+                                            "Öberman",
+                                            "here's my resume",
+                                            "here's my résumé",
+                                            "MY RÉSUMÉ",
+                                            "Héré is my RÉSUMÉ. I høpe Ü like it.",
                                             "WHOLLY COW",
                                             "Holy COW",
                                             "Holy cow",
@@ -142,7 +150,7 @@ class RVS_AutofillTextField_Test_Harness_ViewController: UIViewController, RVS_G
                                             "holy çow",
                                             "holly kow",
                                             "Holy cow, Batman!",
-                                            "Gary Larsen's favorite critter."
+                                            "What is Gary Larsen's favorite critter?"
     ]
         
     /* ################################################################## */
