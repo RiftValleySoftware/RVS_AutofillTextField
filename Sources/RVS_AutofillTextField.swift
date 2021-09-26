@@ -282,6 +282,18 @@ open class RVS_AutofillTextField: UITextField {
     
     /* ################################################################## */
     /**
+     Text that is not selected will be more transparent.
+     */
+    private static let _unselectedTextAlpha: CGFloat = 0.5
+    
+    /* ################################################################## */
+    /**
+     This establishes a minimum scale factor for the text in the dropdown.
+     */
+    private static let _minimumScaleFactorForText: CGFloat = 0.25
+
+    /* ################################################################## */
+    /**
      The height of each table row.
      */
     private static let _tableRowHeightInDisplayUnits: CGFloat = 40
@@ -389,11 +401,16 @@ extension RVS_AutofillTextField {
     /* ################################################################## */
     /**
      This is the current response of what needs to be displayed in the autofill.
+     This also "cleans out" empty lines.
      */
     private var _currentAutoFill: [RVS_AutofillTextFieldDataSourceType] {
-        !(text?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true)
-            ? dataSource?.getTextDictionaryFromThis(string: text ?? "", isCaseSensitive: isCaseSensitive, isWildcardBefore: isWildcardBefore, isWildcardAfter: isWildcardAfter, maximumAutofillCount: maximumAutofillCount) ?? []
-            : []
+        var ret = [RVS_AutofillTextFieldDataSourceType]()
+        if let text = text,
+           !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            ret = dataSource?.getTextDictionaryFromThis(string: text, isCaseSensitive: isCaseSensitive, isWildcardBefore: isWildcardBefore, isWildcardAfter: isWildcardAfter, maximumAutofillCount: maximumAutofillCount) ?? []
+        }
+        
+        return ret.compactMap { !$0.value.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? $0 : nil }
     }
 }
 
@@ -566,12 +583,20 @@ extension RVS_AutofillTextField: UITableViewDataSource {
      */
     public func tableView(_ inTableView: UITableView, cellForRowAt inIndexPath: IndexPath) -> UITableViewCell {
         let ret = UITableViewCell()
+        
+        ret.backgroundColor = .clear
+        ret.textLabel?.adjustsFontSizeToFitWidth = true
+        ret.textLabel?.minimumScaleFactor = Self._minimumScaleFactorForText
+        ret.textLabel?.showsExpansionTextWhenTruncated = true
+        ret.textLabel?.lineBreakMode = .byTruncatingTail
+        ret.textLabel?.font = tableFont
+
         if let text = text {
             // What we do here, is pick out the matched text from the main string, and make the part that will be autofilled a bit more transparent, so that means we need to figure out what we've matched.
             let searchableText = _currentAutoFill[inIndexPath.row].value
             let options = String.CompareOptions(isCaseSensitive ? [.literal] : [.caseInsensitive, .diacriticInsensitive])
             let focusedTextAttribute = [NSAttributedString.Key.foregroundColor: tableTextColor]
-            let unfocusedTextAttribute = [NSAttributedString.Key.foregroundColor: tableTextColor.withAlphaComponent(0.5)]
+            let unfocusedTextAttribute = [NSAttributedString.Key.foregroundColor: tableTextColor.withAlphaComponent(Self._unselectedTextAlpha)]
             if let matchRange = searchableText.range(of: text, options: options) {
                 let unmatchRangeBefore = searchableText.startIndex..<matchRange.lowerBound
                 let unmatchRangeAfter = matchRange.upperBound..<searchableText.endIndex
@@ -579,10 +604,6 @@ extension RVS_AutofillTextField: UITableViewDataSource {
                 attributedText.setAttributes(focusedTextAttribute, range: NSRange(matchRange, in: searchableText))
                 attributedText.setAttributes(unfocusedTextAttribute, range: NSRange(unmatchRangeBefore, in: searchableText))
                 attributedText.setAttributes(unfocusedTextAttribute, range: NSRange(unmatchRangeAfter, in: searchableText))
-                ret.backgroundColor = .clear
-                ret.textLabel?.adjustsFontSizeToFitWidth = true
-                ret.textLabel?.minimumScaleFactor = 0.25
-                ret.textLabel?.font = tableFont
                 ret.textLabel?.attributedText = attributedText
             }
         }

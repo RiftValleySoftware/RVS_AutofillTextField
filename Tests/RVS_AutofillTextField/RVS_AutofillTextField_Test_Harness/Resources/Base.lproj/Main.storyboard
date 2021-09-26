@@ -160,7 +160,7 @@
                                             <action selector="maximumCountChanged:" destination="BYZ-38-t0r" eventType="editingChanged" id="O96-yJ-r8f"/>
                                         </connections>
                                     </textField>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Maximum Suggestions" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.25" translatesAutoresizingMaskIntoConstraints="NO" id="I49-2f-TcG">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Maximum Suggestions" textAlignment="natural" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.25" translatesAutoresizingMaskIntoConstraints="NO" id="I49-2f-TcG">
                                         <rect key="frame" x="96" y="244" width="270" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -320,7 +320,7 @@
         </designable>
     </designables>
     <resources>
-        <image name="CenterImage" width="920" height="913"/>
+        <image name="CenterImage" width="919" height="912"/>
         <image name="background-gradient" width="1" height="1000"/>
         <namedColor name="Tint-6">
             <color red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
