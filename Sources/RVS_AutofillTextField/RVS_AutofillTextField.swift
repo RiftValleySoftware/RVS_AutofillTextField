@@ -22,247 +22,8 @@
 import UIKit
 
 /* ###################################################################################################################################### */
-// MARK: - Fileprivate Array Extension, for Getting Values by Key -
-/* ###################################################################################################################################### */
-/**
- This Array extension adds some fairly basic subscript specializations, that allow the match testing to happen.
- */
-fileprivate extension Array where Element == RVS_AutofillTextFieldDataSourceType {
-    /* ################################################################## */
-    /**
-     This looks for a substring inside another string.
-     
-     This is a very "greedy" and simple search. It simply moves forward, through the text, until the first substring match, and returns the range of that substring.
-     
-     - parameter inSubString: This is the String to look for (needle).
-     - parameter inInThisString: This is the String to look inside (haystack).
-     - parameter isCaseSensitive: Default is false. If true, then the match needs to take case and diacriticals into account. If false, diacriticals are also ignored.
-     - returns: A String Index range (just one). May be nil or empty.
-     */
-    private static func _getRangeOf(_ inSubString: String, inThisString inInThisString: String, isCaseSensitive inIsCaseSensitive: Bool = false) -> Range<String.Index>? {
-        inInThisString.range(of: inSubString, options: String.CompareOptions(inIsCaseSensitive ? [.literal] : [.caseInsensitive, .diacriticInsensitive]))
-    }
-    
-    /* ################################################################## */
-    /**
-     This looks for an exact match. It can be case-blind (by default).
-     
-     - parameter is: This is the String to test against. The entire value must match, but can be case-blind.
-     - parameter isCaseSensitive: Default is false. If true, then the match needs to take case into account.
-     - returns: An Array of all elements that match.
-     */
-    subscript(is inKey: String, isCaseSensitive inIsCaseSensitive: Bool = false) -> [RVS_AutofillTextFieldDataSourceType] {
-        return compactMap {
-            let searchRange = Self._getRangeOf(inKey, inThisString: $0.value, isCaseSensitive: inIsCaseSensitive)
-            if !(searchRange?.isEmpty ?? true),
-               $0.value.startIndex == searchRange?.lowerBound,
-               $0.value.endIndex == searchRange?.upperBound {
-                return $0
-            }
-            
-            return nil
-        }
-    }
-    
-    /* ################################################################## */
-    /**
-     This looks for a string that is "wildcarded" in front, but ends with the exact String. It can be case-blind (by default).
-     
-     - parameter endsWith: This is the String to test against. The entire value must match (but can be preceded by other characters), but can be case-blind.
-     - parameter isCaseSensitive: Default is false. If true, then the match needs to take case into account.
-     - returns: An Array of all elements that match.
-     */
-    subscript(endsWith inKey: String, isCaseSensitive inIsCaseSensitive: Bool = false) -> [RVS_AutofillTextFieldDataSourceType] {
-        return compactMap {
-            let searchRange = Self._getRangeOf(inKey, inThisString: $0.value, isCaseSensitive: inIsCaseSensitive)
-            if !(searchRange?.isEmpty ?? true),
-               $0.value.endIndex == searchRange?.upperBound {
-                return $0
-            }
-            
-            return nil
-        }
-    }
-    
-    /* ################################################################## */
-    /**
-     This looks for a string that is "wildcarded" after, but begins with the exact String. It can be case-blind (by default).
-     
-     - parameter beginsWith: This is the String to test against. The entire value must match (but can be followed by other characters), but can be case-blind.
-     - parameter isCaseSensitive: Default is false. If true, then the match needs to take case into account.
-     - returns: An Array of all elements that match.
-     */
-    subscript(beginsWith inKey: String, isCaseSensitive inIsCaseSensitive: Bool = false) -> [RVS_AutofillTextFieldDataSourceType] {
-        return compactMap {
-            let searchRange = Self._getRangeOf(inKey, inThisString: $0.value, isCaseSensitive: inIsCaseSensitive)
-            if !(searchRange?.isEmpty ?? true),
-               $0.value.startIndex == searchRange?.lowerBound {
-                return $0
-            }
-            
-            return nil
-        }
-    }
-    
-    /* ################################################################## */
-    /**
-     This lsees if the element contains the exact String. It can be case-blind (by default).
-     
-     - parameter contains: This is the String to test against. The entire value must match (but can be preceded and followed by other characters), but can be case-blind.
-     - parameter isCaseSensitive: Default is false. If true, then the match needs to take case into account.
-     - returns: An Array of all elements that match.
-     */
-    subscript(contains inKey: String, isCaseSensitive inIsCaseSensitive: Bool = false) -> [RVS_AutofillTextFieldDataSourceType] {
-        return compactMap {
-            let searchRange = Self._getRangeOf(inKey, inThisString: $0.value, isCaseSensitive: inIsCaseSensitive)
-            if !(searchRange?.isEmpty ?? true) {
-                return $0
-            }
-            
-            return nil
-        }
-    }
-}
-
-/* ###################################################################################################################################### */
-// MARK: - One Element of the Data Source Array -
-/* ###################################################################################################################################### */
-/**
- This is what the protocol needs to provide to the widget.
- It is one element of an Array.
- The purpose of this type, is to allow data context to be attached to a value, and to allow the Array type to be extended.
- */
-public class RVS_AutofillTextFieldDataSourceType {
-    /* ################################################################## */
-    /**
-     The actual String value of this element. Comparisons will happen within this.
-     */
-    public let value: String
-
-    /* ################################################################## */
-    /**
-     This is an arbitrary associated data type. It can be anything, and will be associated with the String value. It should be noted that this will be a strong reference to classes.
-     */
-    public let refCon: Any?
-
-    /* ################################################################## */
-    /**
-     Standard initializer
-     
-     - parameter value: Required (and must be non-blank). The String value.
-     - parameter refCon: Optional (default is nil). This is an arbitrary data item that is associated with this instance. It should be noted that this will be a strong reference to classes.
-     */
-    public init(value inValue: String, refCon inRefCon: Any? = nil) {
-        precondition(!inValue.isEmpty, "Value Must Be Non-Blank!")
-        value = inValue
-        refCon = inRefCon
-    }
-}
-
-/* ###################################################################################################################################### */
-// MARK: Equatable Conformance
-/* ###################################################################################################################################### */
-extension RVS_AutofillTextFieldDataSourceType: Equatable {
-    /* ################################################################## */
-    /**
-     Equality tester
-     - parameter lhs: Left-hand side of the comparison.
-     - parameter rhs: Right-hand side of the comparison.
-     - returns: True, if the the two parameters are equal.
-     */
-    public static func == (lhs: RVS_AutofillTextFieldDataSourceType, rhs: RVS_AutofillTextFieldDataSourceType) -> Bool { lhs.value == rhs.value }
-}
-
-/* ###################################################################################################################################### */
-// MARK: Comparable Conformance
-/* ###################################################################################################################################### */
-extension RVS_AutofillTextFieldDataSourceType: Comparable {
-    /* ################################################################## */
-    /**
-     Comparison tester
-     - parameter lhs: Left-hand side of the comparison.
-     - parameter rhs: Right-hand side of the comparison.
-     - returns: True, if the lhs is less than rhs
-     */
-    public static func < (lhs: RVS_AutofillTextFieldDataSourceType, rhs: RVS_AutofillTextFieldDataSourceType) -> Bool { lhs.value < rhs.value }
-}
-
-/* ###################################################################################################################################### */
-// MARK: - Data Source Protocol -
-/* ###################################################################################################################################### */
-/**
- The text field class will require an instance of a class that conforms to this protocol. It will supply the data to be displayed in the autofill table.
- If the data source does not supply any data, then the text field acts just like any other text field.
- */
-public protocol RVS_AutofillTextFieldDataSource {
-    /* ################################################################## */
-    /**
-     This is an Array of structs, that are the searchable data collection for the text field.
-     You can leave this undefined in your conformance, as the `getTextDictionaryFromThis` method is all that is necessary to supply the searchable Array.
-     If you are using the default implementation of `getTextDictionaryFromThis`, then you **MUST** provide your own version of this Array.
-     However, if you do leave this undefined, then you **MUST** implement your own version of `getTextDictionaryFromThis`.
-     If this is not implemented, or is empty, and there is no custom implementation of `getTextDictionaryFromThis`, then no searches will return any results.
-     */
-    var textDictionary: [RVS_AutofillTextFieldDataSourceType] { get }
-    
-    /* ################################################################## */
-    /**
-     This searches the Array, for strings that match the given String, according to the parameters included with the invocation.
-     If you do leave `textDictionary` undefined, then you **MUST** implement your own version of this method.
-     The protocol default does a rather naive comparison that is likely to be sufficient for most purposes (which requires that you implement `textDictionary`).
-     - parameter string: The String to search for
-     - parameter isCaseSensitive: False, by default. If true, the String must match case, as well as content.
-     - parameter isWildcardBefore: False, by default. If true, then the String can be preceded by other characters. If false, the given String must start the value being tested.
-     - parameter isWildcardAfter: True, by default. If true, then the String can be followed by other characters. If false, the given String must end the value being tested.
-     - parameter maximumAutofillCount: 5, by default. This is the maximum number of results to return. The return can contain fewer elements. If -1, then there is no limit.
-     - returns: An Array of elements that conform to the `RVS_AutofillTextFieldDataSourceType` protocol.
-     */
-    func getTextDictionaryFromThis(string: String, isCaseSensitive: Bool, isWildcardBefore: Bool, isWildcardAfter: Bool, maximumAutofillCount: Int) -> [RVS_AutofillTextFieldDataSourceType]
-}
-
-/* ###################################################################################################################################### */
-// MARK: Defaults
-/* ###################################################################################################################################### */
-extension RVS_AutofillTextFieldDataSource {
-    /* ################################################################## */
-    /**
-     Default is an empty Array.
-     If you are using the default implementation of `getTextDictionaryFromThis`, then you **MUST** provide your own version of this Array.
-     */
-    public var textDictionary: [RVS_AutofillTextFieldDataSourceType] { [] }
-    
-    /* ################################################################## */
-    /**
-     Default uses the Array extension subscripts to search the Array.
-     If you do leave `textDictionary` undefined, then you **MUST** implement your own version of this method.
-     */
-    public func getTextDictionaryFromThis(string inString: String, isCaseSensitive inIsCaseSensitive: Bool, isWildcardBefore inIsWildcardBefore: Bool, isWildcardAfter inIsWildcardAfter: Bool, maximumAutofillCount inMaximumAutofillCount: Int) -> [RVS_AutofillTextFieldDataSourceType] {
-        
-        let localTextDictionary = textDictionary
-        
-        guard !localTextDictionary.isEmpty else { return [] }
-        
-        let ret: [RVS_AutofillTextFieldDataSourceType]
-        
-        if !inIsWildcardBefore,
-           !inIsWildcardAfter {
-            ret = localTextDictionary[is: inString, isCaseSensitive: inIsCaseSensitive]
-        } else if inIsWildcardBefore,
-                  !inIsWildcardAfter {
-            ret = localTextDictionary[endsWith: inString, isCaseSensitive: inIsCaseSensitive]
-        } else if !inIsWildcardBefore,
-                  inIsWildcardAfter {
-            ret = localTextDictionary[beginsWith: inString, isCaseSensitive: inIsCaseSensitive]
-        } else {
-            ret = localTextDictionary[contains: inString, isCaseSensitive: inIsCaseSensitive]
-        }
-        
-        return [RVS_AutofillTextFieldDataSourceType](ret[0..<max(0, min(ret.count, 0 <= inMaximumAutofillCount ? inMaximumAutofillCount : ret.count))])
-    }
-}
-
-/* ###################################################################################################################################### */
-// MARK: - Special Text Field Class That Displays An AutoComplete Table, As You Type -
+// MARK: - Main Class
+// MARK: Special Text Field Class That Displays An AutoComplete Table, As You Type -
 /* ###################################################################################################################################### */
 /**
  This class overloads the standard UITextField widget to provide a realtime "dropdown" menu of possible autocomplete choices (in a table and modal-style screen).
@@ -641,5 +402,249 @@ extension RVS_AutofillTextField: UITableViewDelegate {
         text = textValue
         sendActions(for: .editingChanged)
         closeTableViewAndResignFirstResponder()
+    }
+}
+
+/* ###################################################################################################################################### */
+// MARK: - Data Type
+// MARK: One Element of the Data Source Array -
+/* ###################################################################################################################################### */
+/**
+ This is what the protocol needs to provide to the widget.
+ It is one element of an Array.
+ The purpose of this type, is to allow data context to be attached to a value, and to allow the Array type to be extended.
+ */
+public class RVS_AutofillTextFieldDataSourceType {
+    /* ################################################################## */
+    /**
+     The actual String value of this element. Comparisons will happen within this.
+     */
+    public let value: String
+
+    /* ################################################################## */
+    /**
+     This is an arbitrary associated data type. It can be anything, and will be associated with the String value. It should be noted that this will be a strong reference to classes.
+     */
+    public let refCon: Any?
+
+    /* ################################################################## */
+    /**
+     Standard initializer
+     
+     - parameter value: Required (and must be non-blank). The String value.
+     - parameter refCon: Optional (default is nil). This is an arbitrary data item that is associated with this instance. It should be noted that this will be a strong reference to classes.
+     */
+    public init(value inValue: String, refCon inRefCon: Any? = nil) {
+        precondition(!inValue.isEmpty, "Value Must Be Non-Blank!")
+        value = inValue
+        refCon = inRefCon
+    }
+}
+
+/* ###################################################################################################################################### */
+// MARK: Equatable Conformance
+/* ###################################################################################################################################### */
+extension RVS_AutofillTextFieldDataSourceType: Equatable {
+    /* ################################################################## */
+    /**
+     Equality tester
+     - parameter lhs: Left-hand side of the comparison.
+     - parameter rhs: Right-hand side of the comparison.
+     - returns: True, if the the two parameters are equal.
+     */
+    public static func == (lhs: RVS_AutofillTextFieldDataSourceType, rhs: RVS_AutofillTextFieldDataSourceType) -> Bool { lhs.value == rhs.value }
+}
+
+/* ###################################################################################################################################### */
+// MARK: Comparable Conformance
+/* ###################################################################################################################################### */
+extension RVS_AutofillTextFieldDataSourceType: Comparable {
+    /* ################################################################## */
+    /**
+     Comparison tester
+     - parameter lhs: Left-hand side of the comparison.
+     - parameter rhs: Right-hand side of the comparison.
+     - returns: True, if the lhs is less than rhs
+     */
+    public static func < (lhs: RVS_AutofillTextFieldDataSourceType, rhs: RVS_AutofillTextFieldDataSourceType) -> Bool { lhs.value < rhs.value }
+}
+
+/* ###################################################################################################################################### */
+// MARK: - Published Protocol
+// MARK: Data Source Protocol -
+/* ###################################################################################################################################### */
+/**
+ The text field class will require that it be connected to a data source, which is an instance of a class, struct, or enum that conforms to this protocol. It will supply the data to be displayed in the autofill table.
+ If the data source does not supply any data, then the text field acts just like any other text field.
+ */
+public protocol RVS_AutofillTextFieldDataSource {
+    /* ################################################################## */
+    /**
+     This is an Array of structs, that are the searchable data collection for the text field.
+     You can leave this undefined in your conformance, as the `getTextDictionaryFromThis` method is all that is necessary to supply the searchable Array.
+     If you are using the default implementation of `getTextDictionaryFromThis`, then you **MUST** provide your own version of this Array.
+     However, if you do leave this undefined, then you **MUST** implement your own version of `getTextDictionaryFromThis`.
+     If this is not implemented, or is empty, and there is no custom implementation of `getTextDictionaryFromThis`, then no searches will return any results.
+     */
+    var textDictionary: [RVS_AutofillTextFieldDataSourceType] { get }
+    
+    /* ################################################################## */
+    /**
+     This searches the Array, for strings that match the given String, according to the parameters included with the invocation.
+     If you do leave `textDictionary` undefined, then you **MUST** implement your own version of this method.
+     The protocol default does a rather naive comparison that is likely to be sufficient for most purposes (which requires that you implement `textDictionary`).
+     - parameter string: The String to search for
+     - parameter isCaseSensitive: False, by default. If true, the String must match case, as well as content.
+     - parameter isWildcardBefore: False, by default. If true, then the String can be preceded by other characters. If false, the given String must start the value being tested.
+     - parameter isWildcardAfter: True, by default. If true, then the String can be followed by other characters. If false, the given String must end the value being tested.
+     - parameter maximumAutofillCount: 5, by default. This is the maximum number of results to return. The return can contain fewer elements. If -1, then there is no limit.
+     - returns: An Array of elements that conform to the `RVS_AutofillTextFieldDataSourceType` protocol.
+     */
+    func getTextDictionaryFromThis(string: String, isCaseSensitive: Bool, isWildcardBefore: Bool, isWildcardAfter: Bool, maximumAutofillCount: Int) -> [RVS_AutofillTextFieldDataSourceType]
+}
+
+/* ###################################################################################################################################### */
+// MARK: Defaults
+/* ###################################################################################################################################### */
+extension RVS_AutofillTextFieldDataSource {
+    /* ################################################################## */
+    /**
+     Default is an empty Array.
+     If you are using the default implementation of `getTextDictionaryFromThis`, then you **MUST** provide your own version of this Array.
+     */
+    public var textDictionary: [RVS_AutofillTextFieldDataSourceType] { [] }
+    
+    /* ################################################################## */
+    /**
+     Default uses the Array extension subscripts to search the Array.
+     If you do leave `textDictionary` undefined, then you **MUST** implement your own version of this method.
+     */
+    public func getTextDictionaryFromThis(string inString: String, isCaseSensitive inIsCaseSensitive: Bool, isWildcardBefore inIsWildcardBefore: Bool, isWildcardAfter inIsWildcardAfter: Bool, maximumAutofillCount inMaximumAutofillCount: Int) -> [RVS_AutofillTextFieldDataSourceType] {
+        
+        let localTextDictionary = textDictionary
+        
+        guard !localTextDictionary.isEmpty else { return [] }
+        
+        let ret: [RVS_AutofillTextFieldDataSourceType]
+        
+        if !inIsWildcardBefore,
+           !inIsWildcardAfter {
+            ret = localTextDictionary[is: inString, isCaseSensitive: inIsCaseSensitive]
+        } else if inIsWildcardBefore,
+                  !inIsWildcardAfter {
+            ret = localTextDictionary[endsWith: inString, isCaseSensitive: inIsCaseSensitive]
+        } else if !inIsWildcardBefore,
+                  inIsWildcardAfter {
+            ret = localTextDictionary[beginsWith: inString, isCaseSensitive: inIsCaseSensitive]
+        } else {
+            ret = localTextDictionary[contains: inString, isCaseSensitive: inIsCaseSensitive]
+        }
+        
+        return [RVS_AutofillTextFieldDataSourceType](ret[0..<max(0, min(ret.count, 0 <= inMaximumAutofillCount ? inMaximumAutofillCount : ret.count))])
+    }
+}
+
+/* ###################################################################################################################################### */
+// MARK: - ##############################################################################
+// MARK: Internal Use Only
+// MARK: Fileprivate Array Extension, for Getting Values by Key -
+/* ###################################################################################################################################### */
+/**
+ This Array extension adds some fairly basic subscript specializations, that allow the match testing to happen.
+ */
+fileprivate extension Array where Element == RVS_AutofillTextFieldDataSourceType {
+    /* ################################################################## */
+    /**
+     This looks for a substring inside another string.
+     
+     This is a very "greedy" and simple search. It simply moves forward, through the text, until the first substring match, and returns the range of that substring.
+     
+     - parameter inSubString: This is the String to look for (needle).
+     - parameter inInThisString: This is the String to look inside (haystack).
+     - parameter isCaseSensitive: Default is false. If true, then the match needs to take case and diacriticals into account. If false, diacriticals are also ignored.
+     - returns: A String Index range (just one). May be nil or empty.
+     */
+    private static func _getRangeOf(_ inSubString: String, inThisString inInThisString: String, isCaseSensitive inIsCaseSensitive: Bool = false) -> Range<String.Index>? {
+        inInThisString.range(of: inSubString, options: String.CompareOptions(inIsCaseSensitive ? [.literal] : [.caseInsensitive, .diacriticInsensitive]))
+    }
+    
+    /* ################################################################## */
+    /**
+     This looks for an exact match. It can be case-blind (by default).
+     
+     - parameter is: This is the String to test against. The entire value must match, but can be case-blind.
+     - parameter isCaseSensitive: Default is false. If true, then the match needs to take case into account.
+     - returns: An Array of all elements that match.
+     */
+    subscript(is inKey: String, isCaseSensitive inIsCaseSensitive: Bool = false) -> [RVS_AutofillTextFieldDataSourceType] {
+        return compactMap {
+            let searchRange = Self._getRangeOf(inKey, inThisString: $0.value, isCaseSensitive: inIsCaseSensitive)
+            if !(searchRange?.isEmpty ?? true),
+               $0.value.startIndex == searchRange?.lowerBound,
+               $0.value.endIndex == searchRange?.upperBound {
+                return $0
+            }
+            
+            return nil
+        }
+    }
+    
+    /* ################################################################## */
+    /**
+     This looks for a string that is "wildcarded" in front, but ends with the exact String. It can be case-blind (by default).
+     
+     - parameter endsWith: This is the String to test against. The entire value must match (but can be preceded by other characters), but can be case-blind.
+     - parameter isCaseSensitive: Default is false. If true, then the match needs to take case into account.
+     - returns: An Array of all elements that match.
+     */
+    subscript(endsWith inKey: String, isCaseSensitive inIsCaseSensitive: Bool = false) -> [RVS_AutofillTextFieldDataSourceType] {
+        return compactMap {
+            let searchRange = Self._getRangeOf(inKey, inThisString: $0.value, isCaseSensitive: inIsCaseSensitive)
+            if !(searchRange?.isEmpty ?? true),
+               $0.value.endIndex == searchRange?.upperBound {
+                return $0
+            }
+            
+            return nil
+        }
+    }
+    
+    /* ################################################################## */
+    /**
+     This looks for a string that is "wildcarded" after, but begins with the exact String. It can be case-blind (by default).
+     
+     - parameter beginsWith: This is the String to test against. The entire value must match (but can be followed by other characters), but can be case-blind.
+     - parameter isCaseSensitive: Default is false. If true, then the match needs to take case into account.
+     - returns: An Array of all elements that match.
+     */
+    subscript(beginsWith inKey: String, isCaseSensitive inIsCaseSensitive: Bool = false) -> [RVS_AutofillTextFieldDataSourceType] {
+        return compactMap {
+            let searchRange = Self._getRangeOf(inKey, inThisString: $0.value, isCaseSensitive: inIsCaseSensitive)
+            if !(searchRange?.isEmpty ?? true),
+               $0.value.startIndex == searchRange?.lowerBound {
+                return $0
+            }
+            
+            return nil
+        }
+    }
+    
+    /* ################################################################## */
+    /**
+     This lsees if the element contains the exact String. It can be case-blind (by default).
+     
+     - parameter contains: This is the String to test against. The entire value must match (but can be preceded and followed by other characters), but can be case-blind.
+     - parameter isCaseSensitive: Default is false. If true, then the match needs to take case into account.
+     - returns: An Array of all elements that match.
+     */
+    subscript(contains inKey: String, isCaseSensitive inIsCaseSensitive: Bool = false) -> [RVS_AutofillTextFieldDataSourceType] {
+        return compactMap {
+            let searchRange = Self._getRangeOf(inKey, inThisString: $0.value, isCaseSensitive: inIsCaseSensitive)
+            if !(searchRange?.isEmpty ?? true) {
+                return $0
+            }
+            
+            return nil
+        }
     }
 }
