@@ -19,7 +19,7 @@ This is a standard [`UITextField`](https://developer.apple.com/documentation/uik
 
 *Figure 1: The Widget's Standard Display, with a "Begins With" Action*
 
-This is, by default, a simple, "one-way," "greedy" match. It starts from the beginning, then moves forward, matching the characters entered into the text field. They must all match, but the match can be case/diacritical-independednt (by default).
+This is, by default, a simple, "one-way," "greedy" match. It starts from the beginning, then moves forward, matching the characters entered into the text field. They must all match, but the match can be case/diacritical-independent (by default).
 
 We can choose several modes of matching, so we can "wildcard" text before and/or after the string (or insist on an exact match).
 
