@@ -320,6 +320,13 @@ open class RVS_AutofillTextField: UITextField {
 
     /* ################################################################## */
     /**
+     This is the text color to use in the table. Default is label color.
+     */
+    @IBInspectable
+    public var tableTextColor: UIColor = .label
+
+    /* ################################################################## */
+    /**
      The minimum width of the table. It will be at least this wide, and will follow the width of the edit text item, if it is bigger.
      It will also never go beyond the trailing edge of the screen.
      */
@@ -407,28 +414,15 @@ extension RVS_AutofillTextField {
         }
         
         if let containerView = window?.rootViewController?.view {
-            let maxTableHeight = CGFloat(maximumAutofillCount) * Self._tableRowHeightInDisplayUnits
             let maxTableWidth = max(bounds.size.width, minimumTableWidthInDisplayUnits)
             let numberOfRows = CGFloat(_currentAutoFill.count)
             let currentTableHeight = numberOfRows * Self._tableRowHeightInDisplayUnits
             let tableOrigin = convert(CGPoint(x: 0, y: bounds.size.height + Self._gapInDisplayUnitsBetweenTextItemAndTable), to: containerView)
             let tableWidth = min(containerView.bounds.width - (tableOrigin.x + Self._gapInDisplayUnitsBetweenTextItemAndTable), maxTableWidth)
             let tableFrame = CGRect(origin: tableOrigin, size: CGSize(width: tableWidth, height: currentTableHeight))
-            #if DEBUG
-                print("View bounds: \(containerView.bounds)")
-                print("Number of rows: \(numberOfRows)")
-                print("Maximum Table Height: \(maxTableHeight)")
-                print("Current Table Frame: \(tableFrame)")
-            #endif
             
             if !tableFrame.isEmpty {
-                #if DEBUG
-                    print("We have a table to be displayed.")
-                #endif
                 if nil == _autoCompleteTable {
-                    #if DEBUG
-                        print("One does not yet exist, so we will create it.")
-                    #endif
                     _autoCompleteTable = UITableView(frame: tableFrame)
                     if let autoCompleteTable = _autoCompleteTable {
                         autoCompleteTable.dataSource = self
@@ -458,15 +452,8 @@ extension RVS_AutofillTextField {
                     autoCompleteTable.reloadData()
                 }
             } else if let autoCompleteTable = _autoCompleteTable {
-                #if DEBUG
-                    print("We have a table to be removed.")
-                #endif
                 autoCompleteTable.removeFromSuperview()
                 _autoCompleteTable = nil
-            } else {
-                #if DEBUG
-                    print("We do not have a table, and we won't make one.")
-                #endif
             }
         }
     }
@@ -483,10 +470,6 @@ extension RVS_AutofillTextField {
      - parameter inTextField: The text field (us).
      */
     @objc private func _textHasChanged(_ inTextField: UITextField) {
-        #if DEBUG
-            print("Text Field Changed: \(String(describing: inTextField.text))")
-        #endif
-        
         _createAutoCompleteTable()
     }
 }
@@ -497,7 +480,7 @@ extension RVS_AutofillTextField {
 extension RVS_AutofillTextField {
     /* ################################################################## */
     /**
-     Called to close the table view.
+     Called to close the table view, and nothing more.
      */
     private func _closeTableView() {
         _autoCompleteTable?.removeFromSuperview()
@@ -506,11 +489,10 @@ extension RVS_AutofillTextField {
     
     /* ################################################################## */
     /**
-     Called to close the table view.
+     Called to close the table view, and, possibly, resign as first responder.
      */
-    public func closeTableView() {
-        _autoCompleteTable?.removeFromSuperview()
-        _autoCompleteTable = nil
+    public func closeTableViewAndResignFirstResponder() {
+        _closeTableView()
         if isFirstResponder {
             resignFirstResponder()
         }
@@ -577,6 +559,10 @@ extension RVS_AutofillTextField: UITableViewDataSource {
     /* ################################################################## */
     /**
      This returns one cell of the table, with the specific autofill suggestion.
+     
+     - parameter inTableView: The table view.
+     - parameter cellForRowAt: The index of the cell to be returned (section will always be 0).
+     - returns: A new, simple, default cell, with an attributed text content.
      */
     public func tableView(_ inTableView: UITableView, cellForRowAt inIndexPath: IndexPath) -> UITableViewCell {
         let ret = UITableViewCell()
@@ -584,8 +570,8 @@ extension RVS_AutofillTextField: UITableViewDataSource {
             // What we do here, is pick out the matched text from the main string, and make the part that will be autofilled a bit more transparent, so that means we need to figure out what we've matched.
             let searchableText = _currentAutoFill[inIndexPath.row].value
             let options = String.CompareOptions(isCaseSensitive ? [.literal] : [.caseInsensitive, .diacriticInsensitive])
-            let focusedTextAttribute = [NSAttributedString.Key.foregroundColor: UIColor.label]
-            let unfocusedTextAttribute = [NSAttributedString.Key.foregroundColor: UIColor.label.withAlphaComponent(0.5)]
+            let focusedTextAttribute = [NSAttributedString.Key.foregroundColor: tableTextColor]
+            let unfocusedTextAttribute = [NSAttributedString.Key.foregroundColor: tableTextColor.withAlphaComponent(0.5)]
             if let matchRange = searchableText.range(of: text, options: options) {
                 let unmatchRangeBefore = searchableText.startIndex..<matchRange.lowerBound
                 let unmatchRangeAfter = matchRange.upperBound..<searchableText.endIndex
@@ -611,12 +597,16 @@ extension RVS_AutofillTextField: UITableViewDataSource {
 extension RVS_AutofillTextField: UITableViewDelegate {
     /* ################################################################## */
     /**
+     This reacts to the user selecting a suggested text item.
+     It sets the edit field text to the selected text, and closes the table.
+     - parameter inTableView: The table view.
+     - parameter didSelectRowAt: The index of the selected row,
      */
     public func tableView(_ inTableView: UITableView, didSelectRowAt inIndexPath: IndexPath) {
         inTableView.deselectRow(at: inIndexPath, animated: true)
         guard let textValue = tableView(inTableView, cellForRowAt: inIndexPath).textLabel?.text,
               !textValue.isEmpty else { return }
         text = textValue
-        closeTableView()
+        closeTableViewAndResignFirstResponder()
     }
 }
