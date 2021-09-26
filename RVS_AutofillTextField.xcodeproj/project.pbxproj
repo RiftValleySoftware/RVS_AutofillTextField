@@ -46,6 +46,7 @@
 /* Begin PBXFileReference section */
 		D43CCC0527009D0B00131C62 /* RVS_AutofillTextField.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RVS_AutofillTextField.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D43CCC2D2700A13000131C62 /* RVS_AutofillTextField_Test_Harness (Framework)-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = "RVS_AutofillTextField_Test_Harness (Framework)-Info.plist"; path = "Tests/RVS_AutofillTextField/RVS_AutofillTextField_Test_Harness/RVS_AutofillTextField_Test_Harness (Framework)-Info.plist"; sourceTree = SOURCE_ROOT; };
+		D452CC7F27012A66005AA73F /* Warnings.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Warnings.xcconfig; sourceTree = "<group>"; };
 		D4897E9426FD009C00555EB6 /* RVS_AutofillTextField_Test_Harness (Framework).app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "RVS_AutofillTextField_Test_Harness (Framework).app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4897E9726FD009C00555EB6 /* RVS_AutofillTextField_Test_Harness_AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RVS_AutofillTextField_Test_Harness_AppDelegate.swift; sourceTree = "<group>"; };
 		D4897E9B26FD009C00555EB6 /* RVS_AutofillTextField_Test_Harness_ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RVS_AutofillTextField_Test_Harness_ViewController.swift; sourceTree = "<group>"; };
@@ -91,9 +92,18 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		D452CC7E27012A66005AA73F /* Project-Meta */ = {
+			isa = PBXGroup;
+			children = (
+				D452CC7F27012A66005AA73F /* Warnings.xcconfig */,
+			);
+			path = "Project-Meta";
+			sourceTree = "<group>";
+		};
 		D4897E8B26FD009C00555EB6 = {
 			isa = PBXGroup;
 			children = (
+				D452CC7E27012A66005AA73F /* Project-Meta */,
 				D4E68A5D26FD101D002B6451 /* Sources */,
 				D491CC4126FD0D560005817A /* Tests */,
 				D4897E9526FD009C00555EB6 /* Products */,
@@ -368,7 +378,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.riftvalleysoftware.RVS-AutofillTextField";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -400,7 +410,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.riftvalleysoftware.RVS-AutofillTextField";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -415,6 +425,7 @@
 		};
 		D4897EA626FD009E00555EB6 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D452CC7F27012A66005AA73F /* Warnings.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -476,6 +487,7 @@
 		};
 		D4897EA726FD009E00555EB6 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D452CC7F27012A66005AA73F /* Warnings.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -551,7 +563,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.riftvalleysoftware.RVS-AutofillTextField.TestHarness.FW";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -582,7 +594,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.riftvalleysoftware.RVS-AutofillTextField.TestHarness.FW";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
