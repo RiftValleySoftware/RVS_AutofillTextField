@@ -196,14 +196,18 @@ public protocol RVS_AutofillTextFieldDataSource {
     /* ################################################################## */
     /**
      This is an Array of structs, that are the searchable data collection for the text field.
-     If this is not implemented, or is empty, then no searches will return any results.
+     You can leave this undefined in your conformance, as the `getTextDictionaryFromThis` method is all that is necessary to supply the searchable Array.
+     If you are using the default implementation of `getTextDictionaryFromThis`, then you **MUST** provide your own version of this Array.
+     However, if you do leave this undefined, then you **MUST** implement your own version of `getTextDictionaryFromThis`.
+     If this is not implemented, or is empty, and there is no custom implementation of `getTextDictionaryFromThis`, then no searches will return any results.
      */
     var textDictionary: [RVS_AutofillTextFieldDataSourceType] { get }
     
     /* ################################################################## */
     /**
      This searches the Array, for strings that match the given String, according to the parameters included with the invocation.
-     The protocol default does a rather naive comparison that is likely to be sufficient for most purposes.
+     If you do leave `textDictionary` undefined, then you **MUST** implement your own version of this method.
+     The protocol default does a rather naive comparison that is likely to be sufficient for most purposes (which requires that you implement `textDictionary`).
      - parameter string: The String to search for
      - parameter isCaseSensitive: False, by default. If true, the String must match case, as well as content.
      - parameter isWildcardBefore: False, by default. If true, then the String can be preceded by other characters. If false, the given String must start the value being tested.
@@ -221,12 +225,14 @@ extension RVS_AutofillTextFieldDataSource {
     /* ################################################################## */
     /**
      Default is an empty Array.
+     If you are using the default implementation of `getTextDictionaryFromThis`, then you **MUST** provide your own version of this Array.
      */
     var textDictionary: [RVS_AutofillTextFieldDataSourceType] { [] }
     
     /* ################################################################## */
     /**
      Default uses the Array extension subscripts to search the Array.
+     If you do leave `textDictionary` undefined, then you **MUST** implement your own version of this method.
      */
     func getTextDictionaryFromThis(string inString: String, isCaseSensitive inIsCaseSensitive: Bool = false, isWildcardBefore inIsWildcardBefore: Bool = false, isWildcardAfter inIsWildcardAfter: Bool = true, maximumAutofillCount inMaximumAutofillCount: Int = 5) -> [RVS_AutofillTextFieldDataSourceType] {
         
@@ -262,6 +268,12 @@ extension RVS_AutofillTextFieldDataSource {
  */
 @IBDesignable
 open class RVS_AutofillTextField: UITextField {
+    /* ################################################################## */
+    /**
+     The table background will be the system background, at this transparency.
+     */
+    private static let _animationDurationInSeconds: TimeInterval = 0.25
+    
     /* ################################################################## */
     /**
      The table background will be the system background, at this transparency.
@@ -425,12 +437,24 @@ extension RVS_AutofillTextField {
                         autoCompleteTable.rowHeight = Self._tableRowHeightInDisplayUnits
                         autoCompleteTable.layer.cornerRadius = Self._tableRoundedCornerInDisplayUnits
                         autoCompleteTable.clipsToBounds = true
+                        autoCompleteTable.frame = CGRect(origin: autoCompleteTable.frame.origin, size: CGSize(width: autoCompleteTable.frame.size.width, height: 0))
                         containerView.addSubview(autoCompleteTable)
+                        autoCompleteTable.layoutIfNeeded()
+
+                        UIView.animate(withDuration: Self._animationDurationInSeconds, animations: {
+                            autoCompleteTable.frame = tableFrame
+                            autoCompleteTable.layoutIfNeeded()
+                        })
                     }
                 }
                 
                 if let autoCompleteTable = _autoCompleteTable {
-                    autoCompleteTable.frame = tableFrame
+                    if tableFrame != autoCompleteTable.frame {
+                        UIView.animate(withDuration: Self._animationDurationInSeconds, animations: {
+                            autoCompleteTable.frame = tableFrame
+                            autoCompleteTable.layoutIfNeeded()
+                        })
+                    }
                     autoCompleteTable.reloadData()
                 }
             } else if let autoCompleteTable = _autoCompleteTable {
