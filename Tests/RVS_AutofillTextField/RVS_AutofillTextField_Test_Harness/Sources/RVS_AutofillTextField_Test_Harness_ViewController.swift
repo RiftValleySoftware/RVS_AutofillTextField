@@ -108,6 +108,8 @@ extension RVS_AutofillTextField_Test_Harness_ViewController_TableCell {
 class RVS_AutofillTextField_Test_Harness_ViewController: UIViewController, RVS_GeneralObserverProtocol {
     /* ################################################################## */
     /**
+     `RVS_GeneralObserverProtocol` conformance.
+     This is never used by the class. It is here for the observer relationship management.
      */
     var uuid: UUID = UUID()
     
@@ -115,26 +117,32 @@ class RVS_AutofillTextField_Test_Harness_ViewController: UIViewController, RVS_G
     /**
      This will contain the strings that we will use for comparison.
      */
-    var currentTextDictionary: [String] = [ "How now, brown cow?",
+    var testingTextDictionary: [String] = [ "How now, brown cow?",
                                             "Mrs. O'Leary's Cow",
                                             "The large print giveth, and the small print taketh away.",
                                             "Cow Harbor",
                                             "cow harbor",
+                                            "çow harbor",
+                                            "çöé harbor",
                                             "COW HARBOR",
                                             "A Rhino is A Large Horned Ungulate.",
                                             "A rhino is not a cow, however.",
                                             "Neither is a steer.",
-                                            "What about a bison?",
                                             "Seacows are seals.",
+                                            "So are sea lions.",
+                                            "What about a bison?",
                                             "Buffalo Buffalo Buffalo Buffalo Buffalo",
                                             "The quick brown fox jumped over the lazy dog.",
+                                            "Tomorrow's COW is yesterday's calf.",
                                             "Today's cow is tomorrow's burger.",
-                                            "Today's COW is tomorrow's burger.",
                                             "WHOLLY COW",
                                             "Holy COW",
                                             "Holy cow",
                                             "holly cow",
-                                            "Holy cow, Batman!"
+                                            "holy çow",
+                                            "holly kow",
+                                            "Holy cow, Batman!",
+                                            "Gary Larsen's favorite critter."
     ]
         
     /* ################################################################## */
@@ -212,7 +220,7 @@ extension RVS_AutofillTextField_Test_Harness_ViewController: RVS_AutofillTextFie
      If this is empty, then no searches will return any results.
      */
     var textDictionary: [RVS_AutofillTextFieldDataSourceType] {
-        currentTextDictionary.compactMap {
+        testingTextDictionary.compactMap {
             let currentStr = $0.trimmingCharacters(in: .whitespacesAndNewlines)
             return !currentStr.isEmpty ? RVS_AutofillTextFieldDataSourceType(value: currentStr) : nil
         }
@@ -226,7 +234,7 @@ extension RVS_AutofillTextField_Test_Harness_ViewController {
     /**
      */
     func textChanged(_ inText: String, row inRow: Int) {
-        currentTextDictionary[inRow] = inText
+        testingTextDictionary[inRow] = inText
     }
     
     /* ################################################################## */
@@ -291,7 +299,7 @@ extension RVS_AutofillTextField_Test_Harness_ViewController: UITableViewDataSour
     /* ################################################################## */
     /**
      */
-    func tableView(_ inTableView: UITableView, numberOfRowsInSection inSection: Int) -> Int { currentTextDictionary.count }
+    func tableView(_ inTableView: UITableView, numberOfRowsInSection inSection: Int) -> Int { testingTextDictionary.count }
     
     /* ################################################################## */
     /**
@@ -299,9 +307,9 @@ extension RVS_AutofillTextField_Test_Harness_ViewController: UITableViewDataSour
     func tableView(_ inTableView: UITableView, cellForRowAt inIndexPath: IndexPath) -> UITableViewCell {
         if let ret = inTableView.dequeueReusableCell(withIdentifier: RVS_AutofillTextField_Test_Harness_ViewController_TableCell.textCellReuseID, for: inIndexPath) as? RVS_AutofillTextField_Test_Harness_ViewController_TableCell {
             ret.subscribe(self)
-            if currentTextDictionary.count > inIndexPath.row {
+            if testingTextDictionary.count > inIndexPath.row {
                 ret.index = inIndexPath.row
-                ret.sampleTextField?.text = currentTextDictionary[inIndexPath.row]
+                ret.sampleTextField?.text = testingTextDictionary[inIndexPath.row]
             }
             return ret
         } else {
