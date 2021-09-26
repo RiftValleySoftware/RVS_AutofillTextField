@@ -22,6 +22,107 @@
 import UIKit
 
 /* ###################################################################################################################################### */
+// MARK: - Fileprivate Array Extension, for Getting Values by Key -
+/* ###################################################################################################################################### */
+/**
+ This Array extension adds some fairly basic subscript specializations, that allow the match testing to happen.
+ */
+fileprivate extension Array where Element == RVS_AutofillTextFieldDataSourceType {
+    /* ################################################################## */
+    /**
+     This looks for a substring inside another string.
+     
+     - parameter inSubString: This is the String to look for (needle).
+     - parameter inInThisString: This is the String to look inside (haystack).
+     - parameter isCaseSensitive: Default is false. If true, then the match needs to take case and diacriticals into account. If false, diacriticals are also ignored.
+     - returns: A String Index range (just one). May be nil or empty.
+     */
+    private static func _getRangeOf(_ inSubString: String, inThisString inInThisString: String, isCaseSensitive inIsCaseSensitive: Bool = false) -> Range<String.Index>? {
+        inInThisString.range(of: inSubString, options: String.CompareOptions(inIsCaseSensitive ? [.literal] : [.caseInsensitive, .diacriticInsensitive]))
+    }
+    
+    /* ################################################################## */
+    /**
+     This looks for an exact match. It can be case-blind (by default).
+     
+     - parameter is: This is the String to test against. The entire value must match, but can be case-blind.
+     - parameter isCaseSensitive: Default is false. If true, then the match needs to take case into account.
+     - returns: An Array of all elements that match.
+     */
+    subscript(is inKey: String, isCaseSensitive inIsCaseSensitive: Bool = false) -> [RVS_AutofillTextFieldDataSourceType] {
+        return compactMap {
+            let searchRange = Self._getRangeOf(inKey, inThisString: $0.value, isCaseSensitive: inIsCaseSensitive)
+            if !(searchRange?.isEmpty ?? true),
+               $0.value.startIndex == searchRange?.lowerBound,
+               $0.value.endIndex == searchRange?.upperBound {
+                return $0
+            }
+            
+            return nil
+        }
+    }
+    
+    /* ################################################################## */
+    /**
+     This looks for a string that is "wildcarded" in front, but ends with the exact String. It can be case-blind (by default).
+     
+     - parameter endsWith: This is the String to test against. The entire value must match (but can be preceded by other characters), but can be case-blind.
+     - parameter isCaseSensitive: Default is false. If true, then the match needs to take case into account.
+     - returns: An Array of all elements that match.
+     */
+    subscript(endsWith inKey: String, isCaseSensitive inIsCaseSensitive: Bool = false) -> [RVS_AutofillTextFieldDataSourceType] {
+        return compactMap {
+            let searchRange = Self._getRangeOf(inKey, inThisString: $0.value, isCaseSensitive: inIsCaseSensitive)
+            if !(searchRange?.isEmpty ?? true),
+               $0.value.endIndex == searchRange?.upperBound {
+                return $0
+            }
+            
+            return nil
+        }
+    }
+    
+    /* ################################################################## */
+    /**
+     This looks for a string that is "wildcarded" after, but begins with the exact String. It can be case-blind (by default).
+     
+     - parameter beginsWith: This is the String to test against. The entire value must match (but can be followed by other characters), but can be case-blind.
+     - parameter isCaseSensitive: Default is false. If true, then the match needs to take case into account.
+     - returns: An Array of all elements that match.
+     */
+    subscript(beginsWith inKey: String, isCaseSensitive inIsCaseSensitive: Bool = false) -> [RVS_AutofillTextFieldDataSourceType] {
+        return compactMap {
+            let searchRange = Self._getRangeOf(inKey, inThisString: $0.value, isCaseSensitive: inIsCaseSensitive)
+            if !(searchRange?.isEmpty ?? true),
+               $0.value.startIndex == searchRange?.lowerBound {
+                return $0
+            }
+            
+            return nil
+        }
+    }
+    
+    /* ################################################################## */
+    /**
+     This lsees if the element contains the exact String. It can be case-blind (by default).
+     
+     - parameter contains: This is the String to test against. The entire value must match (but can be preceded and followed by other characters), but can be case-blind.
+     - parameter isCaseSensitive: Default is false. If true, then the match needs to take case into account.
+     - returns: An Array of all elements that match.
+     */
+    subscript(contains inKey: String, isCaseSensitive inIsCaseSensitive: Bool = false) -> [RVS_AutofillTextFieldDataSourceType] {
+        return compactMap {
+            let searchRange = Self._getRangeOf(inKey, inThisString: $0.value, isCaseSensitive: inIsCaseSensitive)
+            if !(searchRange?.isEmpty ?? true) {
+                return $0
+            }
+            
+            return nil
+        }
+    }
+}
+
+/* ###################################################################################################################################### */
 // MARK: - One Element of the Data Source Array -
 /* ###################################################################################################################################### */
 /**
@@ -82,70 +183,6 @@ extension RVS_AutofillTextFieldDataSourceType: Comparable {
      - returns: True, if the lhs is less than rhs
      */
     public static func < (lhs: RVS_AutofillTextFieldDataSourceType, rhs: RVS_AutofillTextFieldDataSourceType) -> Bool { lhs.value < rhs.value }
-}
-
-/* ###################################################################################################################################### */
-// MARK: - Array Extension, for Getting Values by Key -
-/* ###################################################################################################################################### */
-/**
- This Array extension adds some fairly basic subscript specializations, that allow the match testing to happen.
- */
-extension Array where Element == RVS_AutofillTextFieldDataSourceType {
-    /* ################################################################## */
-    /**
-     This looks for an exact match. It can be case-blind (by default).
-     
-     - parameter is: This is the String to test against. The entire value must match, but can be case-blind.
-     - parameter isCaseSensitive: Default is false. If true, then the match needs to take case into account.
-     - returns: An Array of all elements that match.
-     */
-    subscript(is inKey: String, isCaseSensitive inIsCaseSensitive: Bool = false) -> [RVS_AutofillTextFieldDataSourceType] {
-        let lowercasedKey = inKey.lowercased()
-        
-        return compactMap { !inIsCaseSensitive ? (lowercasedKey == $0.value.lowercased() ? $0 : nil) : (inKey == $0.value ? $0 : nil) }
-    }
-    
-    /* ################################################################## */
-    /**
-     This looks for a string that is "wildcarded" in front, but ends with the exact String. It can be case-blind (by default).
-     
-     - parameter endsWith: This is the String to test against. The entire value must match (but can be preceded by other characters), but can be case-blind.
-     - parameter isCaseSensitive: Default is false. If true, then the match needs to take case into account.
-     - returns: An Array of all elements that match.
-     */
-    subscript(endsWith inKey: String, isCaseSensitive inIsCaseSensitive: Bool = false) -> [RVS_AutofillTextFieldDataSourceType] {
-        let lowercasedKey = inKey.lowercased()
-        
-        return compactMap { !inIsCaseSensitive ? ($0.value.lowercased().hasSuffix(lowercasedKey) ? $0 : nil) : ($0.value.hasSuffix(inKey) ? $0 : nil) }
-    }
-    
-    /* ################################################################## */
-    /**
-     This looks for a string that is "wildcarded" after, but begins with the exact String. It can be case-blind (by default).
-     
-     - parameter beginsWith: This is the String to test against. The entire value must match (but can be followed by other characters), but can be case-blind.
-     - parameter isCaseSensitive: Default is false. If true, then the match needs to take case into account.
-     - returns: An Array of all elements that match.
-     */
-    subscript(beginsWith inKey: String, isCaseSensitive inIsCaseSensitive: Bool = false) -> [RVS_AutofillTextFieldDataSourceType] {
-        let lowercasedKey = inKey.lowercased()
-        
-        return compactMap { !inIsCaseSensitive ? ($0.value.lowercased().hasPrefix(lowercasedKey) ? $0 : nil) : ($0.value.hasPrefix(inKey) ? $0 : nil) }
-    }
-    
-    /* ################################################################## */
-    /**
-     This lsees if the element contains the exact String. It can be case-blind (by default).
-     
-     - parameter contains: This is the String to test against. The entire value must match (but can be preceded and followed by other characters), but can be case-blind.
-     - parameter isCaseSensitive: Default is false. If true, then the match needs to take case into account.
-     - returns: An Array of all elements that match.
-     */
-    subscript(contains inKey: String, isCaseSensitive inIsCaseSensitive: Bool = false) -> [RVS_AutofillTextFieldDataSourceType] {
-        let lowercasedKey = inKey.lowercased()
-        
-        return compactMap { !inIsCaseSensitive ? ($0.value.lowercased().contains(lowercasedKey) ? $0 : nil) : ($0.value.contains(inKey) ? $0 : nil) }
-    }
 }
 
 /* ###################################################################################################################################### */
@@ -515,10 +552,12 @@ extension RVS_AutofillTextField: UITableViewDataSource {
             let focusedTextAttribute = [NSAttributedString.Key.foregroundColor: UIColor.label]
             let unfocusedTextAttribute = [NSAttributedString.Key.foregroundColor: UIColor.label.withAlphaComponent(0.5)]
             if let matchRange = searchableText.range(of: text, options: options) {
-                let unmatchRange = matchRange.upperBound..<searchableText.endIndex
+                let unmatchRangeBefore = searchableText.startIndex..<matchRange.lowerBound
+                let unmatchRangeAfter = matchRange.upperBound..<searchableText.endIndex
                 let attributedText = NSMutableAttributedString(string: searchableText)
                 attributedText.setAttributes(focusedTextAttribute, range: NSRange(matchRange, in: searchableText))
-                attributedText.setAttributes(unfocusedTextAttribute, range: NSRange(unmatchRange, in: searchableText))
+                attributedText.setAttributes(unfocusedTextAttribute, range: NSRange(unmatchRangeBefore, in: searchableText))
+                attributedText.setAttributes(unfocusedTextAttribute, range: NSRange(unmatchRangeAfter, in: searchableText))
                 ret.backgroundColor = .clear
                 ret.textLabel?.adjustsFontSizeToFitWidth = true
                 ret.textLabel?.minimumScaleFactor = 0.25
