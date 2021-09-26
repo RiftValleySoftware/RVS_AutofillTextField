@@ -7,21 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D40DF4DC26FFC2960054A0F5 /* RVS-Checkbox in Frameworks */ = {isa = PBXBuildFile; productRef = D40DF4DB26FFC2960054A0F5 /* RVS-Checkbox */; };
-		D422DFA826FE253600D638EF /* RVS-GeneralObserver in Frameworks */ = {isa = PBXBuildFile; productRef = D422DFA726FE253600D638EF /* RVS-GeneralObserver */; };
 		D43CCC0B27009D0C00131C62 /* RVS_AutofillTextField.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D43CCC0527009D0B00131C62 /* RVS_AutofillTextField.framework */; };
 		D43CCC0C27009D0C00131C62 /* RVS_AutofillTextField.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D43CCC0527009D0B00131C62 /* RVS_AutofillTextField.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D43CCC1127009D1800131C62 /* RVS_AutofillTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E68A5E26FD101D002B6451 /* RVS_AutofillTextField.swift */; };
-		D43CCC1A2700A03E00131C62 /* RVS_AutofillTextField_Test_Harness_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4897E9B26FD009C00555EB6 /* RVS_AutofillTextField_Test_Harness_ViewController.swift */; };
-		D43CCC1B2700A03E00131C62 /* RVS_AutofillTextField_Test_Harness_AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4897E9726FD009C00555EB6 /* RVS_AutofillTextField_Test_Harness_AppDelegate.swift */; };
-		D43CCC1D2700A03E00131C62 /* RVS_AutofillTextField.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D43CCC0527009D0B00131C62 /* RVS_AutofillTextField.framework */; };
-		D43CCC1E2700A03E00131C62 /* RVS-GeneralObserver in Frameworks */ = {isa = PBXBuildFile; productRef = D43CCC152700A03E00131C62 /* RVS-GeneralObserver */; };
-		D43CCC1F2700A03E00131C62 /* RVS-Checkbox in Frameworks */ = {isa = PBXBuildFile; productRef = D43CCC172700A03E00131C62 /* RVS-Checkbox */; };
-		D43CCC212700A03E00131C62 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D4897EA226FD009E00555EB6 /* LaunchScreen.storyboard */; };
-		D43CCC222700A03E00131C62 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D4897EA026FD009E00555EB6 /* Assets.xcassets */; };
-		D43CCC232700A03E00131C62 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D4897E9D26FD009C00555EB6 /* Main.storyboard */; };
-		D43CCC262700A03E00131C62 /* RVS_AutofillTextField.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D43CCC0527009D0B00131C62 /* RVS_AutofillTextField.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		D43CCC372700A3E600131C62 /* RVS-AutofillTextField in Frameworks */ = {isa = PBXBuildFile; productRef = D43CCC362700A3E600131C62 /* RVS-AutofillTextField */; };
+		D43CCC3A2700A4E800131C62 /* RVS-Checkbox in Frameworks */ = {isa = PBXBuildFile; productRef = D43CCC392700A4E800131C62 /* RVS-Checkbox */; };
+		D43CCC3D2700A4F500131C62 /* RVS-GeneralObserver in Frameworks */ = {isa = PBXBuildFile; productRef = D43CCC3C2700A4F500131C62 /* RVS-GeneralObserver */; };
 		D4897E9826FD009C00555EB6 /* RVS_AutofillTextField_Test_Harness_AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4897E9726FD009C00555EB6 /* RVS_AutofillTextField_Test_Harness_AppDelegate.swift */; };
 		D4897E9C26FD009C00555EB6 /* RVS_AutofillTextField_Test_Harness_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4897E9B26FD009C00555EB6 /* RVS_AutofillTextField_Test_Harness_ViewController.swift */; };
 		D4897E9F26FD009C00555EB6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D4897E9D26FD009C00555EB6 /* Main.storyboard */; };
@@ -31,13 +21,6 @@
 
 /* Begin PBXContainerItemProxy section */
 		D43CCC0927009D0C00131C62 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D4897E8C26FD009C00555EB6 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = D43CCC0427009D0B00131C62;
-			remoteInfo = RVS_AutofillTextField;
-		};
-		D43CCC142700A03E00131C62 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D4897E8C26FD009C00555EB6 /* Project object */;
 			proxyType = 1;
@@ -58,23 +41,10 @@
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D43CCC252700A03E00131C62 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				D43CCC262700A03E00131C62 /* RVS_AutofillTextField.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		D43CCC0527009D0B00131C62 /* RVS_AutofillTextField.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RVS_AutofillTextField.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		D43CCC2A2700A03E00131C62 /* RVS_AutofillTextField_Test_Harness (SPM).app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "RVS_AutofillTextField_Test_Harness (SPM).app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		D43CCC2C2700A13000131C62 /* RVS_AutofillTextField_Test_Harness (SPM)-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = "RVS_AutofillTextField_Test_Harness (SPM)-Info.plist"; path = "Tests/RVS_AutofillTextField/RVS_AutofillTextField_Test_Harness/RVS_AutofillTextField_Test_Harness (SPM)-Info.plist"; sourceTree = SOURCE_ROOT; };
 		D43CCC2D2700A13000131C62 /* RVS_AutofillTextField_Test_Harness (Framework)-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = "RVS_AutofillTextField_Test_Harness (Framework)-Info.plist"; path = "Tests/RVS_AutofillTextField/RVS_AutofillTextField_Test_Harness/RVS_AutofillTextField_Test_Harness (Framework)-Info.plist"; sourceTree = SOURCE_ROOT; };
 		D4897E9426FD009C00555EB6 /* RVS_AutofillTextField_Test_Harness (Framework).app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "RVS_AutofillTextField_Test_Harness (Framework).app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4897E9726FD009C00555EB6 /* RVS_AutofillTextField_Test_Harness_AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RVS_AutofillTextField_Test_Harness_AppDelegate.swift; sourceTree = "<group>"; };
@@ -93,24 +63,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D43CCC1C2700A03E00131C62 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				D43CCC1D2700A03E00131C62 /* RVS_AutofillTextField.framework in Frameworks */,
-				D43CCC1E2700A03E00131C62 /* RVS-GeneralObserver in Frameworks */,
-				D43CCC372700A3E600131C62 /* RVS-AutofillTextField in Frameworks */,
-				D43CCC1F2700A03E00131C62 /* RVS-Checkbox in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		D4897E9126FD009C00555EB6 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D43CCC3D2700A4F500131C62 /* RVS-GeneralObserver in Frameworks */,
 				D43CCC0B27009D0C00131C62 /* RVS_AutofillTextField.framework in Frameworks */,
-				D422DFA826FE253600D638EF /* RVS-GeneralObserver in Frameworks */,
-				D40DF4DC26FFC2960054A0F5 /* RVS-Checkbox in Frameworks */,
+				D43CCC3A2700A4E800131C62 /* RVS-Checkbox in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -147,7 +106,6 @@
 			children = (
 				D4897E9426FD009C00555EB6 /* RVS_AutofillTextField_Test_Harness (Framework).app */,
 				D43CCC0527009D0B00131C62 /* RVS_AutofillTextField.framework */,
-				D43CCC2A2700A03E00131C62 /* RVS_AutofillTextField_Test_Harness (SPM).app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -192,7 +150,6 @@
 				D4897EA026FD009E00555EB6 /* Assets.xcassets */,
 				D4897EA226FD009E00555EB6 /* LaunchScreen.storyboard */,
 				D43CCC2D2700A13000131C62 /* RVS_AutofillTextField_Test_Harness (Framework)-Info.plist */,
-				D43CCC2C2700A13000131C62 /* RVS_AutofillTextField_Test_Harness (SPM)-Info.plist */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -239,31 +196,6 @@
 			productReference = D43CCC0527009D0B00131C62 /* RVS_AutofillTextField.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		D43CCC122700A03E00131C62 /* RVS_AutofillTextField_Test_Harness (SPM) */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = D43CCC272700A03E00131C62 /* Build configuration list for PBXNativeTarget "RVS_AutofillTextField_Test_Harness (SPM)" */;
-			buildPhases = (
-				D43CCC192700A03E00131C62 /* Sources */,
-				D43CCC1C2700A03E00131C62 /* Frameworks */,
-				D43CCC202700A03E00131C62 /* Resources */,
-				D43CCC242700A03E00131C62 /* ShellScript */,
-				D43CCC252700A03E00131C62 /* Embed Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				D43CCC132700A03E00131C62 /* PBXTargetDependency */,
-			);
-			name = "RVS_AutofillTextField_Test_Harness (SPM)";
-			packageProductDependencies = (
-				D43CCC152700A03E00131C62 /* RVS-GeneralObserver */,
-				D43CCC172700A03E00131C62 /* RVS-Checkbox */,
-				D43CCC362700A3E600131C62 /* RVS-AutofillTextField */,
-			);
-			productName = RVS_AutofillTextField;
-			productReference = D43CCC2A2700A03E00131C62 /* RVS_AutofillTextField_Test_Harness (SPM).app */;
-			productType = "com.apple.product-type.application";
-		};
 		D4897E9326FD009C00555EB6 /* RVS_AutofillTextField_Test_Harness (Framework) */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = D4897EA826FD009E00555EB6 /* Build configuration list for PBXNativeTarget "RVS_AutofillTextField_Test_Harness (Framework)" */;
@@ -281,8 +213,8 @@
 			);
 			name = "RVS_AutofillTextField_Test_Harness (Framework)";
 			packageProductDependencies = (
-				D422DFA726FE253600D638EF /* RVS-GeneralObserver */,
-				D40DF4DB26FFC2960054A0F5 /* RVS-Checkbox */,
+				D43CCC392700A4E800131C62 /* RVS-Checkbox */,
+				D43CCC3C2700A4F500131C62 /* RVS-GeneralObserver */,
 			);
 			productName = RVS_AutofillTextField;
 			productReference = D4897E9426FD009C00555EB6 /* RVS_AutofillTextField_Test_Harness (Framework).app */;
@@ -316,9 +248,8 @@
 			);
 			mainGroup = D4897E8B26FD009C00555EB6;
 			packageReferences = (
-				D422DFA626FE253600D638EF /* XCRemoteSwiftPackageReference "RVS_GeneralObserver" */,
-				D40DF4DA26FFC2960054A0F5 /* XCRemoteSwiftPackageReference "RVS_Checkbox" */,
-				D43CCC322700A3D800131C62 /* XCRemoteSwiftPackageReference "RVS_AutofillTextField" */,
+				D43CCC382700A4E800131C62 /* XCRemoteSwiftPackageReference "RVS_Checkbox" */,
+				D43CCC3B2700A4F500131C62 /* XCRemoteSwiftPackageReference "RVS_GeneralObserver" */,
 			);
 			productRefGroup = D4897E9526FD009C00555EB6 /* Products */;
 			projectDirPath = "";
@@ -326,7 +257,6 @@
 			targets = (
 				D43CCC0427009D0B00131C62 /* RVS_AutofillTextField */,
 				D4897E9326FD009C00555EB6 /* RVS_AutofillTextField_Test_Harness (Framework) */,
-				D43CCC122700A03E00131C62 /* RVS_AutofillTextField_Test_Harness (SPM) */,
 			);
 		};
 /* End PBXProject section */
@@ -336,16 +266,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		D43CCC202700A03E00131C62 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				D43CCC212700A03E00131C62 /* LaunchScreen.storyboard in Resources */,
-				D43CCC222700A03E00131C62 /* Assets.xcassets in Resources */,
-				D43CCC232700A03E00131C62 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -379,23 +299,6 @@
 			shellPath = /bin/sh;
 			shellScript = "if command -v swiftlint\nthen\n    swiftlint\nfi\n";
 		};
-		D43CCC242700A03E00131C62 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if command -v swiftlint\nthen\n    swiftlint\nfi\n";
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -404,15 +307,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D43CCC1127009D1800131C62 /* RVS_AutofillTextField.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		D43CCC192700A03E00131C62 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				D43CCC1A2700A03E00131C62 /* RVS_AutofillTextField_Test_Harness_ViewController.swift in Sources */,
-				D43CCC1B2700A03E00131C62 /* RVS_AutofillTextField_Test_Harness_AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -432,11 +326,6 @@
 			isa = PBXTargetDependency;
 			target = D43CCC0427009D0B00131C62 /* RVS_AutofillTextField */;
 			targetProxy = D43CCC0927009D0C00131C62 /* PBXContainerItemProxy */;
-		};
-		D43CCC132700A03E00131C62 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = D43CCC0427009D0B00131C62 /* RVS_AutofillTextField */;
-			targetProxy = D43CCC142700A03E00131C62 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -521,68 +410,6 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		D43CCC282700A03E00131C62 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0000;
-				DEVELOPMENT_TEAM = KSAUGZFWP2;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Tests/RVS_AutofillTextField/RVS_AutofillTextField_Test_Harness/RVS_AutofillTextField_Test_Harness (SPM)-Info.plist";
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UIRequiredDeviceCapabilities = armv7;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.riftvalleysoftware.RVS-AutofillTextField.TestHarness.SP";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		D43CCC292700A03E00131C62 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0000;
-				DEVELOPMENT_TEAM = KSAUGZFWP2;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Tests/RVS_AutofillTextField/RVS_AutofillTextField_Test_Harness/RVS_AutofillTextField_Test_Harness (SPM)-Info.plist";
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UIRequiredDeviceCapabilities = armv7;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.riftvalleysoftware.RVS-AutofillTextField.TestHarness.SP";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -776,15 +603,6 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D43CCC272700A03E00131C62 /* Build configuration list for PBXNativeTarget "RVS_AutofillTextField_Test_Harness (SPM)" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				D43CCC282700A03E00131C62 /* Debug */,
-				D43CCC292700A03E00131C62 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		D4897E8F26FD009C00555EB6 /* Build configuration list for PBXProject "RVS_AutofillTextField" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -806,7 +624,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		D40DF4DA26FFC2960054A0F5 /* XCRemoteSwiftPackageReference "RVS_Checkbox" */ = {
+		D43CCC382700A4E800131C62 /* XCRemoteSwiftPackageReference "RVS_Checkbox" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/RiftValleySoftware/RVS_Checkbox";
 			requirement = {
@@ -814,65 +632,26 @@
 				minimumVersion = 1.1.6;
 			};
 		};
-		D422DFA626FE253600D638EF /* XCRemoteSwiftPackageReference "RVS_GeneralObserver" */ = {
+		D43CCC3B2700A4F500131C62 /* XCRemoteSwiftPackageReference "RVS_GeneralObserver" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/RiftValleySoftware/RVS_GeneralObserver";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 1.0.5;
-			};
-		};
-		D43CCC162700A03E00131C62 /* XCRemoteSwiftPackageReference "RVS_GeneralObserver" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/RiftValleySoftware/RVS_GeneralObserver";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.5;
-			};
-		};
-		D43CCC182700A03E00131C62 /* XCRemoteSwiftPackageReference "RVS_Checkbox" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/RiftValleySoftware/RVS_Checkbox";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.1.6;
-			};
-		};
-		D43CCC322700A3D800131C62 /* XCRemoteSwiftPackageReference "RVS_AutofillTextField" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/RiftValleySoftware/RVS_AutofillTextField";
-			requirement = {
-				branch = master;
-				kind = branch;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		D40DF4DB26FFC2960054A0F5 /* RVS-Checkbox */ = {
+		D43CCC392700A4E800131C62 /* RVS-Checkbox */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D40DF4DA26FFC2960054A0F5 /* XCRemoteSwiftPackageReference "RVS_Checkbox" */;
+			package = D43CCC382700A4E800131C62 /* XCRemoteSwiftPackageReference "RVS_Checkbox" */;
 			productName = "RVS-Checkbox";
 		};
-		D422DFA726FE253600D638EF /* RVS-GeneralObserver */ = {
+		D43CCC3C2700A4F500131C62 /* RVS-GeneralObserver */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D422DFA626FE253600D638EF /* XCRemoteSwiftPackageReference "RVS_GeneralObserver" */;
+			package = D43CCC3B2700A4F500131C62 /* XCRemoteSwiftPackageReference "RVS_GeneralObserver" */;
 			productName = "RVS-GeneralObserver";
-		};
-		D43CCC152700A03E00131C62 /* RVS-GeneralObserver */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D43CCC162700A03E00131C62 /* XCRemoteSwiftPackageReference "RVS_GeneralObserver" */;
-			productName = "RVS-GeneralObserver";
-		};
-		D43CCC172700A03E00131C62 /* RVS-Checkbox */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D43CCC182700A03E00131C62 /* XCRemoteSwiftPackageReference "RVS_Checkbox" */;
-			productName = "RVS-Checkbox";
-		};
-		D43CCC362700A3E600131C62 /* RVS-AutofillTextField */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D43CCC322700A3D800131C62 /* XCRemoteSwiftPackageReference "RVS_AutofillTextField" */;
-			productName = "RVS-AutofillTextField";
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

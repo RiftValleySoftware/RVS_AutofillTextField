@@ -214,7 +214,7 @@ public protocol RVS_AutofillTextFieldDataSource {
      - parameter isCaseSensitive: False, by default. If true, the String must match case, as well as content.
      - parameter isWildcardBefore: False, by default. If true, then the String can be preceded by other characters. If false, the given String must start the value being tested.
      - parameter isWildcardAfter: True, by default. If true, then the String can be followed by other characters. If false, the given String must end the value being tested.
-     - parameter maximumAutofillCount: 5, by default. This is the maximum number of results to return. The return can contain fewer elements.
+     - parameter maximumAutofillCount: 5, by default. This is the maximum number of results to return. The return can contain fewer elements. If -1, then there is no limit.
      - returns: An Array of elements that conform to the `RVS_AutofillTextFieldDataSourceType` protocol.
      */
     func getTextDictionaryFromThis(string: String, isCaseSensitive: Bool, isWildcardBefore: Bool, isWildcardAfter: Bool, maximumAutofillCount: Int) -> [RVS_AutofillTextFieldDataSourceType]
@@ -257,7 +257,7 @@ extension RVS_AutofillTextFieldDataSource {
             ret = localTextDictionary[contains: inString, isCaseSensitive: inIsCaseSensitive]
         }
         
-        return [RVS_AutofillTextFieldDataSourceType](ret[0..<max(0, min(ret.count, inMaximumAutofillCount))])
+        return [RVS_AutofillTextFieldDataSourceType](ret[0..<max(0, min(ret.count, 0 <= inMaximumAutofillCount ? inMaximumAutofillCount : ret.count))])
     }
 }
 
@@ -382,6 +382,7 @@ open class RVS_AutofillTextField: UITextField {
     /* ################################################################## */
     /**
      This is the maximum number of results to be returned. Default is 5.
+     If -1, then there is no limit.
      */
     @IBInspectable
     public var maximumAutofillCount: Int = 5
@@ -437,10 +438,11 @@ extension RVS_AutofillTextField {
         }
         
         if let containerView = window?.rootViewController?.view {
+            let containerBounds = containerView.bounds
             let maxTableWidth = max(bounds.size.width, minimumTableWidthInDisplayUnits)
             let numberOfRows = CGFloat(_currentAutoFill.count)
-            let currentTableHeight = numberOfRows * Self._tableRowHeightInDisplayUnits
             let tableOrigin = convert(CGPoint(x: 0, y: bounds.size.height + Self._gapInDisplayUnitsBetweenTextItemAndTable), to: containerView)
+            let currentTableHeight = min(numberOfRows * Self._tableRowHeightInDisplayUnits, (containerBounds.height - Self._gapInDisplayUnitsBetweenTextItemAndTable) - tableOrigin.y)
             let tableWidth = min(containerView.bounds.width - (tableOrigin.x + Self._gapInDisplayUnitsBetweenTextItemAndTable), maxTableWidth)
             let tableFrame = CGRect(origin: tableOrigin, size: CGSize(width: tableWidth, height: currentTableHeight))
             
@@ -553,6 +555,9 @@ extension RVS_AutofillTextField {
     public override func layoutSubviews() {
         super.layoutSubviews()
         addTarget(self, action: #selector(_textHasChanged(_:)), for: .editingChanged)
+        if nil != _autoCompleteTable {
+            _createAutoCompleteTable()
+        }
     }
     
     /* ################################################################## */
