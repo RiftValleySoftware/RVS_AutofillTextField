@@ -2,6 +2,15 @@
 
 # RVS_AutofillTextField
 
+---
+**NOTE**
+
+[Here is a link to the GitHub repo for this project.](https://github.com/RiftValleySoftware/RVS_AutofillTextField/)
+
+[Here is a link to the technical documentation for this project.](https://riftvalleysoftware.github.io/RVS_AutofillTextField/)
+
+---
+
 ## INTRODUCTION
 
 This is a standard [`UITextField`](https://developer.apple.com/documentation/uikit/uitextfield), extended to provide an "autofill" dropdown menu, under the widget. This widget will provide matches, within an Array of Strings, which can be used as "autofill." If one of the strings is selected by the user, then it is entered, in its entirety, into the text field.
@@ -27,6 +36,15 @@ The user must actuall select a table row. There is no "tab" autofill. This is fo
 Entering text on phones isn't easy. This helps to reduce the amount of text we actually need to enter.
 
 Additionally, this can help us to "explore" datasets, by entering partial specifications. For example, if we are searching for users in a certain area, we might do a "triage" search, and create a subset of the main database of users, for the locality. These can be used as autofill suggestions, when looking for a user.
+
+## REQUIREMENTS
+
+This is a [Swift](https://apple.com/swift)-only module. It is based on [standard UIKit](https://developer.apple.com/documentation/uikit), for [iOS](https://apple.com/ios)/[iPadOS](https://apple.com/ipados).
+
+There are no dependencies to use the widget, but there are a couple, if you will run [the test harness](https://github.com/RiftValleySoftware/RVS_AutofillTextField/tree/master/Tests/RVS_AutofillTextField/RVS_AutofillTextField_Test_Harness):
+
+1. [`RVS_Checkbox`](https://github.com/RiftValleySoftware/RVS_Checkbox)
+2. [`RVS_GeneralObserver`](https://github.com/RiftValleySoftware/RVS_GeneralObserver)
 
 ## IMPLEMENTATION
 
@@ -193,6 +211,8 @@ You must implement at least one of the above methods. If you don't then you just
 
 The widget has a few optional fields that are available via the storyboard (Figure 6).
 
+#### Customizing Behaviors
+
 1. `isAutoFillOn`
 This is a Bool value that is a "main circuit breaker" for the functionality. Default is on. If off, then the widget is just a regular `UITextField`.
 
@@ -211,3 +231,7 @@ This is an integer value that designates the maximum number of results that show
 If you are looking for an exact match, then turn off both wildcards. If you make it case-sensitive, then the string must match exactly.
 
 If you are looking for a case-insensitive match at the start, just leave the defaults. If you are looking for an "ends with" match, then turn on the before wildcards, and turn off the after wildcards.
+
+#### Customizing Appearance
+
+You can specify different background and font colors. Default is standard system background, at a 75% opacity, and standard label colors, with a 50% opacity for unmatched text.
