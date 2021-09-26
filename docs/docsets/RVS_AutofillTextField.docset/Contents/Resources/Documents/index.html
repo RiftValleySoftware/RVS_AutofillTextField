@@ -81,15 +81,17 @@
 
 <p>This is a standard <a href="https://developer.apple.com/documentation/uikit/uitextfield"><code>UITextField</code></a>, extended to provide an &ldquo;autofill&rdquo; dropdown menu, under the widget. This widget will provide matches, within an Array of Strings, which can be used as &ldquo;autofill.&rdquo; If one of the strings is selected by the user, then it is entered, in its entirety, into the text field.</p>
 
-<p><img src="img/Figure-01.png" alt="Example Display">
-Figure 1: The Widget&rsquo;s Standard Display, with a &ldquo;Begins With&rdquo; Action</p>
+<p><img src="img/Figure-01.png" alt="Example Display"></p>
+
+<p><em>Figure 1: The Widget&rsquo;s Standard Display, with a &ldquo;Begins With&rdquo; Action</em></p>
 
 <p>This is, by default, a simple, &ldquo;one-way,&rdquo; &ldquo;greedy&rdquo; match. It starts from the beginning, then moves forward, matching the characters entered into the text field. They must all match, but the match can be case/diacritical-independednt (by default).</p>
 
 <p>We can choose several modes of matching, so we can &ldquo;wildcard&rdquo; text before and/or after the string (or insist on an exact match).</p>
 
-<p><img src="img/Figure-02.png" alt="Example Display With Wildcard Before and After">
-Figure 2: The Widget&rsquo;s Standard Display, with a &ldquo;Contains&rdquo; Action</p>
+<p><img src="img/Figure-02.png" alt="Example Display With Wildcard Before and After"></p>
+
+<p><em>Figure 2: The Widget&rsquo;s Standard Display, with a &ldquo;Contains&rdquo; Action</em></p>
 
 <p>The widget has been designed to allow a lot of customization, as well as a very simple way to provide the data to be searched. It also has the ability to be modified for more advanced data searching.</p>
 
@@ -148,28 +150,33 @@ Figure 2: The Widget&rsquo;s Standard Display, with a &ldquo;Contains&rdquo; Act
 
 <p>or using Interface Builder, and a storyboard/IB file:</p>
 
-<p><img src="img/Figure-03.png" alt="Adding A Text Field">
-Figure 3: Dragging In A Text Field Object</p>
+<p><img src="img/Figure-03.png" alt="Adding A Text Field"></p>
+
+<p><em>Figure 3: Dragging In A Text Field Object</em></p>
 
 <p>Start by dragging in a Text Field.</p>
 
-<p><img src="img/Figure-04.png" alt="Setting The Type">
-Figure 4: Setting the Class (and Possibly, the Module).</p>
+<p><img src="img/Figure-04.png" alt="Setting The Type"></p>
+
+<p><em>Figure 4: Setting the Class (and Possibly, the Module).</em></p>
 
 <p>Convert the Class to an instance of <code><a href="Classes/RVS_AutofillTextField.html">RVS_AutofillTextField</a></code>. You may need to also set the module (if not directly including the file).</p>
 
-<p><img src="img/Figure-05.png" alt="Accessing the Widdget">
-Figure 5: The Widget, in Its New Home.</p>
+<p><img src="img/Figure-05.png" alt="Accessing the Widdget"></p>
+
+<p><em>Figure 5: The Widget, in Its New Home.</em></p>
 
 <p>It will now show up as a standard Text Field.</p>
 
-<p><img src="img/Figure-06.png" alt="The Widget Parameters">
-Figure 6: The Custom Widget Parameters.</p>
+<p><img src="img/Figure-06.png" alt="The Widget Parameters"></p>
+
+<p><em>Figure 6: The Custom Widget Parameters.</em></p>
 
 <p>These are the custom parameters for the <code><a href="Classes/RVS_AutofillTextField.html">RVS_AutofillTextField</a></code> type.</p>
 
-<p><img src="img/Figure-07.png" alt="The Standard Text Field Parameters">
-Figure 7: The Standard Text Field Parameters.</p>
+<p><img src="img/Figure-07.png" alt="The Standard Text Field Parameters"></p>
+
+<p><em>Figure 7: The Standard Text Field Parameters.</em></p>
 
 <p>But we also have the traditional Text Field controls.</p>
 

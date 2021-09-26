@@ -7,14 +7,16 @@
 This is a standard [`UITextField`](https://developer.apple.com/documentation/uikit/uitextfield), extended to provide an "autofill" dropdown menu, under the widget. This widget will provide matches, within an Array of Strings, which can be used as "autofill." If one of the strings is selected by the user, then it is entered, in its entirety, into the text field.
 
 ![Example Display](img/Figure-01.png)
-Figure 1: The Widget's Standard Display, with a "Begins With" Action
+
+*Figure 1: The Widget's Standard Display, with a "Begins With" Action*
 
 This is, by default, a simple, "one-way," "greedy" match. It starts from the beginning, then moves forward, matching the characters entered into the text field. They must all match, but the match can be case/diacritical-independednt (by default).
 
 We can choose several modes of matching, so we can "wildcard" text before and/or after the string (or insist on an exact match).
 
 ![Example Display With Wildcard Before and After](img/Figure-02.png)
-Figure 2: The Widget's Standard Display, with a "Contains" Action
+
+*Figure 2: The Widget's Standard Display, with a "Contains" Action*
 
 The widget has been designed to allow a lot of customization, as well as a very simple way to provide the data to be searched. It also has the ability to be modified for more advanced data searching.
 
@@ -81,27 +83,32 @@ You instantiate the control, in exactly the same way that you would, an instance
 or using Interface Builder, and a storyboard/IB file:
 
 ![Adding A Text Field](img/Figure-03.png)
-Figure 3: Dragging In A Text Field Object
+
+*Figure 3: Dragging In A Text Field Object*
 
 Start by dragging in a Text Field.
 
 ![Setting The Type](img/Figure-04.png)
-Figure 4: Setting the Class (and Possibly, the Module).
+
+*Figure 4: Setting the Class (and Possibly, the Module).*
 
 Convert the Class to an instance of `RVS_AutofillTextField`. You may need to also set the module (if not directly including the file).
 
 ![Accessing the Widdget](img/Figure-05.png)
-Figure 5: The Widget, in Its New Home.
+
+*Figure 5: The Widget, in Its New Home.*
 
 It will now show up as a standard Text Field.
 
 ![The Widget Parameters](img/Figure-06.png)
-Figure 6: The Custom Widget Parameters.
+
+*Figure 6: The Custom Widget Parameters.*
 
 These are the custom parameters for the `RVS_AutofillTextField` type.
 
 ![The Standard Text Field Parameters](img/Figure-07.png)
-Figure 7: The Standard Text Field Parameters.
+
+*Figure 7: The Standard Text Field Parameters.*
 
 But we also have the traditional Text Field controls.
 
