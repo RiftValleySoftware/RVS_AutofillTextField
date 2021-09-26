@@ -222,7 +222,7 @@ class RVS_AutofillTextField_Test_Harness_ViewController: UIViewController, RVS_G
 extension RVS_AutofillTextField_Test_Harness_ViewController {
     /* ################################################################## */
     /**
-     Called when the view hierarchy has been loded. We use this to synct the CuT with the UX.
+     Called when the view hierarchy has been loaded. We use this to sync the CuT with the UX.
      */
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -81,16 +81,189 @@
 
 <p>This is a standard <a href="https://developer.apple.com/documentation/uikit/uitextfield"><code>UITextField</code></a>, extended to provide an &ldquo;autofill&rdquo; dropdown menu, under the widget. This widget will provide matches, within an Array of Strings, which can be used as &ldquo;autofill.&rdquo; If one of the strings is selected by the user, then it is entered, in its entirety, into the text field.</p>
 
-<p><img src="img/Figure-01.png" alt="Example Display"></p>
+<p><img src="img/Figure-01.png" alt="Example Display">
+Figure 1: The Widget&rsquo;s Standard Display, with a &ldquo;Begins With&rdquo; Action</p>
 
 <p>This is, by default, a simple, &ldquo;one-way,&rdquo; &ldquo;greedy&rdquo; match. It starts from the beginning, then moves forward, matching the characters entered into the text field. They must all match, but the match can be case/diacritical-independednt (by default).</p>
 
 <p>We can choose several modes of matching, so we can &ldquo;wildcard&rdquo; text before and/or after the string (or insist on an exact match).</p>
+
+<p><img src="img/Figure-02.png" alt="Example Display With Wildcard Before and After">
+Figure 2: The Widget&rsquo;s Standard Display, with a &ldquo;Contains&rdquo; Action</p>
+
+<p>The widget has been designed to allow a lot of customization, as well as a very simple way to provide the data to be searched. It also has the ability to be modified for more advanced data searching.</p>
+
+<p>The user must actuall select a table row. There is no &ldquo;tab&rdquo; autofill. This is for things like phones, where that doesn&rsquo;t really make sense, and the application may have other plans for the return function.</p>
 <h2 id='what-problem-does-this-solve' class='heading'>WHAT PROBLEM DOES THIS SOLVE?</h2>
 
 <p>Entering text on phones isn&rsquo;t easy. This helps to reduce the amount of text we actually need to enter.</p>
 
 <p>Additionally, this can help us to &ldquo;explore&rdquo; datasets, by entering partial specifications. For example, if we are searching for users in a certain area, we might do a &ldquo;triage&rdquo; search, and create a subset of the main database of users, for the locality. These can be used as autofill suggestions, when looking for a user.</p>
+<h2 id='implementation' class='heading'>IMPLEMENTATION</h2>
+<h3 id='where-to-get-the-package' class='heading'>Where to Get the Package</h3>
+
+<p>You can get this package as a <a href="https://swift.org/package-manager/">Swift Package Manager</a> (SPM) package, or you can include it, using <a href="https://github.com/Carthage/Carthage">GitHub&rsquo;s Carthage Package Manager</a>. Finally, you can also <a href="https://github.com/RiftValleySoftware/RVS_AutofillTextField">directly access the GitHub repository</a>, and simply include <a href="https://github.com/RiftValleySoftware/RVS_AutofillTextField/blob/master/Sources/RVS_AutofillTextField/RVS_AutofillTextField.swift">the single source file</a> into your app.</p>
+<h4 id='the-swift-package-manager' class='heading'>The Swift Package Manager</h4>
+
+<p>In order to use the SPM, add the package to your project with its GitHub repo location:</p>
+<pre class="highlight plaintext"><code>git@github.com:RiftValleySoftware/RVS_AutofillTextField.git (SSH),
+</code></pre>
+
+<p>or</p>
+<pre class="highlight plaintext"><code>https://github.com/RiftValleySoftware/RVS_AutofillTextField.git (HTTPS).
+</code></pre>
+
+<p>Add the static <code><a href="Classes/RVS_AutofillTextField.html">RVS_AutofillTextField</a></code> library to your project, and add the following <code>import</code> line to the top of the files that will use the widget:</p>
+<pre class="highlight plaintext"><code>import RVS_AutofillTextField
+</code></pre>
+<h4 id='carthage' class='heading'>Carthage</h4>
+
+<p>Add the following line to your <a href="https://github.com/Carthage/Carthage/blob/master/Documentation/Artifacts.md#cartfile">Cartfile</a>:</p>
+<pre class="highlight plaintext"><code>github "RiftValleySoftware/RVS_AutofillTextField.git"
+</code></pre>
+
+<p>Then, run <code>carthage update</code> in the main project directory.</p>
+
+<p>This will create a directory, called &ldquo;Carthage&rdquo;. Inside of that, will be another directory, called <code>Checkins</code>. Inside of that, will be <code>RVS_AutofillTextField/Sources/RVS_AutofillTextField/RVS_AutofillTextField.swift</code>.</p>
+
+<p>I recommend that you include this file directly into your app, as opposed to building the library, and adding that. If you do this, there will be no need to import a module. Additionally, the IBDesignables stuff should work (these are the previews in the storyboard file).</p>
+<h4 id='directly-from-github' class='heading'>Directly From GitHub</h4>
+
+<p>The above Carthage instructions will also basically apply to getting the file from GitHub. You can use the following GitHub URLs to access the repository:</p>
+<pre class="highlight plaintext"><code>git@github.com:RiftValleySoftware/RVS_AutofillTextField.git (SSH),
+</code></pre>
+
+<p>or</p>
+<pre class="highlight plaintext"><code>https://github.com/RiftValleySoftware/RVS_AutofillTextField.git (HTTPS).
+</code></pre>
+
+<p>You can add the repo as a <a href="https://git-scm.com/book/en/v2/Git-Tools-Submodules">Git Submodule</a>, or even as a separate repo, that you use as a source for the physical file.</p>
+
+<p>Get the same file, as indicated by Carthage, and add it to your project.</p>
+<h3 id='customizing-the-widget' class='heading'>Customizing the widget</h3>
+
+<p>You instantiate the control, in exactly the same way that you would, an instance of <a href="https://developer.apple.com/documentation/uikit/uitextfield"><code>UITextField</code></a>. This can be done programmatically:</p>
+<pre class="highlight plaintext"><code>var myTextEntryWidget = RVS_AutofillTextField(frame: widgetFrame)
+</code></pre>
+
+<p>or using Interface Builder, and a storyboard/IB file:</p>
+
+<p><img src="img/Figure-03.png" alt="Adding A Text Field">
+Figure 3: Dragging In A Text Field Object</p>
+
+<p>Start by dragging in a Text Field.</p>
+
+<p><img src="img/Figure-04.png" alt="Setting The Type">
+Figure 4: Setting the Class (and Possibly, the Module).</p>
+
+<p>Convert the Class to an instance of <code><a href="Classes/RVS_AutofillTextField.html">RVS_AutofillTextField</a></code>. You may need to also set the module (if not directly including the file).</p>
+
+<p><img src="img/Figure-05.png" alt="Accessing the Widdget">
+Figure 5: The Widget, in Its New Home.</p>
+
+<p>It will now show up as a standard Text Field.</p>
+
+<p><img src="img/Figure-06.png" alt="The Widget Parameters">
+Figure 6: The Custom Widget Parameters.</p>
+
+<p>These are the custom parameters for the <code><a href="Classes/RVS_AutofillTextField.html">RVS_AutofillTextField</a></code> type.</p>
+
+<p><img src="img/Figure-07.png" alt="The Standard Text Field Parameters">
+Figure 7: The Standard Text Field Parameters.</p>
+
+<p>But we also have the traditional Text Field controls.</p>
+
+<hr>
+
+<p><strong>NOTE</strong></p>
+
+<p>The dropdown menu attaches to the main root screen view, so it &ldquo;floats&rdquo; above everything else. <strong>It is not modal.</strong> You can still access everything behind it.</p>
+
+<p>Also, the dropdown only appears when the widget has focus, and has text in it that matches the selections.</p>
+
+<hr>
+<h3 id='setting-up-the-data-source' class='heading'>Setting Up the Data Source</h3>
+
+<p>The widget won&rsquo;t work, without a data source. You can&rsquo;t add the data source via the storyboard. It needs to be done programmatically. This is because we did not want to force the user of this widget to have to start with an <a href="https://developer.apple.com/documentation/objectivec/nsobject"><code>NSObject</code></a>-based class (required to have the data source available via IB).</p>
+
+<p>Once the widget has been installed/instantiated, it needs to be referenced by <a href="https://github.com/RiftValleySoftware/RVS_AutofillTextField/blob/master/Tests/RVS_AutofillTextField/RVS_AutofillTextField_Test_Harness/Sources/RVS_AutofillTextField_Test_Harness_ViewController.swift#L176">an internal property</a>, like so:</p>
+<pre class="highlight plaintext"><code>/* ################################################################## */
+/**
+ This is the CuT (Code Under Test). It is the test target instance of `RVS_AutofillTextField`.
+ */
+@IBOutlet weak var autofillTextField: RVS_AutofillTextField!
+</code></pre>
+
+<p><a href="https://github.com/RiftValleySoftware/RVS_AutofillTextField/blob/master/Tests/RVS_AutofillTextField/RVS_AutofillTextField_Test_Harness/Sources/RVS_AutofillTextField_Test_Harness_ViewController.swift#L223">During the load setup, we should add the data source</a>, like so:</p>
+<pre class="highlight plaintext"><code>/* ################################################################## */
+/**
+ Called when the view hierarchy has been loaded. We use this to sync the CuT with the UX.
+ */
+override func viewDidLoad() {
+    super.viewDidLoad()
+    autofillTextField?.dataSource = self
+</code></pre>
+
+<p>The above examples were taken directly from <a href="https://github.com/RiftValleySoftware/RVS_AutofillTextField/tree/master/Tests/RVS_AutofillTextField/RVS_AutofillTextField_Test_Harness">the test harness project</a>. In that project, the main View Controller is also <a href="https://github.com/RiftValleySoftware/RVS_AutofillTextField/blob/master/Sources/RVS_AutofillTextField/RVS_AutofillTextField.swift#L197">the <code><a href="Protocols/RVS_AutofillTextFieldDataSource.html">RVS_AutofillTextFieldDataSource</a></code>-conformant Instance</a>.</p>
+<h3 id='conforming-to-the-data-source-protocol' class='heading'>Conforming to the Data Source Protocol</h3>
+
+<p><a href="https://github.com/RiftValleySoftware/RVS_AutofillTextField/blob/master/Sources/RVS_AutofillTextField/RVS_AutofillTextField.swift#L190">The <code><a href="Protocols/RVS_AutofillTextFieldDataSource.html">RVS_AutofillTextFieldDataSource</a></code> protocol</a> is really very simple.</p>
+
+<p>It requires that an Array of <a href="https://github.com/RiftValleySoftware/RVS_AutofillTextField/blob/master/Sources/RVS_AutofillTextField/RVS_AutofillTextField.swift#L127">a simple struct</a> be supplied to the widget, which will then be used to provide the autofill &ldquo;fuel.&rdquo;</p>
+
+<p>Each instance of the struct will have two properties:</p>
+<h5 id='the-value-property' class='heading'>The value Property</h5>
+
+<p>This is a simple <code>String</code>. It has the full string to be searched, and, possibly, offered to replace the contents of the text field.</p>
+<h5 id='the-refcon-property' class='heading'>The refCon Property</h5>
+
+<p>This allows you to attach an arbitrary &ldquo;reference context&rdquo; to the element. This is how you can attach things like references to other properties or objects. It is an optional <code>Any?</code> value, defaulted to <code>nil</code>, so there is no need to define it. It&rsquo;s just there, for you.</p>
+
+<p>This Array can be provided in one of two ways:</p>
+<h4 id='the-really-simple-way' class='heading'>The Really Simple Way</h4>
+
+<p>By default, the data source protocol does a rather simple, naive search for matches. If we are happy with this, then all we need to do, is provide a property, <a href="https://github.com/RiftValleySoftware/RVS_AutofillTextField/blob/master/Tests/RVS_AutofillTextField/RVS_AutofillTextField_Test_Harness/Sources/RVS_AutofillTextField_Test_Harness_ViewController.swift#L242">like so</a>:</p>
+<pre class="highlight plaintext"><code>/* ################################################################## */
+/**
+ This is an Array of structs, that are the searchable data collection for the text field.
+ If this is empty, then no searches will return any results.
+ */
+var textDictionary: [RVS_AutofillTextFieldDataSourceType] {
+    testingTextDictionary.compactMap {
+        let currentStr = $0.trimmingCharacters(in: .whitespacesAndNewlines)
+        return !currentStr.isEmpty ? RVS_AutofillTextFieldDataSourceType(value: currentStr) : nil
+    }
+}
+</code></pre>
+
+<p>The protocol default will take care of searching and matching for us.</p>
+<h3 id='the-more-complex-way' class='heading'>The More Complex Way</h3>
+
+<p>If you want to have a way to optimize or otherwise filter/interpret the data being given to the widget, your data source can implement <a href="https://github.com/RiftValleySoftware/RVS_AutofillTextField/blob/master/Sources/RVS_AutofillTextField/RVS_AutofillTextField.swift#L208">the <code>getTextDictionaryFromThis(string inString: String, isCaseSensitive inIsCaseSensitive: Bool, isWildcardBefore inIsWildcardBefore: Bool, isWildcardAfter inIsWildcardAfter: Bool, maximumAutofillCount inMaximumAutofillCount: Int) -&gt; [RVS_AutofillTextFieldDataSourceType]</code> method</a></p>
+
+<p>This is called by the widget repeatedly, with a String, containing the current text contents, and returns a filtered and searched Array of elements.</p>
+
+<p>You must implement at least one of the above methods. If you don&rsquo;t then you just have a normal <code>UITextField</code> instance.</p>
+<h3 id='the-widget-options' class='heading'>The Widget Options</h3>
+
+<p>The widget has a few optional fields that are available via the storyboard (Figure 6).</p>
+
+<ol>
+<li><p><code>isAutoFillOn</code>
+This is a Bool value that is a &ldquo;main circuit breaker&rdquo; for the functionality. Default is on. If off, then the widget is just a regular <code>UITextField</code>.</p></li>
+<li><p><code>isCaseSensitive</code>
+If this is on (default is off), then searches take case and diacriticals into account. If off, then the search ignores diacriticals and case.</p></li>
+<li><p><code>isWildcardBefore</code>
+If this is on (default is off), then we ignore characters <strong>before</strong> the match, so the match can be further into the string. It does not need to start the string.</p></li>
+<li><p><code>isWildcardAfter</code>
+If this is on (default is on), then characters <strong>after</strong> the match are ignored.</p></li>
+<li><p><code>maximumAutofillCount</code>
+This is an integer value that designates the maximum number of results that show up in the table. If it is set to -1 (or any negative number), then there will be no limit, and the table could get quite large (and scroll). Default is 5.</p></li>
+</ol>
+
+<p>If you are looking for an exact match, then turn off both wildcards. If you make it case-sensitive, then the string must match exactly.</p>
+
+<p>If you are looking for a case-insensitive match at the start, just leave the defaults. If you are looking for an &ldquo;ends with&rdquo; match, then turn on the before wildcards, and turn off the after wildcards.</p>
 
           </div>
         </section>
