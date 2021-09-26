@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>RVS_AutofillTextFieldDataSource Protocol Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset="utf-8">
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+    <script src="../js/lunr.min.js" defer></script>
+    <script src="../js/typeahead.jquery.js" defer></script>
+    <script src="../js/jazzy.search.js" defer></script>
+  </head>
+  <body>
+
+    <a name="//apple_ref/swift/Protocol/RVS_AutofillTextFieldDataSource" class="dashAnchor"></a>
+
+    <a title="RVS_AutofillTextFieldDataSource Protocol Reference"></a>
+
+    <header class="header">
+      <p class="header-col header-col--primary">
+        <a class="header-link" href="../index.html">
+          RVS_AutofillTextField Public API Doumentation
+        </a>
+         (100% documented)
+      </p>
+    
+      <p class="header-col--secondary">
+        <form role="search" action="../search.json">
+          <input type="text" placeholder="Search documentation" data-typeahead>
+        </form>
+      </p>
+    
+        <p class="header-col header-col--secondary">
+          <a class="header-link" href="https://github.com/RiftValleySoftware/RVS_AutofillTextField">
+            <img class="header-icon" src="../img/gh.png"/>
+            View on GitHub
+          </a>
+        </p>
+    
+    </header>
+
+    <p class="breadcrumbs">
+      <a class="breadcrumb" href="../index.html">RVS_AutofillTextField Reference</a>
+      <img class="carat" src="../img/carat.png" />
+      RVS_AutofillTextFieldDataSource Protocol Reference
+    </p>
+
+    <div class="content-wrapper">
+      <nav class="navigation">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/RVS_AutofillTextField.html">RVS_AutofillTextField</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/RVS_AutofillTextFieldDataSourceType.html">RVS_AutofillTextFieldDataSourceType</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/RVS_AutofillTextFieldDataSource.html">RVS_AutofillTextFieldDataSource</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+
+        <section class="section">
+          <div class="section-content top-matter">
+            <h1>RVS_AutofillTextFieldDataSource</h1>
+              <div class="declaration">
+                <div class="language">
+                  
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">RVS_AutofillTextFieldDataSource</span></code></pre>
+
+                </div>
+              </div>
+            <p>The text field class will require an instance of a class that conforms to this protocol. It will supply the data to be displayed in the autofill table.
+If the data source does not supply any data, then the text field acts just like any other text field.</p>
+
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-content">
+            <div class="task-group">
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21RVS_AutofillTextField0a1_bcD10DataSourceP14textDictionarySayAA0a1_bcdeF4TypeCGvp"></a>
+                    <a name="//apple_ref/swift/Property/textDictionary" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21RVS_AutofillTextField0a1_bcD10DataSourceP14textDictionarySayAA0a1_bcdeF4TypeCGvp">textDictionary</a>
+                    </code>
+                      <span class="declaration-note">
+                        Default implementation
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>This is an Array of structs, that are the searchable data collection for the text field.
+You can leave this undefined in your conformance, as the <code>getTextDictionaryFromThis</code> method is all that is necessary to supply the searchable Array.
+If you are using the default implementation of <code>getTextDictionaryFromThis</code>, then you <strong>MUST</strong> provide your own version of this Array.
+However, if you do leave this undefined, then you <strong>MUST</strong> implement your own version of <code>getTextDictionaryFromThis</code>.
+If this is not implemented, or is empty, and there is no custom implementation of <code>getTextDictionaryFromThis</code>, then no searches will return any results.</p>
+
+                      </div>
+                      <h4>Default Implementation</h4>
+                      <div class="default_impl abstract">
+                        <p>Default is an empty Array.
+If you are using the default implementation of <code>getTextDictionaryFromThis</code>, then you <strong>MUST</strong> provide your own version of this Array.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">textDictionary</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Classes/RVS_AutofillTextFieldDataSourceType.html">RVS_AutofillTextFieldDataSourceType</a></span><span class="p">]</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21RVS_AutofillTextField0a1_bcD10DataSourceP03getC18DictionaryFromThis6string15isCaseSensitive0L14WildcardBefore0lO5After07maximumB5CountSayAA0a1_bcdeF4TypeCGSS_S3bSitF"></a>
+                    <a name="//apple_ref/swift/Method/getTextDictionaryFromThis(string:isCaseSensitive:isWildcardBefore:isWildcardAfter:maximumAutofillCount:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21RVS_AutofillTextField0a1_bcD10DataSourceP03getC18DictionaryFromThis6string15isCaseSensitive0L14WildcardBefore0lO5After07maximumB5CountSayAA0a1_bcdeF4TypeCGSS_S3bSitF">getTextDictionaryFromThis(string:<wbr>isCaseSensitive:<wbr>isWildcardBefore:<wbr>isWildcardAfter:<wbr>maximumAutofillCount:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Default implementation
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>This searches the Array, for strings that match the given String, according to the parameters included with the invocation.
+If you do leave <code><a href="../Protocols/RVS_AutofillTextFieldDataSource.html#/s:21RVS_AutofillTextField0a1_bcD10DataSourceP14textDictionarySayAA0a1_bcdeF4TypeCGvp">textDictionary</a></code> undefined, then you <strong>MUST</strong> implement your own version of this method.
+The protocol default does a rather naive comparison that is likely to be sufficient for most purposes (which requires that you implement <code><a href="../Protocols/RVS_AutofillTextFieldDataSource.html#/s:21RVS_AutofillTextField0a1_bcD10DataSourceP14textDictionarySayAA0a1_bcdeF4TypeCGvp">textDictionary</a></code>).</p>
+
+                      </div>
+                      <h4>Default Implementation</h4>
+                      <div class="default_impl abstract">
+                        <p>Default uses the Array extension subscripts to search the Array.
+If you do leave <code>textDictionary</code> undefined, then you <strong>MUST</strong> implement your own version of this method.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">getTextDictionaryFromThis</span><span class="p">(</span><span class="nv">string</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">isCaseSensitive</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">,</span> <span class="nv">isWildcardBefore</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">,</span> <span class="nv">isWildcardAfter</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">,</span> <span class="nv">maximumAutofillCount</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt"><a href="../Classes/RVS_AutofillTextFieldDataSourceType.html">RVS_AutofillTextFieldDataSourceType</a></span><span class="p">]</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>string</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The String to search for</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>isCaseSensitive</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>False, by default. If true, the String must match case, as well as content.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>isWildcardBefore</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>False, by default. If true, then the String can be preceded by other characters. If false, the given String must start the value being tested.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>isWildcardAfter</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>True, by default. If true, then the String can be followed by other characters. If false, the given String must end the value being tested.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>maximumAutofillCount</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>5, by default. This is the maximum number of results to return. The return can contain fewer elements.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>An Array of elements that conform to the <code><a href="../Classes/RVS_AutofillTextFieldDataSourceType.html">RVS_AutofillTextFieldDataSourceType</a></code> protocol.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+      </article>
+    </div>
+    <section class="footer">
+      <p>&copy; 2021 <a class="link" href="https://riftvalleysoftware.com" target="_blank" rel="external">The Great Rift Valley Software Company</a>. All rights reserved. (Last updated: 2021-09-26)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.7</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+    </section>
+  </body>
+</div>
+</html>

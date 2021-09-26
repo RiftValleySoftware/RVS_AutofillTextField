@@ -24,7 +24,7 @@ import PackageDescription
 let package = Package(
     name: "RVS_AutofillTextField",
     platforms: [
-        .iOS(.v13)
+        .iOS(.v14)
     ],
     products: [
         .library(name: "RVS-AutofillTextField",

@@ -32,6 +32,8 @@ fileprivate extension Array where Element == RVS_AutofillTextFieldDataSourceType
     /**
      This looks for a substring inside another string.
      
+     This is a very "greedy" and simple search. It simply moves forward, through the text, until the first substring match, and returns the range of that substring.
+     
      - parameter inSubString: This is the String to look for (needle).
      - parameter inInThisString: This is the String to look inside (haystack).
      - parameter isCaseSensitive: Default is false. If true, then the match needs to take case and diacriticals into account. If false, diacriticals are also ignored.
@@ -135,13 +137,13 @@ public class RVS_AutofillTextFieldDataSourceType {
     /**
      The actual String value of this element. Comparisons will happen within this.
      */
-    let value: String
+    public let value: String
 
     /* ################################################################## */
     /**
      This is an arbitrary associated data type. It can be anything, and will be associated with the String value. It should be noted that this will be a strong reference to classes.
      */
-    let refCon: Any?
+    public let refCon: Any?
 
     /* ################################################################## */
     /**
@@ -150,7 +152,7 @@ public class RVS_AutofillTextFieldDataSourceType {
      - parameter value: Required (and must be non-blank). The String value.
      - parameter refCon: Optional (default is nil). This is an arbitrary data item that is associated with this instance. It should be noted that this will be a strong reference to classes.
      */
-    init(value inValue: String, refCon inRefCon: Any? = nil) {
+    public init(value inValue: String, refCon inRefCon: Any? = nil) {
         precondition(!inValue.isEmpty, "Value Must Be Non-Blank!")
         value = inValue
         refCon = inRefCon
@@ -227,14 +229,14 @@ extension RVS_AutofillTextFieldDataSource {
      Default is an empty Array.
      If you are using the default implementation of `getTextDictionaryFromThis`, then you **MUST** provide your own version of this Array.
      */
-    var textDictionary: [RVS_AutofillTextFieldDataSourceType] { [] }
+    public var textDictionary: [RVS_AutofillTextFieldDataSourceType] { [] }
     
     /* ################################################################## */
     /**
      Default uses the Array extension subscripts to search the Array.
      If you do leave `textDictionary` undefined, then you **MUST** implement your own version of this method.
      */
-    func getTextDictionaryFromThis(string inString: String, isCaseSensitive inIsCaseSensitive: Bool = false, isWildcardBefore inIsWildcardBefore: Bool = false, isWildcardAfter inIsWildcardAfter: Bool = true, maximumAutofillCount inMaximumAutofillCount: Int = 5) -> [RVS_AutofillTextFieldDataSourceType] {
+    public func getTextDictionaryFromThis(string inString: String, isCaseSensitive inIsCaseSensitive: Bool, isWildcardBefore inIsWildcardBefore: Bool, isWildcardAfter inIsWildcardAfter: Bool, maximumAutofillCount inMaximumAutofillCount: Int) -> [RVS_AutofillTextFieldDataSourceType] {
         
         let localTextDictionary = textDictionary
         
@@ -264,7 +266,11 @@ extension RVS_AutofillTextFieldDataSource {
 /* ###################################################################################################################################### */
 /**
  This class overloads the standard UITextField widget to provide a realtime "dropdown" menu of possible autocomplete choices (in a table and modal-style screen).
+ The dropdown is always displayed below the text field, and is attached to the main window root view (so it appears over everything else). It is not modal.
  If the user selects a value from the table, that entire string is entered into the text field, and the dropdown is dismissed.
+ The dropdown is dismissed whenever focus leaves the text item.
+ When focus is set to the text field, the current text is evaluated, and a dropdown may appear, if required.
+ If the autofill functionality is not available, or is explicitly deactivated, the text item behaves exactly like a standard `UITextField`.
  */
 @IBDesignable
 open class RVS_AutofillTextField: UITextField {
