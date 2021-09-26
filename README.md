@@ -29,7 +29,7 @@ We can choose several modes of matching, so we can "wildcard" text before and/or
 
 The widget has been designed to allow a lot of customization, as well as a very simple way to provide the data to be searched. It also has the ability to be modified for more advanced data searching.
 
-The user must actuall select a table row. There is no "tab" autofill. This is for things like phones, where that doesn't really make sense, and the application may have other plans for the return function.
+The user must actually select a table row. There is no "tab" autofill. This is for things like phones, where that doesn't really make sense, and the application may have other plans for the return function.
 
 ## WHAT PROBLEM DOES THIS SOLVE?
 
