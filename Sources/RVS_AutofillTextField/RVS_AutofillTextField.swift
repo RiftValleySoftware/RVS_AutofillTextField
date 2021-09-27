@@ -150,6 +150,12 @@ open class RVS_AutofillTextField: UITextField {
 
     /* ################################################################## */
     /**
+     This allows us to assign an explicit "container" view for the popover. Default is nil. If not provided, the main window root view is used.
+     */
+    public weak var containerView: UIView?
+
+    /* ################################################################## */
+    /**
      This is the data source for this widget. Be aware that this is a strong reference.
      This is not inspectable, and must be assigned programmatically.
      */
@@ -199,7 +205,7 @@ extension RVS_AutofillTextField {
             return
         }
         
-        if let containerView = window?.rootViewController?.view {
+        if let containerView = containerView ?? window?.rootViewController?.view {
             let containerBounds = containerView.bounds
             let maxTableWidth = max(bounds.size.width, minimumTableWidthInDisplayUnits)
             let numberOfRows = CGFloat(_currentAutoFill.count)

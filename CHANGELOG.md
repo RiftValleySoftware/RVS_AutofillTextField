@@ -1,5 +1,11 @@
 # RVS_AutofillTextField Change Log
 
+## 1.1.0
+
+- **September 27, 2021**
+
+- Added the ability to explicitly assign a container view for the popover. If that view is not provided, then the main window root view is used.
+
 ## 1.0.2
 
 - **September 27, 2021**
