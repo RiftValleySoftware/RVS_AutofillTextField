@@ -1,5 +1,13 @@
 # RVS_AutofillTextField Change Log
 
+## 1.0.2
+
+- **September 27, 2021**
+
+- Mostly documentation improvements.
+- The control will redraw the table background, every time it refreshes, as opposed to just when it is created. This allows "on the fly" color changes.
+- The control will now refresh when a few of the properties are changed.
+
 ## 1.0.1
 
 - **September 26, 2021**
