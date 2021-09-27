@@ -4,7 +4,16 @@
 
 ## INTRODUCTION
 
-This is the test harness app for [the RVS_AutofillTextField project](https://github.com/RiftValleySoftware/RVS_AutofillTextField/).
+This is the test harness app for [the RVS_AutofillTextField project](https://github.com/RiftValleySoftware/RVS_AutofillTextField/). It is a simple, standalone, iOS native Swift app, based on the [standard (classic) UIKit](https://developer.apple.com/documentation/uikit) model.
+
+## REQUIREMENTS
+
+There are no dependencies to use the widget, itself, but there are a couple that are required for this test harness:
+
+1. [`RVS_Checkbox`](https://github.com/RiftValleySoftware/RVS_Checkbox)
+2. [`RVS_GeneralObserver`](https://github.com/RiftValleySoftware/RVS_GeneralObserver)
+
+The test harness builds [a dynamic framework](https://developer.apple.com/library/archive/documentation/DeveloperTools/Conceptual/DynamicLibraries/100-Articles/OverviewOfDynamicLibraries.html) of the widget, and imports it, in order to provide a relevant usage example, similar to use of the widget via [the Swift Package Manager](https://swift.org/package-manager/).
 
 ## USAGE
 

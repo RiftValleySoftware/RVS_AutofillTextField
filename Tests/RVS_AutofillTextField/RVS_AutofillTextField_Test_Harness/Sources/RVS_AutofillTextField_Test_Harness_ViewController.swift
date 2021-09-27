@@ -170,7 +170,19 @@ class RVS_AutofillTextField_Test_Harness_ViewController: UIViewController, RVS_G
                                             "holy çow",
                                             "holly kow",
                                             "Holy cow, Batman!",
-                                            "What is Gary Larsen's favorite critter?"
+                                            "What is Gary Larsen's favorite critter?",
+                                            "What is it, with you and cows, anyway?"
+    ]
+    
+    /* ################################################################## */
+    /**
+     This contains color combinations that are applied for various values of the segmented switch.
+     */
+    var segmentColorThemeValues: [(backgroundColor: UIColor, textColor: UIColor)] = [
+        (backgroundColor: .systemBackground.withAlphaComponent(0.75), textColor: .label),   // Use whatever the system decides.
+        (backgroundColor: .white.withAlphaComponent(0.75), textColor: .black),              // Force a light appearance
+        (backgroundColor: .black.withAlphaComponent(0.75), textColor: .white),              // Force a dark appearance
+        (backgroundColor: .systemRed.withAlphaComponent(0.75), textColor: .yellow)          // MY EYES MY EYES
     ]
         
     /* ################################################################## */
@@ -214,6 +226,12 @@ class RVS_AutofillTextField_Test_Harness_ViewController: UIViewController, RVS_G
      This is the maximum number of results edit field. If set to -1, then we will display all possible matches in the dropdown.
      */
     @IBOutlet weak var maximumResultCount: UITextField!
+
+    /* ################################################################## */
+    /**
+     This control allows us to select an explicit "color theme" for the text field.
+     */
+    @IBOutlet weak var colorSegmentedControl: UISegmentedControl!
 }
 
 /* ###################################################################################################################################### */
@@ -232,6 +250,17 @@ extension RVS_AutofillTextField_Test_Harness_ViewController {
         autofillTextField?.isWildcardAfter = isWildcardAfterCheckbox?.isOn ?? false
         autofillTextField?.isCaseSensitive = isCaseSensitiveCheckbox?.isOn ?? false
         autofillTextField?.maximumAutofillCount = Int(maximumResultCount?.text ?? "0") ?? 0
+    }
+    
+    /* ################################################################## */
+    /**
+     This sets the color theme, according to the segmented switch.
+     */
+    func selectColorTheme() {
+        let selectedColorTheme = segmentColorThemeValues[colorSegmentedControl?.selectedSegmentIndex ?? 0]
+        
+        autofillTextField?.tableBackgroundColor = selectedColorTheme.backgroundColor
+        autofillTextField?.tableTextColor = selectedColorTheme.textColor
     }
 }
 
@@ -332,6 +361,16 @@ extension RVS_AutofillTextField_Test_Harness_ViewController {
      */
     @IBAction func maximumCountChanged(_ inSender: UITextField) {
         autofillTextField?.maximumAutofillCount = Int(inSender.text ?? "0") ?? 0
+    }
+
+    /* ################################################################## */
+    /**
+     Called when the "color theme" has changed.
+     
+     - parameter inSegmentedControl: The segmented control that changed.
+     */
+    @IBAction func colorSegmentedControlChanged(_ inSegmentedControl: UISegmentedControl) {
+        selectColorTheme()
     }
 
     /* ################################################################## */

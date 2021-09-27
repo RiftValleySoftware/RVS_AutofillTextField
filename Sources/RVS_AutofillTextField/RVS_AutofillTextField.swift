@@ -95,14 +95,14 @@ open class RVS_AutofillTextField: UITextField {
      When the table comes up, this will be the color. The default is the standard system color, with a 0.25 alpha.
      */
     @IBInspectable
-    public var tableBackgroundColor: UIColor = .systemBackground.withAlphaComponent(RVS_AutofillTextField._tableBackgroundAlpha)
+    public var tableBackgroundColor: UIColor = .systemBackground.withAlphaComponent(RVS_AutofillTextField._tableBackgroundAlpha) { didSet { DispatchQueue.main.async { self.setNeedsLayout() } } }
 
     /* ################################################################## */
     /**
      This is the text color to use in the table. Default is label color.
      */
     @IBInspectable
-    public var tableTextColor: UIColor = .label
+    public var tableTextColor: UIColor = .label { didSet { DispatchQueue.main.async { self.setNeedsLayout() } } }
 
     /* ################################################################## */
     /**
@@ -110,7 +110,15 @@ open class RVS_AutofillTextField: UITextField {
      It will also never go beyond the trailing edge of the screen.
      */
     @IBInspectable
-    public var minimumTableWidthInDisplayUnits: CGFloat = 100
+    public var minimumTableWidthInDisplayUnits: CGFloat = 100 { didSet { DispatchQueue.main.async { self.setNeedsLayout() } } }
+    
+    /* ################################################################## */
+    /**
+     This is the maximum number of results to be returned. Default is 5.
+     If -1, then there is no limit.
+     */
+    @IBInspectable
+    public var maximumAutofillCount: Int = 5 { didSet { DispatchQueue.main.async { self.setNeedsLayout() } } }
 
     /* ################################################################## */
     /**
@@ -139,14 +147,6 @@ open class RVS_AutofillTextField: UITextField {
      */
     @IBInspectable
     public var isWildcardAfter: Bool = true
-    
-    /* ################################################################## */
-    /**
-     This is the maximum number of results to be returned. Default is 5.
-     If -1, then there is no limit.
-     */
-    @IBInspectable
-    public var maximumAutofillCount: Int = 5
 
     /* ################################################################## */
     /**
@@ -214,7 +214,6 @@ extension RVS_AutofillTextField {
                     if let autoCompleteTable = _autoCompleteTable {
                         autoCompleteTable.dataSource = self
                         autoCompleteTable.delegate = self
-                        autoCompleteTable.backgroundColor = tableBackgroundColor
                         autoCompleteTable.rowHeight = Self._tableRowHeightInDisplayUnits
                         autoCompleteTable.layer.cornerRadius = Self._tableRoundedCornerInDisplayUnits
                         autoCompleteTable.clipsToBounds = true
@@ -222,6 +221,8 @@ extension RVS_AutofillTextField {
                         containerView.addSubview(autoCompleteTable)
                     }
                 }
+                
+                _autoCompleteTable?.backgroundColor = tableBackgroundColor
                 
                 if let autoCompleteTable = _autoCompleteTable,
                    tableFrame != autoCompleteTable.frame {
