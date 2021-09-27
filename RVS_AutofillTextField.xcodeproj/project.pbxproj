@@ -44,6 +44,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		D4385EFD2701D4FC0061ABC6 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = Tests/RVS_AutofillTextField/README.md; sourceTree = SOURCE_ROOT; };
 		D43CCC0527009D0B00131C62 /* RVS_AutofillTextField.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RVS_AutofillTextField.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D43CCC2D2700A13000131C62 /* RVS_AutofillTextField_Test_Harness (Framework)-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = "RVS_AutofillTextField_Test_Harness (Framework)-Info.plist"; path = "Tests/RVS_AutofillTextField/RVS_AutofillTextField_Test_Harness/RVS_AutofillTextField_Test_Harness (Framework)-Info.plist"; sourceTree = SOURCE_ROOT; };
 		D452CC7F27012A66005AA73F /* Warnings.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Warnings.xcconfig; sourceTree = "<group>"; };
@@ -139,6 +140,7 @@
 		D491CC4226FD0D720005817A /* RVS_AutofillTextField_Test_Harness */ = {
 			isa = PBXGroup;
 			children = (
+				D4385EFD2701D4FC0061ABC6 /* README.md */,
 				D4E68A6726FD11BA002B6451 /* Sources */,
 				D4E68A6626FD11AF002B6451 /* Resources */,
 			);
