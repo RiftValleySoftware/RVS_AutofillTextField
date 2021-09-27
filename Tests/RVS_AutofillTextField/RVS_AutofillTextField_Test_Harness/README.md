@@ -1,4 +1,4 @@
-![Icon](../../img/icon.png)
+![Icon](../../../img/icon.png)
 
 # RVS_AutofillTextField_Test_Harness
 
@@ -19,7 +19,7 @@ The test harness builds [a dynamic framework](https://developer.apple.com/librar
 
 ### The Main Screen
 
-![The Main Screen, Itemized](../../img/TH-Figure-01.png)
+![The Main Screen, Itemized](../../../img/TH-Figure-01.png)
 
 *Figure 1: The Main Screen, Itemized*
 
