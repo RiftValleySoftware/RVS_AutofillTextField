@@ -1,6 +1,6 @@
 /* ###################################################################################################################################### */
 /**
- © Copyright 2018-2021, The Great Rift Valley Software Company.
+ © Copyright 2021, The Great Rift Valley Software Company.
  
  MIT License
  
