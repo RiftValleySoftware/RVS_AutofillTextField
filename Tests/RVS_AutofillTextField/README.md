@@ -1,4 +1,4 @@
-![Icon](img/icon.png)
+![Icon](../../img/icon.png)
 
 # RVS_AutofillTextField_Test_Harness
 
