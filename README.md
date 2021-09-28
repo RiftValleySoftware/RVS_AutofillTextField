@@ -238,7 +238,7 @@ You can specify different background and font colors. Default is standard system
 
 #### The Delegate
 
-There is a [`RVS_AutofillTextFieldDelegate`]() protocol. It has a simple method for detecting when the user selects a choice.
+There is a [`RVS_AutofillTextFieldDelegate`](https://riftvalleysoftware.github.io/RVS_AutofillTextField/Protocols/RVS_AutofillTextFieldDelegate.html) protocol. It has a simple method for detecting when the user selects a choice.
 
 You assign the delegate by simply setting it to the [`UITextField.delegate`](https://riftvalleysoftware.github.io/RVS_AutofillTextField/Protocols/RVS_AutofillTextFieldDelegate.html) property. It needs to be a [`UITextFieldDelegate`](https://developer.apple.com/documentation/uikit/uitextfielddelegate/)
 (which also means that the delegate must be an [`NSObject`](https://developer.apple.com/documentation/objectivec/nsobject)), even if it is not using any of the delegate functionality.
