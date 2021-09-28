@@ -302,7 +302,7 @@ This is an integer value that designates the maximum number of results that show
 
 <p>There is a <a href=""><code><a href="Protocols/RVS_AutofillTextFieldDelegate.html">RVS_AutofillTextFieldDelegate</a></code></a> protocol. It has a simple method for detecting when the user selects a choice.</p>
 
-<p>You assign the delegate by simply setting it to the <a href=""><code>UITextField.delegate</code></a> property. It needs to be a <a href="https://developer.apple.com/documentation/uikit/uitextfielddelegate/"><code>UITextFieldDelegate</code></a>
+<p>You assign the delegate by simply setting it to the <a href="https://riftvalleysoftware.github.io/RVS_AutofillTextField/Protocols/RVS_AutofillTextFieldDelegate.html"><code>UITextField.delegate</code></a> property. It needs to be a <a href="https://developer.apple.com/documentation/uikit/uitextfielddelegate/"><code>UITextFieldDelegate</code></a>
 (which also means that the delegate must be an <a href="https://developer.apple.com/documentation/objectivec/nsobject"><code>NSObject</code></a>), even if it is not using any of the delegate functionality.
 This is because we &ldquo;piggyback&rdquo; on the built-in delegate.
 The delegate protocol, itself, does not extend <a href="https://developer.apple.com/documentation/uikit/uitextfielddelegate/"><code>UITextFieldDelegate</code></a>, because it has a data type that won&rsquo;t necessarily work with Objective-C.</p>
