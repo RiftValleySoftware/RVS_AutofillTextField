@@ -125,7 +125,7 @@ extension RVS_AutofillTextField_Test_Harness_ViewController_TableCell {
 /**
  The test harness app is a very simple app, with only one screen. This screen presents a "dashboard" to test the edit text field.
  */
-class RVS_AutofillTextField_Test_Harness_ViewController: UIViewController, RVS_GeneralObserverProtocol {
+class RVS_AutofillTextField_Test_Harness_ViewController: UIViewController, RVS_GeneralObserverProtocol, UITextFieldDelegate {
     /* ################################################################## */
     /**
      `RVS_GeneralObserverProtocol` conformance.
@@ -245,6 +245,7 @@ extension RVS_AutofillTextField_Test_Harness_ViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         autofillTextField?.dataSource = self
+        autofillTextField?.delegate = self  // We need to be a UITextFieldDelegate, as we will leverage the inherited delegate property.
         autofillTextField?.isAutoFillOn = isOnCheckbox?.isOn ?? false
         autofillTextField?.isWildcardBefore = isWildcardBeforeCheckbox?.isOn ?? false
         autofillTextField?.isWildcardAfter = isWildcardAfterCheckbox?.isOn ?? false
@@ -274,10 +275,19 @@ extension RVS_AutofillTextField_Test_Harness_ViewController: RVS_AutofillTextFie
      If this is empty, then no searches will return any results.
      */
     var textDictionary: [RVS_AutofillTextFieldDataSourceType] {
-        testingTextDictionary.compactMap {
+        var index = 0
+        
+        let ret: [RVS_AutofillTextFieldDataSourceType] = testingTextDictionary.compactMap {
             let currentStr = $0.trimmingCharacters(in: .whitespacesAndNewlines)
-            return !currentStr.isEmpty ? RVS_AutofillTextFieldDataSourceType(value: currentStr) : nil
+            if !currentStr.isEmpty {
+                defer { index += 1 }
+                return RVS_AutofillTextFieldDataSourceType(value: currentStr, refCon: index)
+            }
+            
+            return nil
         }
+        
+        return ret
     }
 }
 
@@ -418,5 +428,14 @@ extension RVS_AutofillTextField_Test_Harness_ViewController: UITableViewDataSour
         } else {
             return UITableViewCell()
         }
+    }
+}
+
+/* ###################################################################################################################################### */
+// MARK: RVS_AutofillTextFieldDelegate Conformance
+/* ###################################################################################################################################### */
+extension RVS_AutofillTextField_Test_Harness_ViewController: RVS_AutofillTextFieldDelegate {
+    func autoFillTextField(_ inAutofillTextField: RVS_AutofillTextField, selectionWasMade inSelectedItem: RVS_AutofillTextFieldDataSourceType) {
+        print("The user selected this: \(inSelectedItem.debugDescription)")
     }
 }

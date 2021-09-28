@@ -32,6 +32,9 @@ import UIKit
  The dropdown is dismissed whenever focus leaves the text item.
  When focus is set to the text field, the current text is evaluated, and a dropdown may appear, if required.
  If the autofill functionality is not available, or is explicitly deactivated, the text item behaves exactly like a standard `UITextField`.
+ **NB:** When assigning a delegate, the caller needs to be a [`UITextFieldDelegate`](https://developer.apple.com/documentation/uikit/uitextfielddelegate/), even if they are not using any of the delegate functionality.
+ This is because we "piggyback" on the built-in delegate.
+ This also means that the delegate must be an [`NSObject`](https://developer.apple.com/documentation/objectivec/nsobject).
  */
 @IBDesignable
 open class RVS_AutofillTextField: UITextField {
@@ -205,7 +208,7 @@ extension RVS_AutofillTextField {
             return
         }
         
-        if let containerView = containerView ?? window?.rootViewController?.view {
+        if let containerView = containerView ?? window {
             let containerBounds = containerView.bounds
             let maxTableWidth = max(bounds.size.width, minimumTableWidthInDisplayUnits)
             let numberOfRows = CGFloat(_currentAutoFill.count)
@@ -402,6 +405,7 @@ extension RVS_AutofillTextField: UITableViewDelegate {
         guard let textValue = tableView(inTableView, cellForRowAt: inIndexPath).textLabel?.text,
               !textValue.isEmpty else { return }
         text = textValue
+        (delegate as? RVS_AutofillTextFieldDelegate)?.autoFillTextField(self, selectionWasMade: _currentAutoFill[inIndexPath.row])
         sendActions(for: .editingChanged)
         closeTableViewAndResignFirstResponder()
     }
@@ -428,7 +432,7 @@ public class RVS_AutofillTextFieldDataSourceType {
      This is an arbitrary associated data type. It can be anything, and will be associated with the String value. It should be noted that this will be a strong reference to classes.
      */
     public let refCon: Any?
-
+    
     /* ################################################################## */
     /**
      Standard initializer
@@ -441,6 +445,28 @@ public class RVS_AutofillTextFieldDataSourceType {
         value = inValue
         refCon = inRefCon
     }
+}
+
+/* ###################################################################################################################################### */
+// MARK: CustomDebugStringConvertible Conformance
+/* ###################################################################################################################################### */
+extension RVS_AutofillTextFieldDataSourceType: CustomDebugStringConvertible {
+    /* ################################################################## */
+    /**
+     This gives us a debug display.
+     */
+    public var debugDescription: String { "RVS_AutofillTextFieldDataSourceType {\n\tvalue: \"\(value)\"\n\trefCon: \(String(describing: refCon))\n}" }
+}
+
+/* ###################################################################################################################################### */
+// MARK: CustomStringConvertible Conformance
+/* ###################################################################################################################################### */
+extension RVS_AutofillTextFieldDataSourceType: CustomStringConvertible {
+    /* ################################################################## */
+    /**
+     This gives us a simple display.
+     */
+    public var description: String { "RVS_AutofillTextFieldDataSourceType(value: \"\(value)\", refCon: \(String(describing: refCon)))" }
 }
 
 /* ###################################################################################################################################### */
@@ -472,7 +498,7 @@ extension RVS_AutofillTextFieldDataSourceType: Comparable {
 }
 
 /* ###################################################################################################################################### */
-// MARK: - Published Protocol
+// MARK: - Published Protocols
 // MARK: Data Source Protocol -
 /* ###################################################################################################################################### */
 /**
@@ -544,6 +570,35 @@ extension RVS_AutofillTextFieldDataSource {
         
         return [RVS_AutofillTextFieldDataSourceType](ret[0..<max(0, min(ret.count, 0 <= inMaximumAutofillCount ? inMaximumAutofillCount : ret.count))])
     }
+}
+
+/* ###################################################################################################################################### */
+// MARK: - Delegate Protocol -
+/* ###################################################################################################################################### */
+/**
+ We add methods specific to this class.
+ */
+public protocol RVS_AutofillTextFieldDelegate: AnyObject {
+    /* ################################################################## */
+    /**
+     This is called when the user makes a selection, and the text is entered into the field.
+     It allows you to access the refCon of the selected completion.
+     
+     - parameter autofillTextField: The text field affected.
+     - parameter selectionWasMade: This is the complete data source entity that was selected.
+     */
+    func autoFillTextField(_ autofillTextField: RVS_AutofillTextField, selectionWasMade: RVS_AutofillTextFieldDataSourceType)
+}
+
+/* ###################################################################################################################################### */
+// MARK: Defaults
+/* ###################################################################################################################################### */
+extension RVS_AutofillTextFieldDelegate {
+    /* ################################################################## */
+    /**
+     Default does nothing.
+     */
+    public func autoFillTextField(_: RVS_AutofillTextField, selectionWasMade: RVS_AutofillTextFieldDataSourceType) { }
 }
 
 /* ###################################################################################################################################### */

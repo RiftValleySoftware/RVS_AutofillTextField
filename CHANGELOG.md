@@ -1,5 +1,12 @@
 # RVS_AutofillTextField Change Log
 
+## 1.2.0
+
+- **September 28, 2021**
+
+- Added a delegate protocol, allowing notification of user selection.
+- The dropdown now attaches to the window object. This allows it to float over popovers.
+
 ## 1.1.0
 
 - **September 27, 2021**
