@@ -146,7 +146,7 @@ open class RVS_AutofillTextField: UITextField {
      If -1, then there is no limit.
      */
     @IBInspectable
-    public var maximumAutofillCount: Int = 5 { didSet { DispatchQueue.main.async { self.setNeedsLayout() } } }
+    public var maximumAutofillCount: Int = defaultMaximumCount { didSet { DispatchQueue.main.async { self.setNeedsLayout() } } }
 
     /* ################################################################## */
     /**
@@ -160,21 +160,21 @@ open class RVS_AutofillTextField: UITextField {
      This specifies whether or not matches are case-blind (default), or case-sensitive (true).
      */
     @IBInspectable
-    public var isCaseSensitive: Bool = false
+    public var isCaseSensitive: Bool = defaultIsCaseSensitive
 
     /* ################################################################## */
     /**
      If true (default is false), then the match is made at the end of the string.
      */
     @IBInspectable
-    public var isWildcardBefore: Bool = false
+    public var isWildcardBefore: Bool = defaultIsWildcardBefore
     
     /* ################################################################## */
     /**
      If true (default is true), then the match is made at the beginning of the string.
      */
     @IBInspectable
-    public var isWildcardAfter: Bool = true
+    public var isWildcardAfter: Bool = defaultIsWildcardAfter
 
     /* ################################################################## */
     /**

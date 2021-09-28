@@ -1,5 +1,11 @@
 # RVS_AutofillTextField Change Log
 
+## 1.2.2
+
+- **TBD**
+
+- Code smell cleanup.
+
 ## 1.2.1
 
 - **September 28, 2021**
