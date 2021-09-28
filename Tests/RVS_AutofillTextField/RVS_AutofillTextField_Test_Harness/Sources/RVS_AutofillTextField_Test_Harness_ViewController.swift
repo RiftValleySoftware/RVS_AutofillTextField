@@ -302,9 +302,6 @@ extension RVS_AutofillTextField_Test_Harness_ViewController {
      - parameter: ignored (can also be omitted)
      */
     @IBAction func closeKeyboard(_: Any! = nil) {
-        #if DEBUG
-            print("Closing the keyboard.")
-        #endif
         autofillTextField?.resignFirstResponder()
     }
     
@@ -418,7 +415,8 @@ extension RVS_AutofillTextField_Test_Harness_ViewController: UITableViewDataSour
      - returns: A new table row instance.
      */
     func tableView(_ inTableView: UITableView, cellForRowAt inIndexPath: IndexPath) -> UITableViewCell {
-        if let ret = inTableView.dequeueReusableCell(withIdentifier: RVS_AutofillTextField_Test_Harness_ViewController_TableCell.textCellReuseID, for: inIndexPath) as? RVS_AutofillTextField_Test_Harness_ViewController_TableCell {
+        if let ret = inTableView.dequeueReusableCell(withIdentifier: RVS_AutofillTextField_Test_Harness_ViewController_TableCell.textCellReuseID,
+                                                     for: inIndexPath) as? RVS_AutofillTextField_Test_Harness_ViewController_TableCell {
             ret.subscribe(self)
             if testingTextDictionary.count > inIndexPath.row {
                 ret.index = inIndexPath.row
@@ -435,6 +433,13 @@ extension RVS_AutofillTextField_Test_Harness_ViewController: UITableViewDataSour
 // MARK: RVS_AutofillTextFieldDelegate Conformance
 /* ###################################################################################################################################### */
 extension RVS_AutofillTextField_Test_Harness_ViewController: RVS_AutofillTextFieldDelegate {
+    /* ################################################################## */
+    /**
+     This is called when the user selects one of the autofill choices.
+     In this app, all we do is print to the debug console.
+     - parameter inAutofillTextField: The text field instance that the user affected.
+     - parameter selectionWasMade: The data item, with the string and the refCon.
+     */
     func autoFillTextField(_ inAutofillTextField: RVS_AutofillTextField, selectionWasMade inSelectedItem: RVS_AutofillTextFieldDataSourceType) {
         print("The user selected this: \(inSelectedItem.debugDescription)")
     }

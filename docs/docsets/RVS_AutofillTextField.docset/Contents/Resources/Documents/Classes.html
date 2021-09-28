@@ -110,13 +110,15 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>This class extends the standard <a href="https://developer.apple.com/documentation/uikit/uitextfield"><code>UITextField</code></a> widget to provide a realtime &ldquo;dropdown&rdquo; menu of possible autocomplete choices (in a table and modal-style screen).
+                        <p>This class extends the standard <a href="https://developer.apple.com/documentation/uikit/uitextfield"><code>UITextField</code></a> widget to provide a realtime &ldquo;dropdown&rdquo; menu of possible
+autocomplete choices (in a table and modal-style screen).
 The dropdown is always displayed below the text field, and is attached to the main window root view (so it appears over everything else). It is not modal.
 If the user selects a value from the table, that entire string is entered into the text field, and the dropdown is dismissed.
 The dropdown is dismissed whenever focus leaves the text item.
 When focus is set to the text field, the current text is evaluated, and a dropdown may appear, if required.
 If the autofill functionality is not available, or is explicitly deactivated, the text item behaves exactly like a standard <code>UITextField</code>.
-<strong>NB:</strong> When assigning a delegate, the caller needs to be a <a href="https://developer.apple.com/documentation/uikit/uitextfielddelegate/"><code>UITextFieldDelegate</code></a>, even if they are not using any of the delegate functionality.
+<strong>NB:</strong> When assigning a delegate, the caller needs to be a <a href="https://developer.apple.com/documentation/uikit/uitextfielddelegate/"><code>UITextFieldDelegate</code></a>,
+even if they are not using any of the delegate functionality.
 This is because we &ldquo;piggyback&rdquo; on the built-in delegate.
 This also means that the delegate must be an <a href="https://developer.apple.com/documentation/objectivec/nsobject"><code>NSObject</code></a>.</p>
 

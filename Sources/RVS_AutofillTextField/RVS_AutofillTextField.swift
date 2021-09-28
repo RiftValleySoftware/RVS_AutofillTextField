@@ -26,18 +26,42 @@ import UIKit
 // MARK: Special Text Field Class That Displays An AutoComplete Table, As You Type -
 /* ###################################################################################################################################### */
 /**
- This class extends the standard [`UITextField`](https://developer.apple.com/documentation/uikit/uitextfield) widget to provide a realtime "dropdown" menu of possible autocomplete choices (in a table and modal-style screen).
+ This class extends the standard [`UITextField`](https://developer.apple.com/documentation/uikit/uitextfield) widget to provide a realtime "dropdown" menu of possible
+ autocomplete choices (in a table and modal-style screen).
  The dropdown is always displayed below the text field, and is attached to the main window root view (so it appears over everything else). It is not modal.
  If the user selects a value from the table, that entire string is entered into the text field, and the dropdown is dismissed.
  The dropdown is dismissed whenever focus leaves the text item.
  When focus is set to the text field, the current text is evaluated, and a dropdown may appear, if required.
  If the autofill functionality is not available, or is explicitly deactivated, the text item behaves exactly like a standard `UITextField`.
- **NB:** When assigning a delegate, the caller needs to be a [`UITextFieldDelegate`](https://developer.apple.com/documentation/uikit/uitextfielddelegate/), even if they are not using any of the delegate functionality.
+ **NB:** When assigning a delegate, the caller needs to be a [`UITextFieldDelegate`](https://developer.apple.com/documentation/uikit/uitextfielddelegate/),
+ even if they are not using any of the delegate functionality.
  This is because we "piggyback" on the built-in delegate.
  This also means that the delegate must be an [`NSObject`](https://developer.apple.com/documentation/objectivec/nsobject).
  */
 @IBDesignable
 open class RVS_AutofillTextField: UITextField {
+    // MARK: Default Values
+    /* ################################################################## */
+    /**
+     */
+    private static let _defaultIsCaseSensitive = false
+
+    /* ################################################################## */
+    /**
+     */
+    private static let _defaultIsWildcardBefore = false
+
+    /* ################################################################## */
+    /**
+     */
+    private static let _defaultIsWildcardAfter = true
+
+    /* ################################################################## */
+    /**
+     */
+    private static let _defaultMaximumCount = 5
+
+    // MARK: Private Property - GET OFF MAH LAWN!
     /* ################################################################## */
     /**
      The table background will be the system background, at this transparency.
@@ -86,13 +110,14 @@ open class RVS_AutofillTextField: UITextField {
      The leading edge of the table will be aligned with the edit field's leading edge.
      */
     private static let _gapInDisplayUnitsBetweenTextItemAndTable: CGFloat = 8
-    
+
     /* ################################################################## */
     /**
      This will contain a Table View, that will display our autocompletes.
      */
     private var _autoCompleteTable: UITableView?
 
+    // MARK: - Public Properties
     /* ################################################################## */
     /**
      When the table comes up, this will be the color. The default is the standard system color, with a 0.25 alpha.
@@ -172,7 +197,7 @@ open class RVS_AutofillTextField: UITextField {
 }
 
 /* ###################################################################################################################################### */
-// MARK: Computed Properties
+// MARK: Private Computed Properties
 /* ###################################################################################################################################### */
 extension RVS_AutofillTextField {
     /* ################################################################## */
@@ -184,7 +209,11 @@ extension RVS_AutofillTextField {
         var ret = [RVS_AutofillTextFieldDataSourceType]()
         if let text = text,
            !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            ret = dataSource?.getTextDictionaryFromThis(string: text, isCaseSensitive: isCaseSensitive, isWildcardBefore: isWildcardBefore, isWildcardAfter: isWildcardAfter, maximumAutofillCount: maximumAutofillCount) ?? []
+            ret = dataSource?.getTextDictionaryFromThis(string: text,
+                                                        isCaseSensitive: isCaseSensitive,
+                                                        isWildcardBefore: isWildcardBefore,
+                                                        isWildcardAfter: isWildcardAfter,
+                                                        maximumAutofillCount: maximumAutofillCount) ?? []
         }
         
         return ret.compactMap { !$0.value.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? $0 : nil }
@@ -192,9 +221,25 @@ extension RVS_AutofillTextField {
 }
 
 /* ###################################################################################################################################### */
+// MARK: Private Callbacks
+/* ###################################################################################################################################### */
+extension RVS_AutofillTextField {
+    /* ################################################################## */
+    /**
+     This callback is triggered whenever the text in the edit field has changed. This is where we test the auto-complete dictionary.
+     
+     - parameter inTextField: The text field (us).
+     */
+    @objc private func _textHasChanged(_ inTextField: UITextField) {
+        _createAutoCompleteTable()
+    }
+}
+
+/* ###################################################################################################################################### */
 // MARK: Instance Methods
 /* ###################################################################################################################################### */
 extension RVS_AutofillTextField {
+    // MARK: Private Methods
     /* ################################################################## */
     /**
      This will create a new instance of the display table, if it does not already exist.
@@ -203,7 +248,8 @@ extension RVS_AutofillTextField {
      */
     private func _createAutoCompleteTable() {
         guard isAutoFillOn,
-              0 < _currentAutoFill.count else {
+              0 < _currentAutoFill.count
+        else {
             _closeTableView()
             return
         }
@@ -248,27 +294,7 @@ extension RVS_AutofillTextField {
             }
         }
     }
-}
 
-/* ###################################################################################################################################### */
-// MARK: Callbacks
-/* ###################################################################################################################################### */
-extension RVS_AutofillTextField {
-    /* ################################################################## */
-    /**
-     This callback is triggered whenever the text in the edit field has changed. This is where we test the auto-complete dictionary.
-     
-     - parameter inTextField: The text field (us).
-     */
-    @objc private func _textHasChanged(_ inTextField: UITextField) {
-        _createAutoCompleteTable()
-    }
-}
-
-/* ###################################################################################################################################### */
-// MARK: Instance Methods
-/* ###################################################################################################################################### */
-extension RVS_AutofillTextField {
     /* ################################################################## */
     /**
      Called to close the table view, and nothing more.
@@ -278,6 +304,7 @@ extension RVS_AutofillTextField {
         _autoCompleteTable = nil
     }
     
+    // MARK: Public Methods
     /* ################################################################## */
     /**
      Called to close the table view, and, possibly, resign as first responder.
@@ -291,7 +318,7 @@ extension RVS_AutofillTextField {
 }
 
 /* ###################################################################################################################################### */
-// MARK: Base Class Overrides
+// MARK: Public Base Class Overrides
 /* ###################################################################################################################################### */
 extension RVS_AutofillTextField {
     /* ################################################################## */
@@ -321,7 +348,7 @@ extension RVS_AutofillTextField {
     public override func layoutSubviews() {
         super.layoutSubviews()
         addTarget(self, action: #selector(_textHasChanged(_:)), for: .editingChanged)
-        if nil != _autoCompleteTable {
+        if nil != _autoCompleteTable {  // This is to make sure we update the position.
             _createAutoCompleteTable()
         }
     }
@@ -369,7 +396,8 @@ extension RVS_AutofillTextField: UITableViewDataSource {
         ret.textLabel?.font = tableFont
 
         if let text = text {
-            // What we do here, is pick out the matched text from the main string, and make the part that will be autofilled a bit more transparent, so that means we need to figure out what we've matched.
+            // What we do here, is pick out the matched text from the main string, and make the part that will be autofilled a bit more transparent,
+            // so that means we need to figure out what we've matched.
             let searchableText = _currentAutoFill[inIndexPath.row].value
             let options = String.CompareOptions(isCaseSensitive ? [.literal] : [.caseInsensitive, .diacriticInsensitive])
             let focusedTextAttribute = [NSAttributedString.Key.foregroundColor: tableTextColor]
@@ -401,11 +429,12 @@ extension RVS_AutofillTextField: UITableViewDelegate {
      - parameter didSelectRowAt: The index of the selected row,
      */
     public func tableView(_ inTableView: UITableView, didSelectRowAt inIndexPath: IndexPath) {
+        (delegate as? RVS_AutofillTextFieldDelegate)?.autoFillTextField(self, selectionWasMade: _currentAutoFill[inIndexPath.row])
         inTableView.deselectRow(at: inIndexPath, animated: true)
         guard let textValue = tableView(inTableView, cellForRowAt: inIndexPath).textLabel?.text,
-              !textValue.isEmpty else { return }
+              !textValue.isEmpty
+        else { return }
         text = textValue
-        (delegate as? RVS_AutofillTextFieldDelegate)?.autoFillTextField(self, selectionWasMade: _currentAutoFill[inIndexPath.row])
         sendActions(for: .editingChanged)
         closeTableViewAndResignFirstResponder()
     }
@@ -502,7 +531,8 @@ extension RVS_AutofillTextFieldDataSourceType: Comparable {
 // MARK: Data Source Protocol -
 /* ###################################################################################################################################### */
 /**
- The text field class will require that it be connected to a data source, which is an instance of a class, struct, or enum that conforms to this protocol. It will supply the data to be displayed in the autofill table.
+ The text field class will require that it be connected to a data source, which is an instance of a class, struct, or enum that conforms to this protocol.
+ It will supply the data to be displayed in the autofill table.
  If the data source does not supply any data, then the text field acts just like any other text field.
  */
 public protocol RVS_AutofillTextFieldDataSource {
@@ -546,8 +576,20 @@ extension RVS_AutofillTextFieldDataSource {
     /**
      Default uses the Array extension subscripts to search the Array.
      If you do leave `textDictionary` undefined, then you **MUST** implement your own version of this method.
+     We have some defaults:
+     
+        - isCaseSensitive: false
+        - isWildcardBefore: false
+        - isWildcardAfter: true
+        - maximumAutofillCount: 5
+     
+     The String is required.
      */
-    public func getTextDictionaryFromThis(string inString: String, isCaseSensitive inIsCaseSensitive: Bool, isWildcardBefore inIsWildcardBefore: Bool, isWildcardAfter inIsWildcardAfter: Bool, maximumAutofillCount inMaximumAutofillCount: Int) -> [RVS_AutofillTextFieldDataSourceType] {
+    public func getTextDictionaryFromThis(string inString: String,
+                                          isCaseSensitive inIsCaseSensitive: Bool = false,
+                                          isWildcardBefore inIsWildcardBefore: Bool = false,
+                                          isWildcardAfter inIsWildcardAfter: Bool = true,
+                                          maximumAutofillCount inMaximumAutofillCount: Int = 5) -> [RVS_AutofillTextFieldDataSourceType] {
         
         let localTextDictionary = textDictionary
         
@@ -695,13 +737,6 @@ fileprivate extension Array where Element == RVS_AutofillTextFieldDataSourceType
      - returns: An Array of all elements that match.
      */
     subscript(contains inKey: String, isCaseSensitive inIsCaseSensitive: Bool = false) -> [RVS_AutofillTextFieldDataSourceType] {
-        return compactMap {
-            let searchRange = Self._getRangeOf(inKey, inThisString: $0.value, isCaseSensitive: inIsCaseSensitive)
-            if !(searchRange?.isEmpty ?? true) {
-                return $0
-            }
-            
-            return nil
-        }
+        compactMap({ !(Self._getRangeOf(inKey, inThisString: $0.value, isCaseSensitive: inIsCaseSensitive)?.isEmpty ?? true) ? $0 : nil })
     }
 }

@@ -1,5 +1,12 @@
 # RVS_AutofillTextField Change Log
 
+## 1.2.1
+
+- **September 28, 2021**
+
+- Fixed a bug in the delegate call. It was possible to have a crash, if selecting the last item.
+- FAUGH! Code smell bad! Me spritz stink-pretty. Mmmm...Code smell good!
+
 ## 1.2.0
 
 - **September 28, 2021**

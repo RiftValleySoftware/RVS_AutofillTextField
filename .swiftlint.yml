@@ -17,25 +17,24 @@ opt_in_rules:
 - comma
 
 function_body_length:
-- 60 # warning
-- 61 #error
+- 39 # warning
+- 40 #error
 
 file_length:
-- 1500 # warning
-- 1501 # error
+- 799 # warning
+- 800 # error
 
 type_body_length:
-- 500 # warning
-- 501 # error
+- 99 # warning
+- 100 # error
 
 line_length:
-- 309 # warning
-- 310 # error
+- 199 # warning
+- 200 # error
 
 cyclomatic_complexity:
-- 9 # warning
-- 10 # error
+- 6 # warning
+- 7 # error
 
 excluded:
-- Pods
 - Carthage

@@ -86,7 +86,8 @@
 
                 </div>
               </div>
-            <p>The text field class will require that it be connected to a data source, which is an instance of a class, struct, or enum that conforms to this protocol. It will supply the data to be displayed in the autofill table.
+            <p>The text field class will require that it be connected to a data source, which is an instance of a class, struct, or enum that conforms to this protocol.
+It will supply the data to be displayed in the autofill table.
 If the data source does not supply any data, then the text field acts just like any other text field.</p>
 
           </div>
@@ -160,7 +161,17 @@ The protocol default does a rather naive comparison that is likely to be suffici
                       <h4>Default Implementation</h4>
                       <div class="default_impl abstract">
                         <p>Default uses the Array extension subscripts to search the Array.
-If you do leave <code>textDictionary</code> undefined, then you <strong>MUST</strong> implement your own version of this method.</p>
+If you do leave <code>textDictionary</code> undefined, then you <strong>MUST</strong> implement your own version of this method.
+We have some defaults:</p>
+
+<ul>
+<li>isCaseSensitive: false</li>
+<li>isWildcardBefore: false</li>
+<li>isWildcardAfter: true</li>
+<li>maximumAutofillCount: 5</li>
+</ul>
+
+<p>The String is required.</p>
 
                       </div>
                       <div class="declaration">
