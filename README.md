@@ -236,6 +236,11 @@ If you are looking for a case-insensitive match at the start, just leave the def
 
 You can specify different background and font colors. Default is standard system background, at a 75% opacity, and standard label colors, with a 50% opacity for unmatched text.
 
+#### The Container View
+
+By default, the dropdown attaches to the main [`UIWindow`](https://developer.apple.com/documentation/uikit/uiwindow/) instance for the app, but you can provide your own context, by setting [the `containerView` property](https://riftvalleysoftware.github.io/RVS_AutofillTextField/Classes/RVS_AutofillTextField.html#/s:21RVS_AutofillTextFieldAAC13containerViewSo6UIViewCSgvp).
+If you leave it nil, the main window is used. The coordinates of the display are adjusted to work in the context view.
+
 #### The Delegate
 
 There is a [`RVS_AutofillTextFieldDelegate`](https://riftvalleysoftware.github.io/RVS_AutofillTextField/Protocols/RVS_AutofillTextFieldDelegate.html) protocol. It has a simple method for detecting when the user selects a choice.

@@ -298,6 +298,10 @@ This is an integer value that designates the maximum number of results that show
 <h4 id='customizing-appearance' class='heading'>Customizing Appearance</h4>
 
 <p>You can specify different background and font colors. Default is standard system background, at a 75% opacity, and standard label colors, with a 50% opacity for unmatched text.</p>
+<h4 id='the-container-view' class='heading'>The Container View</h4>
+
+<p>By default, the dropdown attaches to the main <a href="https://developer.apple.com/documentation/uikit/uiwindow/"><code>UIWindow</code></a> instance for the app, but you can provide your own context, by setting <a href="https://riftvalleysoftware.github.io/RVS_AutofillTextField/Classes/RVS_AutofillTextField.html#/s:21RVS_AutofillTextFieldAAC13containerViewSo6UIViewCSgvp">the <code>containerView</code> property</a>.
+If you leave it nil, the main window is used. The coordinates of the display are adjusted to work in the context view.</p>
 <h4 id='the-delegate' class='heading'>The Delegate</h4>
 
 <p>There is a <a href="https://riftvalleysoftware.github.io/RVS_AutofillTextField/Protocols/RVS_AutofillTextFieldDelegate.html"><code><a href="Protocols/RVS_AutofillTextFieldDelegate.html">RVS_AutofillTextFieldDelegate</a></code></a> protocol. It has a simple method for detecting when the user selects a choice.</p>

@@ -26,7 +26,7 @@ import UIKit
 // MARK: Special Text Field Class That Displays An AutoComplete Table, As You Type -
 /* ###################################################################################################################################### */
 /**
- This class overloads the standard UITextField widget to provide a realtime "dropdown" menu of possible autocomplete choices (in a table and modal-style screen).
+ This class extends the standard [`UITextField`](https://developer.apple.com/documentation/uikit/uitextfield) widget to provide a realtime "dropdown" menu of possible autocomplete choices (in a table and modal-style screen).
  The dropdown is always displayed below the text field, and is attached to the main window root view (so it appears over everything else). It is not modal.
  If the user selects a value from the table, that entire string is entered into the text field, and the dropdown is dismissed.
  The dropdown is dismissed whenever focus leaves the text item.
