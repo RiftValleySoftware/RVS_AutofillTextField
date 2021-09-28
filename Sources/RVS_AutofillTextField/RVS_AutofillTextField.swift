@@ -40,27 +40,6 @@ import UIKit
  */
 @IBDesignable
 open class RVS_AutofillTextField: UITextField {
-    // MARK: Default Values
-    /* ################################################################## */
-    /**
-     */
-    private static let _defaultIsCaseSensitive = false
-
-    /* ################################################################## */
-    /**
-     */
-    private static let _defaultIsWildcardBefore = false
-
-    /* ################################################################## */
-    /**
-     */
-    private static let _defaultIsWildcardAfter = true
-
-    /* ################################################################## */
-    /**
-     */
-    private static let _defaultMaximumCount = 5
-
     // MARK: Private Property - GET OFF MAH LAWN!
     /* ################################################################## */
     /**
@@ -116,6 +95,27 @@ open class RVS_AutofillTextField: UITextField {
      This will contain a Table View, that will display our autocompletes.
      */
     private var _autoCompleteTable: UITableView?
+
+    // MARK: Default Values
+    /* ################################################################## */
+    /**
+     */
+    public static let defaultIsCaseSensitive = false
+
+    /* ################################################################## */
+    /**
+     */
+    public static let defaultIsWildcardBefore = false
+
+    /* ################################################################## */
+    /**
+     */
+    public static let defaultIsWildcardAfter = true
+
+    /* ################################################################## */
+    /**
+     */
+    public static let defaultMaximumCount = 5
 
     // MARK: - Public Properties
     /* ################################################################## */
@@ -586,10 +586,11 @@ extension RVS_AutofillTextFieldDataSource {
      The String is required.
      */
     public func getTextDictionaryFromThis(string inString: String,
-                                          isCaseSensitive inIsCaseSensitive: Bool = false,
-                                          isWildcardBefore inIsWildcardBefore: Bool = false,
-                                          isWildcardAfter inIsWildcardAfter: Bool = true,
-                                          maximumAutofillCount inMaximumAutofillCount: Int = 5) -> [RVS_AutofillTextFieldDataSourceType] {
+                                          isCaseSensitive inIsCaseSensitive: Bool = RVS_AutofillTextField.defaultIsCaseSensitive,
+                                          isWildcardBefore inIsWildcardBefore: Bool = RVS_AutofillTextField.defaultIsWildcardBefore,
+                                          isWildcardAfter inIsWildcardAfter: Bool = RVS_AutofillTextField.defaultIsWildcardAfter,
+                                          maximumAutofillCount inMaximumAutofillCount: Int = RVS_AutofillTextField.defaultMaximumCount
+    ) -> [RVS_AutofillTextFieldDataSourceType] {
         
         let localTextDictionary = textDictionary
         
