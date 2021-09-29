@@ -246,21 +246,27 @@ extension RVS_AutofillTextField {
     
     /* ################################################################## */
     /**
-     
+     Called when the keyboard opens.
+     We use this to extract and store the height of the keyboard, so we don't go below it.
+     - parameter inNotification: The notification object.
      */
     @objc private func _keyboardWasShown(_ inNotification: Notification) {
         let info = inNotification.userInfo
         if let value = info?[UIResponder.keyboardFrameEndUserInfoKey],
            let keyboardFrame = (value as AnyObject).cgRectValue {
             _keyboardHeightInDisplayUnits = keyboardFrame.height
+            DispatchQueue.main.async { self.setNeedsLayout() }
         }
     }
     
     /* ################################################################## */
     /**
+     Called when the keyboard closes.
+     - parameter: The notification object (ignored).
      */
-    @objc private func _keyboardWasHidden(_ inNotification: Notification) {
+    @objc private func _keyboardWasHidden(_: Notification) {
         _keyboardHeightInDisplayUnits = 0
+        DispatchQueue.main.async { self.setNeedsLayout() }
     }
 }
 
