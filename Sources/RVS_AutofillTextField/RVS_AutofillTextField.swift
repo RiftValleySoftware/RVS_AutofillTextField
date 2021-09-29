@@ -111,7 +111,7 @@ open class RVS_AutofillTextField: UITextField {
 
     /* ################################################################## */
     /**
-     The default value for wildcards after (OFF)
+     The default value for wildcards after (ON)
      */
     public static let defaultIsWildcardAfter = true
 
