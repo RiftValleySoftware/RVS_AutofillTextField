@@ -148,14 +148,14 @@
                                             <action selector="caseSensitiveChanged:" destination="BYZ-38-t0r" eventType="touchUpInside" id="4Gb-l9-gxR"/>
                                         </connections>
                                     </button>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" text="5" borderStyle="roundedRect" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="O7n-gX-XUD">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" text="5" borderStyle="roundedRect" textAlignment="right" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="O7n-gX-XUD">
                                         <rect key="frame" x="8" y="242" width="80" height="34"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="80" id="aPT-oX-Jjh"/>
                                             <constraint firstAttribute="height" constant="34" id="zDd-2x-uyC"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="numberPad" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="numbersAndPunctuation" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
                                         <connections>
                                             <action selector="maximumCountChanged:" destination="BYZ-38-t0r" eventType="editingChanged" id="O96-yJ-r8f"/>
                                         </connections>
@@ -341,7 +341,7 @@
         </designable>
     </designables>
     <resources>
-        <image name="CenterImage" width="920" height="913"/>
+        <image name="CenterImage" width="919" height="912"/>
         <image name="background-gradient" width="1" height="1000"/>
         <namedColor name="Tint-6">
             <color red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

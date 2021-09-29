@@ -96,6 +96,12 @@ open class RVS_AutofillTextField: UITextField {
      */
     private var _autoCompleteTable: UITableView?
 
+    /* ################################################################## */
+    /**
+     This holds the height of the keyboard, in display units.
+     */
+    private var _keyboardHeightInDisplayUnits: CGFloat = 0
+
     // MARK: Default Values
     /* ################################################################## */
     /**
@@ -157,28 +163,28 @@ open class RVS_AutofillTextField: UITextField {
      This is a "circuit breaker" for the autofill capability. Default is on. If Off, the autofill will not be shown.
      */
     @IBInspectable
-    public var isAutoFillOn: Bool = true
+    public var isAutoFillOn: Bool = true { didSet { DispatchQueue.main.async { self.setNeedsLayout() } } }
 
     /* ################################################################## */
     /**
      This specifies whether or not matches are case-blind (default), or case-sensitive (true).
      */
     @IBInspectable
-    public var isCaseSensitive: Bool = defaultIsCaseSensitive
+    public var isCaseSensitive: Bool = defaultIsCaseSensitive { didSet { DispatchQueue.main.async { self.setNeedsLayout() } } }
 
     /* ################################################################## */
     /**
      If true (default is false), then the match is made at the end of the string.
      */
     @IBInspectable
-    public var isWildcardBefore: Bool = defaultIsWildcardBefore
+    public var isWildcardBefore: Bool = defaultIsWildcardBefore { didSet { DispatchQueue.main.async { self.setNeedsLayout() } } }
     
     /* ################################################################## */
     /**
      If true (default is true), then the match is made at the beginning of the string.
      */
     @IBInspectable
-    public var isWildcardAfter: Bool = defaultIsWildcardAfter
+    public var isWildcardAfter: Bool = defaultIsWildcardAfter { didSet { DispatchQueue.main.async { self.setNeedsLayout() } } }
 
     /* ################################################################## */
     /**
@@ -237,6 +243,25 @@ extension RVS_AutofillTextField {
     @objc private func _textHasChanged(_ inTextField: UITextField) {
         _createAutoCompleteTable()
     }
+    
+    /* ################################################################## */
+    /**
+     
+     */
+    @objc private func _keyboardWasShown(_ inNotification: Notification) {
+        let info = inNotification.userInfo
+        if let value = info?[UIResponder.keyboardFrameEndUserInfoKey],
+           let keyboardFrame = (value as AnyObject).cgRectValue {
+            _keyboardHeightInDisplayUnits = keyboardFrame.height
+        }
+    }
+    
+    /* ################################################################## */
+    /**
+     */
+    @objc private func _keyboardWasHidden(_ inNotification: Notification) {
+        _keyboardHeightInDisplayUnits = 0
+    }
 }
 
 /* ###################################################################################################################################### */
@@ -263,7 +288,8 @@ extension RVS_AutofillTextField {
             let maxTableWidth = max(bounds.size.width, minimumTableWidthInDisplayUnits)
             let numberOfRows = CGFloat(_currentAutoFill.count)
             let tableOrigin = convert(CGPoint(x: 0, y: bounds.size.height + Self._gapInDisplayUnitsBetweenTextItemAndTable), to: containerView)
-            let currentTableHeight = min(numberOfRows * Self._tableRowHeightInDisplayUnits, (containerBounds.height - Self._gapInDisplayUnitsBetweenTextItemAndTable) - tableOrigin.y)
+            let currentTableHeight = min(numberOfRows * Self._tableRowHeightInDisplayUnits,
+                                         (containerBounds.height - (Self._gapInDisplayUnitsBetweenTextItemAndTable + _keyboardHeightInDisplayUnits)) - tableOrigin.y)
             let tableWidth = min(containerView.bounds.width - (tableOrigin.x + Self._gapInDisplayUnitsBetweenTextItemAndTable), maxTableWidth)
             let tableFrame = CGRect(origin: tableOrigin, size: CGSize(width: tableWidth, height: currentTableHeight))
             
@@ -352,8 +378,11 @@ extension RVS_AutofillTextField {
     public override func layoutSubviews() {
         super.layoutSubviews()
         addTarget(self, action: #selector(_textHasChanged(_:)), for: .editingChanged)
+        NotificationCenter.default.addObserver(self, selector: #selector(_keyboardWasShown(_:)), name: UIResponder.keyboardDidShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(_keyboardWasHidden(_:)), name: UIResponder.keyboardDidHideNotification, object: nil)
         if nil != _autoCompleteTable {  // This is to make sure we update the position.
             _createAutoCompleteTable()
+            _autoCompleteTable?.reloadData()
         }
     }
     
@@ -363,6 +392,8 @@ extension RVS_AutofillTextField {
      */
     public override func removeFromSuperview() {
         _closeTableView()
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardDidShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardDidHideNotification, object: nil)
         removeTarget(self, action: #selector(_textHasChanged(_:)), for: .editingChanged)
         super.removeFromSuperview()
     }

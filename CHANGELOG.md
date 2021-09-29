@@ -1,5 +1,13 @@
 # RVS_AutofillTextField Change Log
 
+## 1.2.3
+
+- **September 29, 2021**
+
+- I now take the keyboard height into account. This is especially important for -1 maximum count.
+- All the inspectables now trigger layout.
+- The keyboard type for the test harness maximum count was the wrong type. It would not allow -1.
+
 ## 1.2.2
 
 - **September 29, 2021**
