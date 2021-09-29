@@ -5,6 +5,7 @@
 - **TBD**
 
 - Code smell cleanup.
+- Documentation cleanup.
 
 ## 1.2.1
 

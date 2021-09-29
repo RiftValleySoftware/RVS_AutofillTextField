@@ -99,21 +99,25 @@ open class RVS_AutofillTextField: UITextField {
     // MARK: Default Values
     /* ################################################################## */
     /**
+     The default value for case sensitivity (OFF)
      */
     public static let defaultIsCaseSensitive = false
 
     /* ################################################################## */
     /**
+     The default value for wildcards before (OFF)
      */
     public static let defaultIsWildcardBefore = false
 
     /* ################################################################## */
     /**
+     The default value for wildcards after (OFF)
      */
     public static let defaultIsWildcardAfter = true
 
     /* ################################################################## */
     /**
+     The default value for maximum count (5)
      */
     public static let defaultMaximumCount = 5
 
