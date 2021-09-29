@@ -2,10 +2,11 @@
 
 ## 1.2.2
 
-- **TBD**
+- **September 29, 2021**
 
 - Code smell cleanup.
 - Documentation cleanup.
+- Addressed a possible crasher, if the text is wiped out while the table is being dismantled.
 
 ## 1.2.1
 

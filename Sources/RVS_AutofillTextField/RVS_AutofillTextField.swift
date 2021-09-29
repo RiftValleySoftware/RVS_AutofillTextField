@@ -399,7 +399,9 @@ extension RVS_AutofillTextField: UITableViewDataSource {
         ret.textLabel?.lineBreakMode = .byTruncatingTail
         ret.textLabel?.font = tableFont
 
-        if let text = text {
+        if let text = text,
+           !text.isEmpty,
+           _currentAutoFill.count > inIndexPath.row {
             // What we do here, is pick out the matched text from the main string, and make the part that will be autofilled a bit more transparent,
             // so that means we need to figure out what we've matched.
             let searchableText = _currentAutoFill[inIndexPath.row].value
