@@ -109,11 +109,12 @@ extension RVS_AutofillTextField_Test_Harness_ViewController_TableCell {
      - parameter inTextField: The text field that was changed.
      */
     @objc private func _textHasChanged(_ inTextField: UITextField) {
-        observers.forEach {
+        observers.forEach { [weak self] in
             if let observer = $0 as? RVS_AutofillTextField_Test_Harness_ViewController,
                let text = inTextField.text,
+               let index = self?.index,
                -1 < index {
-                observer.textChanged(text, row: self.index)
+                observer.textChanged(text, row: index)
             }
         }
     }

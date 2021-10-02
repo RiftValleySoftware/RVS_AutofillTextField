@@ -1,5 +1,11 @@
 # RVS_AutofillTextField Change Log
 
+## 1.2.4
+
+- **October 2, 2021**
+
+- Experienced some strange crashes, with an implementation, when running under stress. Added [weak self] in several places, just in case...
+
 ## 1.2.3
 
 - **September 29, 2021**

@@ -133,14 +133,14 @@ open class RVS_AutofillTextField: UITextField {
      When the table comes up, this will be the color. The default is the standard system color, with a 0.25 alpha.
      */
     @IBInspectable
-    public var tableBackgroundColor: UIColor = .systemBackground.withAlphaComponent(RVS_AutofillTextField._tableBackgroundAlpha) { didSet { DispatchQueue.main.async { self.setNeedsLayout() } } }
+    public var tableBackgroundColor: UIColor = .systemBackground.withAlphaComponent(RVS_AutofillTextField._tableBackgroundAlpha) { didSet { DispatchQueue.main.async { [weak self] in self?.setNeedsLayout() } } }
 
     /* ################################################################## */
     /**
      This is the text color to use in the table. Default is label color.
      */
     @IBInspectable
-    public var tableTextColor: UIColor = .label { didSet { DispatchQueue.main.async { self.setNeedsLayout() } } }
+    public var tableTextColor: UIColor = .label { didSet { DispatchQueue.main.async { [weak self] in self?.setNeedsLayout() } } }
 
     /* ################################################################## */
     /**
@@ -148,7 +148,7 @@ open class RVS_AutofillTextField: UITextField {
      It will also never go beyond the trailing edge of the screen.
      */
     @IBInspectable
-    public var minimumTableWidthInDisplayUnits: CGFloat = 100 { didSet { DispatchQueue.main.async { self.setNeedsLayout() } } }
+    public var minimumTableWidthInDisplayUnits: CGFloat = 100 { didSet { DispatchQueue.main.async { [weak self] in self?.setNeedsLayout() } } }
     
     /* ################################################################## */
     /**
@@ -156,35 +156,35 @@ open class RVS_AutofillTextField: UITextField {
      If -1, then there is no limit.
      */
     @IBInspectable
-    public var maximumAutofillCount: Int = defaultMaximumCount { didSet { DispatchQueue.main.async { self.setNeedsLayout() } } }
+    public var maximumAutofillCount: Int = defaultMaximumCount { didSet { DispatchQueue.main.async { [weak self] in self?.setNeedsLayout() } } }
 
     /* ################################################################## */
     /**
      This is a "circuit breaker" for the autofill capability. Default is on. If Off, the autofill will not be shown.
      */
     @IBInspectable
-    public var isAutoFillOn: Bool = true { didSet { DispatchQueue.main.async { self.setNeedsLayout() } } }
+    public var isAutoFillOn: Bool = true { didSet { DispatchQueue.main.async { [weak self] in self?.setNeedsLayout() } } }
 
     /* ################################################################## */
     /**
      This specifies whether or not matches are case-blind (default), or case-sensitive (true).
      */
     @IBInspectable
-    public var isCaseSensitive: Bool = defaultIsCaseSensitive { didSet { DispatchQueue.main.async { self.setNeedsLayout() } } }
+    public var isCaseSensitive: Bool = defaultIsCaseSensitive { didSet { DispatchQueue.main.async { [weak self] in self?.setNeedsLayout() } } }
 
     /* ################################################################## */
     /**
      If true (default is false), then the match is made at the end of the string.
      */
     @IBInspectable
-    public var isWildcardBefore: Bool = defaultIsWildcardBefore { didSet { DispatchQueue.main.async { self.setNeedsLayout() } } }
+    public var isWildcardBefore: Bool = defaultIsWildcardBefore { didSet { DispatchQueue.main.async { [weak self] in self?.setNeedsLayout() } } }
     
     /* ################################################################## */
     /**
      If true (default is true), then the match is made at the beginning of the string.
      */
     @IBInspectable
-    public var isWildcardAfter: Bool = defaultIsWildcardAfter { didSet { DispatchQueue.main.async { self.setNeedsLayout() } } }
+    public var isWildcardAfter: Bool = defaultIsWildcardAfter { didSet { DispatchQueue.main.async { [weak self] in self?.setNeedsLayout() } } }
 
     /* ################################################################## */
     /**
@@ -251,11 +251,13 @@ extension RVS_AutofillTextField {
      - parameter inNotification: The notification object.
      */
     @objc private func _keyboardWasShown(_ inNotification: Notification) {
-        let info = inNotification.userInfo
-        if let value = info?[UIResponder.keyboardFrameEndUserInfoKey],
-           let keyboardFrame = (value as AnyObject).cgRectValue {
-            _keyboardHeightInDisplayUnits = keyboardFrame.height
-            DispatchQueue.main.async { self.setNeedsLayout() }
+        DispatchQueue.main.async { [weak self] in
+            let info = inNotification.userInfo
+            if let value = info?[UIResponder.keyboardFrameEndUserInfoKey],
+               let keyboardFrame = (value as AnyObject).cgRectValue {
+                self?._keyboardHeightInDisplayUnits = keyboardFrame.height
+                self?.setNeedsLayout()
+            }
         }
     }
     
@@ -265,8 +267,10 @@ extension RVS_AutofillTextField {
      - parameter: The notification object (ignored).
      */
     @objc private func _keyboardWasHidden(_: Notification) {
-        _keyboardHeightInDisplayUnits = 0
-        DispatchQueue.main.async { self.setNeedsLayout() }
+        DispatchQueue.main.async { [weak self] in
+            self?._keyboardHeightInDisplayUnits = 0
+            self?.setNeedsLayout()
+        }
     }
 }
 
