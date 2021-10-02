@@ -244,6 +244,7 @@ extension RVS_AutofillTextField {
      */
     @objc private func _textHasChanged(_ inTextField: UITextField) {
         _createAutoCompleteTable()
+        _autoCompleteTable?.reloadData()
     }
     
     /* ################################################################## */

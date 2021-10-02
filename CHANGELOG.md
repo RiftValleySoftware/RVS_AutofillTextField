@@ -1,5 +1,11 @@
 # RVS_AutofillTextField Change Log
 
+## 1.2.6
+
+- **October 2, 2021**
+
+- Found an issue that caused crashes on iOS14 devices. I was referencing the UILabel.showsExpansionTextWhenTruncated property, and this was allowed to compile for 14, but wasn't actually there.
+
 ## 1.2.5
 
 - **October 2, 2021**
