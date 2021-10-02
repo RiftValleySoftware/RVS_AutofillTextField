@@ -18,7 +18,7 @@
  
  The Great Rift Valley Software Company: https://riftvalleysoftware.com
  
- Version 1.2.5
+ Version 1.2.6
  */
 
 import UIKit
@@ -306,30 +306,29 @@ extension RVS_AutofillTextField {
             let tableFrame = CGRect(origin: tableOrigin, size: CGSize(width: tableWidth, height: currentTableHeight))
             
             if !tableFrame.isEmpty {
-                if nil == _autoCompleteTable {
-                    let autoCompleteTable = UITableView(frame: tableFrame)
-                    _autoCompleteTable = autoCompleteTable
-                    autoCompleteTable.dataSource = self
-                    autoCompleteTable.delegate = self
-                    autoCompleteTable.rowHeight = Self._tableRowHeightInDisplayUnits
-                    autoCompleteTable.layer.cornerRadius = Self._tableRoundedCornerInDisplayUnits
-                    autoCompleteTable.clipsToBounds = true
-                    autoCompleteTable.frame = CGRect(origin: autoCompleteTable.frame.origin, size: CGSize(width: autoCompleteTable.frame.size.width, height: 0))
-                    containerView.addSubview(autoCompleteTable)
+                var tableView: UITableView! = _autoCompleteTable
+                
+                if nil == tableView {
+                    tableView = UITableView(frame: tableFrame)
+                    tableView.rowHeight = Self._tableRowHeightInDisplayUnits
+                    tableView.layer.cornerRadius = Self._tableRoundedCornerInDisplayUnits
+                    tableView.clipsToBounds = true
+                    tableView.frame = CGRect(origin: tableView.frame.origin, size: CGSize(width: tableView.frame.size.width, height: 0))
+                    tableView.dataSource = self
+                    tableView.delegate = self
+                    self._autoCompleteTable = tableView
+                    containerView.addSubview(tableView)
                 }
                 
-                _autoCompleteTable?.backgroundColor = tableBackgroundColor
+                tableView?.backgroundColor = tableBackgroundColor
                 
-                if let autoCompleteTable = _autoCompleteTable,
-                   tableFrame != autoCompleteTable.frame {
-                    autoCompleteTable.layoutIfNeeded()
-                    UIView.animate(withDuration: Self._animationDurationInSeconds, animations: { [weak self] in
-                        self?._autoCompleteTable?.frame = tableFrame
-                        self?._autoCompleteTable?.layoutIfNeeded()
-                    })
+                if tableFrame != tableView.frame {
+                    UIView.animate(withDuration: Self._animationDurationInSeconds, animations: {
+                        tableView.frame = tableFrame
+                    }, completion: { _ in tableView.reloadData() }
+                    )
                 }
                 
-                _autoCompleteTable?.reloadData()
             } else {
                 _closeTableView()
             }
@@ -393,7 +392,6 @@ extension RVS_AutofillTextField {
         NotificationCenter.default.addObserver(self, selector: #selector(_keyboardWasHidden(_:)), name: UIResponder.keyboardDidHideNotification, object: nil)
         if nil != _autoCompleteTable {  // This is to make sure we update the position.
             _createAutoCompleteTable()
-            _autoCompleteTable?.reloadData()
         }
     }
     
@@ -435,18 +433,19 @@ extension RVS_AutofillTextField: UITableViewDataSource {
         let ret = UITableViewCell()
         
         ret.backgroundColor = .clear
-        ret.textLabel?.adjustsFontSizeToFitWidth = true
-        ret.textLabel?.minimumScaleFactor = Self._minimumScaleFactorForText
-        ret.textLabel?.showsExpansionTextWhenTruncated = true
-        ret.textLabel?.lineBreakMode = .byTruncatingTail
-        ret.textLabel?.font = tableFont
-
-        if let text = text,
+        
+        if let label = ret.textLabel,
+           let text = text,
            !text.isEmpty,
            _currentAutoFill.count > inIndexPath.row {
+            label.adjustsFontSizeToFitWidth = true
+            label.minimumScaleFactor = Self._minimumScaleFactorForText
+            label.lineBreakMode = .byTruncatingTail
+            label.font = tableFont
             // What we do here, is pick out the matched text from the main string, and make the part that will be autofilled a bit more transparent,
             // so that means we need to figure out what we've matched.
             let searchableText = _currentAutoFill[inIndexPath.row].value
+            label.text = searchableText
             let options = String.CompareOptions(isCaseSensitive ? [.literal] : [.caseInsensitive, .diacriticInsensitive])
             let focusedTextAttribute = [NSAttributedString.Key.foregroundColor: tableTextColor]
             let unfocusedTextAttribute = [NSAttributedString.Key.foregroundColor: tableTextColor.withAlphaComponent(Self._unselectedTextAlpha)]
