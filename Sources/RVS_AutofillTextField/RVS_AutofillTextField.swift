@@ -17,6 +17,8 @@
  CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  
  The Great Rift Valley Software Company: https://riftvalleysoftware.com
+ 
+ Version 1.2.5
  */
 
 import UIKit
@@ -305,16 +307,15 @@ extension RVS_AutofillTextField {
             
             if !tableFrame.isEmpty {
                 if nil == _autoCompleteTable {
-                    _autoCompleteTable = UITableView(frame: tableFrame)
-                    if let autoCompleteTable = _autoCompleteTable {
-                        autoCompleteTable.dataSource = self
-                        autoCompleteTable.delegate = self
-                        autoCompleteTable.rowHeight = Self._tableRowHeightInDisplayUnits
-                        autoCompleteTable.layer.cornerRadius = Self._tableRoundedCornerInDisplayUnits
-                        autoCompleteTable.clipsToBounds = true
-                        autoCompleteTable.frame = CGRect(origin: autoCompleteTable.frame.origin, size: CGSize(width: autoCompleteTable.frame.size.width, height: 0))
-                        containerView.addSubview(autoCompleteTable)
-                    }
+                    let autoCompleteTable = UITableView(frame: tableFrame)
+                    _autoCompleteTable = autoCompleteTable
+                    autoCompleteTable.dataSource = self
+                    autoCompleteTable.delegate = self
+                    autoCompleteTable.rowHeight = Self._tableRowHeightInDisplayUnits
+                    autoCompleteTable.layer.cornerRadius = Self._tableRoundedCornerInDisplayUnits
+                    autoCompleteTable.clipsToBounds = true
+                    autoCompleteTable.frame = CGRect(origin: autoCompleteTable.frame.origin, size: CGSize(width: autoCompleteTable.frame.size.width, height: 0))
+                    containerView.addSubview(autoCompleteTable)
                 }
                 
                 _autoCompleteTable?.backgroundColor = tableBackgroundColor
@@ -322,9 +323,9 @@ extension RVS_AutofillTextField {
                 if let autoCompleteTable = _autoCompleteTable,
                    tableFrame != autoCompleteTable.frame {
                     autoCompleteTable.layoutIfNeeded()
-                    UIView.animate(withDuration: Self._animationDurationInSeconds, animations: {
-                        autoCompleteTable.frame = tableFrame
-                        autoCompleteTable.layoutIfNeeded()
+                    UIView.animate(withDuration: Self._animationDurationInSeconds, animations: { [weak self] in
+                        self?._autoCompleteTable?.frame = tableFrame
+                        self?._autoCompleteTable?.layoutIfNeeded()
                     })
                 }
                 

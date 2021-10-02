@@ -1,5 +1,11 @@
 # RVS_AutofillTextField Change Log
 
+## 1.2.5
+
+- **October 2, 2021**
+
+- Tweaked a few more things, to try to add as much "robustness" to the widget as possible. Doubtful these changes will make a difference, but belt & suspenders...
+
 ## 1.2.4
 
 - **October 2, 2021**
