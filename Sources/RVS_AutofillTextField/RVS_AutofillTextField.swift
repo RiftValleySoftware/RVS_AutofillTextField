@@ -190,7 +190,7 @@ open class RVS_AutofillTextField: UITextField {
 
     /* ################################################################## */
     /**
-     This allows us to assign an explicit "container" view for the popover. Default is nil. If not provided, the main window root view is used.
+     This allows us to assign an explicit "container" view for the popover. Default is nil. If not provided, the main window, itself, is used.
      */
     public weak var containerView: UIView?
 
