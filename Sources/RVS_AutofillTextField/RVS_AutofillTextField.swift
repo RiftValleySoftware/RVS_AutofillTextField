@@ -18,7 +18,7 @@
  
  The Great Rift Valley Software Company: https://riftvalleysoftware.com
  
- Version 1.2.6
+ Version 1.2.7
  */
 
 import UIKit
@@ -135,14 +135,28 @@ open class RVS_AutofillTextField: UITextField {
      When the table comes up, this will be the color. The default is the standard system color, with a reduced alpha.
      */
     @IBInspectable
-    public var tableBackgroundColor: UIColor = .systemBackground.withAlphaComponent(RVS_AutofillTextField._tableBackgroundAlpha) { didSet { DispatchQueue.main.async { [weak self] in self?.setNeedsLayout() } } }
+    public var tableBackgroundColor: UIColor = .systemBackground.withAlphaComponent(RVS_AutofillTextField._tableBackgroundAlpha) {
+        didSet {
+            DispatchQueue.main.async { [weak self] in
+            self?.setNeedsLayout()
+            self?.refreshTable()
+            }
+        }
+    }
 
     /* ################################################################## */
     /**
      This is the text color to use in the table. Default is label color.
      */
     @IBInspectable
-    public var tableTextColor: UIColor = .label { didSet { DispatchQueue.main.async { [weak self] in self?.setNeedsLayout() } } }
+    public var tableTextColor: UIColor = .label {
+        didSet {
+            DispatchQueue.main.async { [weak self] in
+                self?.setNeedsLayout()
+                self?.refreshTable()
+            }
+        }
+    }
 
     /* ################################################################## */
     /**
@@ -356,6 +370,16 @@ extension RVS_AutofillTextField {
             resignFirstResponder()
         }
     }
+    
+    /* ################################################################## */
+    /**
+     If the table is open, when this is called, it will do a reloadData().
+     */
+    public func refreshTable() {
+        DispatchQueue.main.async {
+            self._autoCompleteTable?.reloadData()
+        }
+    }
 }
 
 /* ###################################################################################################################################### */
@@ -432,7 +456,7 @@ extension RVS_AutofillTextField: UITableViewDataSource {
      - returns: A new, simple, default cell, with an attributed text content.
      */
     public func tableView(_ inTableView: UITableView, cellForRowAt inIndexPath: IndexPath) -> UITableViewCell {
-        let ret = UITableViewCell()
+        let ret = inTableView.dequeueReusableCell(withIdentifier: "\(inIndexPath.section),\(inIndexPath.row)") ?? UITableViewCell(style: .default, reuseIdentifier: "\(inIndexPath.section),\(inIndexPath.row)")
         
         ret.backgroundColor = .clear
         
@@ -444,10 +468,15 @@ extension RVS_AutofillTextField: UITableViewDataSource {
             label.minimumScaleFactor = Self._minimumScaleFactorForText
             label.lineBreakMode = .byTruncatingTail
             label.font = tableFont
+            // If we have iOS 15+, we can see more of the text.
+            if #available(iOS 15.0, *) {
+                label.showsExpansionTextWhenTruncated = true
+            }
             // What we do here, is pick out the matched text from the main string, and make the part that will be autofilled a bit more transparent,
             // so that means we need to figure out what we've matched.
             let searchableText = _currentAutoFill[inIndexPath.row].value
             label.text = searchableText
+
             let options = String.CompareOptions(isCaseSensitive ? [.literal] : [.caseInsensitive, .diacriticInsensitive])
             let focusedTextAttribute = [NSAttributedString.Key.foregroundColor: tableTextColor]
             let unfocusedTextAttribute = [NSAttributedString.Key.foregroundColor: tableTextColor.withAlphaComponent(Self._unselectedTextAlpha)]

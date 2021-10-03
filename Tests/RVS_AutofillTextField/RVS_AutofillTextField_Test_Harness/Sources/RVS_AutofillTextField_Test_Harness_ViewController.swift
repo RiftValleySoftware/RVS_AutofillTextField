@@ -183,7 +183,7 @@ class RVS_AutofillTextField_Test_Harness_ViewController: UIViewController, RVS_G
         (backgroundColor: .systemBackground.withAlphaComponent(0.75), textColor: .label),   // Use whatever the system decides.
         (backgroundColor: .white.withAlphaComponent(0.75), textColor: .black),              // Force a light appearance
         (backgroundColor: .black.withAlphaComponent(0.75), textColor: .white),              // Force a dark appearance
-        (backgroundColor: .systemRed.withAlphaComponent(0.75), textColor: .yellow)          // MY EYES MY EYES
+        (backgroundColor: .systemRed.withAlphaComponent(0.75), textColor: .systemYellow)    // MY EYES MY EYES
     ]
         
     /* ################################################################## */
@@ -261,8 +261,8 @@ extension RVS_AutofillTextField_Test_Harness_ViewController {
     func selectColorTheme() {
         let selectedColorTheme = segmentColorThemeValues[colorSegmentedControl?.selectedSegmentIndex ?? 0]
         
-        autofillTextField?.tableBackgroundColor = selectedColorTheme.backgroundColor
         autofillTextField?.tableTextColor = selectedColorTheme.textColor
+        autofillTextField?.tableBackgroundColor = selectedColorTheme.backgroundColor
     }
 }
 

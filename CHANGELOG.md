@@ -1,10 +1,18 @@
 # RVS_AutofillTextField Change Log
 
+## 1.2.7
+
+- **October 3, 2021**
+
+- I re-added the `UILabel.showsExpansionTextWhenTruncated` property, as it's just too damn useful. I had to wrap it in an availablility test, though.
+- Some basic work to make it a bit more performant.
+- Added the `refreshTable()` method.
+
 ## 1.2.6
 
 - **October 2, 2021**
 
-- Found an issue that caused crashes on iOS14 devices. I was referencing the UILabel.showsExpansionTextWhenTruncated property, and this was allowed to compile for 14, but wasn't actually there.
+- Found an issue that caused crashes on iOS14 devices. I was referencing the `UILabel.showsExpansionTextWhenTruncated` property, and this was allowed to compile for 14, but wasn't actually there.
 
 ## 1.2.5
 
