@@ -780,7 +780,7 @@ fileprivate extension Array where Element == RVS_AutofillTextFieldDataSourceType
     
     /* ################################################################## */
     /**
-     This lsees if the element contains the exact String. It can be case-blind (by default).
+     This checks if the element contains the exact String. It can be case-blind (by default).
      
      - parameter contains: This is the String to test against. The entire value must match (but can be preceded and followed by other characters), but can be case-blind.
      - parameter isCaseSensitive: Default is false. If true, then the match needs to take case into account.
