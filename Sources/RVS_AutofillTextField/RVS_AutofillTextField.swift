@@ -132,7 +132,7 @@ open class RVS_AutofillTextField: UITextField {
     // MARK: - Public Properties
     /* ################################################################## */
     /**
-     When the table comes up, this will be the color. The default is the standard system color, with a 0.25 alpha.
+     When the table comes up, this will be the color. The default is the standard system color, with a reduced alpha.
      */
     @IBInspectable
     public var tableBackgroundColor: UIColor = .systemBackground.withAlphaComponent(RVS_AutofillTextField._tableBackgroundAlpha) { didSet { DispatchQueue.main.async { [weak self] in self?.setNeedsLayout() } } }
