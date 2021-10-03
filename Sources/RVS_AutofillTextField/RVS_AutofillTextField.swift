@@ -203,7 +203,7 @@ open class RVS_AutofillTextField: UITextField {
 
     /* ################################################################## */
     /**
-     This is the font to use. It must be set programmatically.
+     This is the font to use. It must be set programmatically. By default, it is system 20.
      */
     public var tableFont: UIFont = .systemFont(ofSize: 20)
 }
