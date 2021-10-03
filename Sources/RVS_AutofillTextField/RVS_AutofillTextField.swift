@@ -425,7 +425,8 @@ extension RVS_AutofillTextField: UITableViewDataSource {
     /* ################################################################## */
     /**
      This returns one cell of the table, with the specific autofill suggestion.
-     
+     The text is attributed, so the match is made slightly more prominent than the unmatched text.
+ 
      - parameter inTableView: The table view.
      - parameter cellForRowAt: The index of the cell to be returned (section will always be 0).
      - returns: A new, simple, default cell, with an attributed text content.
