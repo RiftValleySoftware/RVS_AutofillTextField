@@ -51,7 +51,7 @@ open class RVS_AutofillTextField: UITextField {
     
     /* ################################################################## */
     /**
-     The table background will be the system background, at this transparency.
+     The default table background will be the system background, at this transparency.
      */
     private static let _tableBackgroundAlpha: CGFloat = 0.75
     
