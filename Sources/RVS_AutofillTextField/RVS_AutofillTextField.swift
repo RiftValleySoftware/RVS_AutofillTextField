@@ -45,7 +45,7 @@ open class RVS_AutofillTextField: UITextField {
     // MARK: Private Property - GET OFF MAH LAWN!
     /* ################################################################## */
     /**
-     The table background will be the system background, at this transparency.
+     This is the duration of the opening/resizing animation, in seconds.
      */
     private static let _animationDurationInSeconds: TimeInterval = 0.25
     
