@@ -87,7 +87,7 @@ open class RVS_AutofillTextField: UITextField {
     
     /* ################################################################## */
     /**
-     The table will display above or below the text item, and will be separated by this many display units.
+     The table will display below the text item, and will be separated by this many display units.
      The leading edge of the table will be aligned with the edit field's leading edge.
      */
     private static let _gapInDisplayUnitsBetweenTextItemAndTable: CGFloat = 8
