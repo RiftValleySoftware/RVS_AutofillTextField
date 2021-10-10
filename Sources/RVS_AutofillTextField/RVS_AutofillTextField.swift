@@ -388,7 +388,7 @@ extension RVS_AutofillTextField {
 extension RVS_AutofillTextField {
     /* ################################################################## */
     /**
-     This makes sure that we remove the table, if we are no longer the focus.
+     This makes sure that we create or move the table, if we are no longer the focus.
      */
     @discardableResult
     public override func becomeFirstResponder() -> Bool {
