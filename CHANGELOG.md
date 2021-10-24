@@ -1,5 +1,11 @@
 # RVS_AutofillTextField Change Log
 
+## 1.2.8
+
+- **October 24, 2021**
+
+- Added an #if clause to prevent IB errors.
+
 ## 1.2.7
 
 - **October 3, 2021**

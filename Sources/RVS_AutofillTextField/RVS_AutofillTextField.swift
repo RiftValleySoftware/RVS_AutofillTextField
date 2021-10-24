@@ -18,11 +18,12 @@
  
  The Great Rift Valley Software Company: https://riftvalleysoftware.com
  
- Version 1.2.7
+ Version 1.2.8
  */
 
 import UIKit
 
+#if os(iOS) // This prevents the IB errors from showing up, under SPM (From SO Answer: https://stackoverflow.com/a/66334661/879365).
 /* ###################################################################################################################################### */
 // MARK: - Main Class
 // MARK: Special Text Field Class That Displays An AutoComplete Table, As You Type -
@@ -138,8 +139,8 @@ open class RVS_AutofillTextField: UITextField {
     public var tableBackgroundColor: UIColor = .systemBackground.withAlphaComponent(RVS_AutofillTextField._tableBackgroundAlpha) {
         didSet {
             DispatchQueue.main.async { [weak self] in
-            self?.setNeedsLayout()
-            self?.refreshTable()
+                self?.setNeedsLayout()
+                self?.refreshTable()
             }
         }
     }
@@ -819,3 +820,4 @@ fileprivate extension Array where Element == RVS_AutofillTextFieldDataSourceType
         compactMap({ !(Self._getRangeOf(inKey, inThisString: $0.value, isCaseSensitive: inIsCaseSensitive)?.isEmpty ?? true) ? $0 : nil })
     }
 }
+#endif
