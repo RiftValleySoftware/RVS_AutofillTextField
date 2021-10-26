@@ -58,13 +58,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		D43CCC0227009D0B00131C62 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		D4897E9126FD009C00555EB6 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -177,25 +170,13 @@
 		};
 /* End PBXGroup section */
 
-/* Begin PBXHeadersBuildPhase section */
-		D43CCC0027009D0B00131C62 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXHeadersBuildPhase section */
-
 /* Begin PBXNativeTarget section */
 		D43CCC0427009D0B00131C62 /* RVS_AutofillTextField */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = D43CCC1027009D0C00131C62 /* Build configuration list for PBXNativeTarget "RVS_AutofillTextField" */;
 			buildPhases = (
-				D43CCC0027009D0B00131C62 /* Headers */,
+				D4BC598C2728A71E0031211D /* SwiftLint */,
 				D43CCC0127009D0B00131C62 /* Sources */,
-				D43CCC0227009D0B00131C62 /* Frameworks */,
-				D43CCC0327009D0B00131C62 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -212,10 +193,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D4897EA826FD009E00555EB6 /* Build configuration list for PBXNativeTarget "RVS_AutofillTextField_Test_Harness (Framework)" */;
 			buildPhases = (
+				D4212F0926FDE2FE0049F675 /* SwiftLint */,
 				D4897E9026FD009C00555EB6 /* Sources */,
 				D4897E9126FD009C00555EB6 /* Frameworks */,
 				D4897E9226FD009C00555EB6 /* Resources */,
-				D4212F0926FDE2FE0049F675 /* ShellScript */,
 				D43CCC0D27009D0C00131C62 /* Embed Frameworks */,
 			);
 			buildRules = (
@@ -240,7 +221,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1300;
-				LastUpgradeCheck = 1300;
+				LastUpgradeCheck = 1310;
 				TargetAttributes = {
 					D43CCC0427009D0B00131C62 = {
 						CreatedOnToolsVersion = 13.0;
@@ -274,13 +255,6 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		D43CCC0327009D0B00131C62 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		D4897E9226FD009C00555EB6 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -294,7 +268,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		D4212F0926FDE2FE0049F675 /* ShellScript */ = {
+		D4212F0926FDE2FE0049F675 /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -303,6 +277,25 @@
 			);
 			inputPaths = (
 			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if command -v swiftlint\nthen\n    swiftlint\nfi\n";
+		};
+		D4BC598C2728A71E0031211D /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
 			outputFileListPaths = (
 			);
 			outputPaths = (
