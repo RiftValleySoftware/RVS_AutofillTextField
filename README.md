@@ -201,7 +201,7 @@ The protocol default will take care of searching and matching for us.
 
 ### The More Complex Way
 
-If you want to have a way to optimize or otherwise filter/interpret the data being given to the widget, your data source can implement [the `getTextDictionaryFromThis(string inString: String, isCaseSensitive inIsCaseSensitive: Bool, isWildcardBefore inIsWildcardBefore: Bool, isWildcardAfter inIsWildcardAfter: Bool, maximumAutofillCount inMaximumAutofillCount: Int) -> [RVS_AutofillTextFieldDataSourceType]` method](https://github.com/RiftValleySoftware/RVS_AutofillTextField/blob/master/Sources/RVS_AutofillTextField/RVS_AutofillTextField.swift#L208)
+If you want to have a way to optimize or otherwise filter/interpret the data being given to the widget, your data source can implement [the `getTextDictionaryFromThis(string inString: String, isCaseSensitive inIsCaseSensitive: Bool, isWildcardBefore inIsWildcardBefore: Bool, isWildcardAfter inIsWildcardAfter: Bool, maximumAutofillCount inMaximumAutofillCount: Int) -> [RVS_AutofillTextFieldDataSourceType]` method](https://github.com/RiftValleySoftware/RVS_AutofillTextField/blob/2cfceaf7c51a4063ca65860553b6ad213145060c/Sources/RVS_AutofillTextField/RVS_AutofillTextField.swift#L640)
 
 This is called by the widget repeatedly, with a String, containing the current text contents, and returns a filtered and searched Array of elements.
 
