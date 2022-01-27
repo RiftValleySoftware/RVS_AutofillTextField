@@ -2,7 +2,7 @@
 
 ## 1.2.10
 
-- **TBD**
+- **January 27, 2022**
 
 - Added DocC support (no change to the code or API, other than a version bump).
 
