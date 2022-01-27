@@ -1,5 +1,11 @@
 # RVS_AutofillTextField Change Log
 
+## 1.2.10
+
+- **TBD**
+
+- Added DocC support (no change to the code or API, other than a version bump).
+
 ## 1.2.9
 
 - **December 14, 2021**

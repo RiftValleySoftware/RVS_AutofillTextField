@@ -33,6 +33,6 @@ jazzy   --readme ./README.md \
         --module RVS_AutofillTextField \
         --theme fullwidth \
         -b -scheme,RVS_AutofillTextField
-cp ./img/* docs/img
+cp ./Sources/RVS_AutofillTextField.docc/Resources/* docs/img
 
 cd "${CWD}"
