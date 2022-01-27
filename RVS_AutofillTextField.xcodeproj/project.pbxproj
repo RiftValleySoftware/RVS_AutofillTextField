@@ -50,7 +50,7 @@
 		D43CCC0527009D0B00131C62 /* RVS_AutofillTextField.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RVS_AutofillTextField.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D43CCC2D2700A13000131C62 /* RVS_AutofillTextField_Test_Harness (Framework)-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = "RVS_AutofillTextField_Test_Harness (Framework)-Info.plist"; path = "Tests/RVS_AutofillTextField/RVS_AutofillTextField_Test_Harness/RVS_AutofillTextField_Test_Harness (Framework)-Info.plist"; sourceTree = SOURCE_ROOT; };
 		D452CC7F27012A66005AA73F /* Warnings.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Warnings.xcconfig; sourceTree = "<group>"; };
-		D47AB53B27A33AAF00B33DB9 /* RVS_AutofillTextField.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = RVS_AutofillTextField.docc; sourceTree = "<group>"; };
+		D46D5D4527A364F2001F1D67 /* RVS_AutofillTextField.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = RVS_AutofillTextField.docc; sourceTree = "<group>"; };
 		D4897E9426FD009C00555EB6 /* RVS_AutofillTextField_Test_Harness (Framework).app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "RVS_AutofillTextField_Test_Harness (Framework).app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4897E9726FD009C00555EB6 /* RVS_AutofillTextField_Test_Harness_AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RVS_AutofillTextField_Test_Harness_AppDelegate.swift; sourceTree = "<group>"; };
 		D4897E9B26FD009C00555EB6 /* RVS_AutofillTextField_Test_Harness_ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RVS_AutofillTextField_Test_Harness_ViewController.swift; sourceTree = "<group>"; };
@@ -87,6 +87,7 @@
 		D43CCC2F2700A27900131C62 /* RVS_AutofillTextField */ = {
 			isa = PBXGroup;
 			children = (
+				D46D5D4527A364F2001F1D67 /* RVS_AutofillTextField.docc */,
 				D4E68A5E26FD101D002B6451 /* RVS_AutofillTextField.swift */,
 			);
 			path = RVS_AutofillTextField;
@@ -158,7 +159,6 @@
 		D4E68A5D26FD101D002B6451 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				D47AB53B27A33AAF00B33DB9 /* RVS_AutofillTextField.docc */,
 				D43CCC2F2700A27900131C62 /* RVS_AutofillTextField */,
 			);
 			path = Sources;
