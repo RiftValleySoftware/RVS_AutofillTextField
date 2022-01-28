@@ -1,7 +1,5 @@
 # ``RVS_AutofillTextField``
 
-![Icon](icon.png)
-
 A type-ahead lookup UITextField Extension.
 
 ## Overview
