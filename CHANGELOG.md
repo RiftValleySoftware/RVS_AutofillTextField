@@ -1,5 +1,11 @@
 # RVS_AutofillTextField Change Log
 
+## 1.2.11
+
+- **March 15, 2022**
+
+- Updated to the latest tools. No other changes.
+
 ## 1.2.10
 
 - **January 27, 2022**
