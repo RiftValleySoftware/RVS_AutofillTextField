@@ -1,5 +1,12 @@
 # RVS_AutofillTextField Change Log
 
+## 1.3.0
+
+- **May 31, 2022**
+
+- Removed the dash-notation.
+- Updated to latest tools. No API changes.
+
 ## 1.2.11
 
 - **March 15, 2022**
