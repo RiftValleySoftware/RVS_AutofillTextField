@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 53;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -232,7 +232,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1300;
-				LastUpgradeCheck = 1340;
+				LastUpgradeCheck = 1400;
 				TargetAttributes = {
 					D43CCC0427009D0B00131C62 = {
 						CreatedOnToolsVersion = 13.0;
@@ -281,6 +281,7 @@
 /* Begin PBXShellScriptBuildPhase section */
 		D4212F0926FDE2FE0049F675 /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -299,6 +300,7 @@
 		};
 		D4BC598C2728A71E0031211D /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -569,7 +571,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3.0;
+				MARKETING_VERSION = 1.3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.riftvalleysoftware.RVS-AutofillTextField.TestHarness.FW";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -600,7 +602,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3.0;
+				MARKETING_VERSION = 1.3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.riftvalleysoftware.RVS-AutofillTextField.TestHarness.FW";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -647,7 +649,7 @@
 			repositoryURL = "https://github.com/RiftValleySoftware/RVS_GeneralObserver";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.1.0;
+				minimumVersion = 1.1.1;
 			};
 		};
 		D46D6D792846CD8600A5B2CE /* XCRemoteSwiftPackageReference "RVS_Checkbox" */ = {
@@ -655,7 +657,7 @@
 			repositoryURL = "https://github.com/RiftValleySoftware/RVS_Checkbox";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.2.0;
+				minimumVersion = 1.2.2;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
