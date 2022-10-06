@@ -1,5 +1,11 @@
 # RVS_AutofillTextField Change Log
 
+## 1.3.2
+
+- **October 6, 2022**
+
+- Updated a test harness dependency. No API changes.
+
 ## 1.3.1
 
 - **September 16, 2022**
