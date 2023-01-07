@@ -1,5 +1,11 @@
 # RVS_AutofillTextField Change Log
 
+## 1.3.3
+
+- **January 7, 2023**
+
+- Fixed a bug, where the open menu could be left displayed, when the control is hidden.
+
 ## 1.3.2
 
 - **October 6, 2022**

@@ -18,7 +18,7 @@
  
  The Great Rift Valley Software Company: https://riftvalleysoftware.com
  
- Version 1.3.2
+ Version 1.3.3
  */
 
 import UIKit
@@ -387,6 +387,20 @@ extension RVS_AutofillTextField {
 // MARK: Public Base Class Overrides
 /* ###################################################################################################################################### */
 extension RVS_AutofillTextField {
+    /* ################################################################## */
+    /**
+     Called to hide or show the field.
+     We override, so we make sure that the table gets hidden, when we are.
+     */
+    public override var isHidden: Bool {
+        get { super.isHidden }
+        set { super.isHidden = newValue
+            if !newValue {
+                _closeTableView()
+            }
+        }
+    }
+
     /* ################################################################## */
     /**
      This makes sure that we create or move the table, if we are no longer the focus.
