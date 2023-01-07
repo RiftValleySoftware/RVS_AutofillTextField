@@ -1,5 +1,11 @@
 # RVS_AutofillTextField Change Log
 
+## 1.3.4
+
+- **January 7, 2023**
+
+- Oops. Recursabug (bug within bug). I was looking for false, when I should have been looking for true.
+
 ## 1.3.3
 
 - **January 7, 2023**

@@ -18,7 +18,7 @@
  
  The Great Rift Valley Software Company: https://riftvalleysoftware.com
  
- Version 1.3.3
+ Version 1.3.4
  */
 
 import UIKit
@@ -395,7 +395,7 @@ extension RVS_AutofillTextField {
     public override var isHidden: Bool {
         get { super.isHidden }
         set { super.isHidden = newValue
-            if !newValue {
+            if newValue {
                 _closeTableView()
             }
         }
