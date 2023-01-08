@@ -1,5 +1,11 @@
 # RVS_AutofillTextField Change Log
 
+## 1.3.5
+
+- **January 8, 2023**
+
+- I need to also put away the keyboard.
+
 ## 1.3.4
 
 - **January 7, 2023**

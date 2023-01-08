@@ -396,7 +396,7 @@ extension RVS_AutofillTextField {
         get { super.isHidden }
         set { super.isHidden = newValue
             if newValue {
-                _closeTableView()
+                closeTableViewAndResignFirstResponder()
             }
         }
     }
