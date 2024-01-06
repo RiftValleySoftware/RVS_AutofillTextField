@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -30,8 +30,8 @@
                                     <constraint firstAttribute="width" secondItem="VLq-9C-m69" secondAttribute="height" multiplier="1:1" id="Wgf-D3-9Ok"/>
                                 </constraints>
                             </imageView>
-                            <view clipsSubviews="YES" alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Ea-8n-ipt">
-                                <rect key="frame" x="20" y="44" width="374" height="314"/>
+                            <view clipsSubviews="YES" alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Ea-8n-ipt" userLabel="Container View">
+                                <rect key="frame" x="20" y="48" width="374" height="278"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Some Text" textAlignment="natural" minimumFontSize="10" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="F5V-Vh-dDr" customClass="RVS_AutofillTextField" customModule="RVS_AutofillTextField">
                                         <rect key="frame" x="8" y="8" width="358" height="34"/>
@@ -41,115 +41,123 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IJU-3J-iBp" customClass="RVS_Checkbox" customModule="RVS_Checkbox">
-                                        <rect key="frame" x="8" y="50" width="40" height="40"/>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Apw-Fw-xhu">
+                                        <rect key="frame" x="0.0" y="50" width="374" height="148"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Zhf-oQ-gNi">
+                                                <rect key="frame" x="0.0" y="0.0" width="374" height="31"/>
+                                                <subviews>
+                                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0a5-PU-JZR" customClass="RVS_Checkbox" customModule="RVS_Checkbox">
+                                                        <rect key="frame" x="0.0" y="0.0" width="51" height="31"/>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="boolean" keyPath="isUsingSFSymbols" value="YES"/>
+                                                        </userDefinedRuntimeAttributes>
+                                                        <connections>
+                                                            <action selector="isOnChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="0O1-HY-gsJ"/>
+                                                        </connections>
+                                                    </switch>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xhF-hN-zjH">
+                                                        <rect key="frame" x="57" y="0.0" width="317" height="31"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                        <state key="normal" title="Is On">
+                                                            <color key="titleColor" name="Tint-6"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="isOnChanged:" destination="BYZ-38-t0r" eventType="touchUpInside" id="0FX-FN-bbp"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                            </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="XXg-4d-dzi">
+                                                <rect key="frame" x="0.0" y="39" width="374" height="31"/>
+                                                <subviews>
+                                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NYu-j7-G10" customClass="RVS_Checkbox" customModule="RVS_Checkbox">
+                                                        <rect key="frame" x="0.0" y="0.0" width="51" height="31"/>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="boolean" keyPath="isUsingSFSymbols" value="YES"/>
+                                                        </userDefinedRuntimeAttributes>
+                                                        <connections>
+                                                            <action selector="wildcardBeforeChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="w6K-YD-9uc"/>
+                                                        </connections>
+                                                    </switch>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tTv-mn-jE4">
+                                                        <rect key="frame" x="57" y="0.0" width="317" height="31"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                        <state key="normal" title="Wildcard Before">
+                                                            <color key="titleColor" name="Tint-6"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="wildcardBeforeChanged:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Sdc-s3-jsb"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                            </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="avq-FT-o93">
+                                                <rect key="frame" x="0.0" y="78" width="374" height="31"/>
+                                                <subviews>
+                                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4hi-6f-cQq" customClass="RVS_Checkbox" customModule="RVS_Checkbox">
+                                                        <rect key="frame" x="0.0" y="0.0" width="51" height="31"/>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="boolean" keyPath="isUsingSFSymbols" value="YES"/>
+                                                        </userDefinedRuntimeAttributes>
+                                                        <connections>
+                                                            <action selector="wildcardAfterChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="Bqt-eb-ycX"/>
+                                                        </connections>
+                                                    </switch>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wQ1-al-QHm">
+                                                        <rect key="frame" x="57" y="0.0" width="317" height="31"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                        <state key="normal" title="Wildcard After">
+                                                            <color key="titleColor" name="Tint-6"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="wildcardAfterChanged:" destination="BYZ-38-t0r" eventType="touchUpInside" id="6I1-06-3Zg"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                            </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="cfC-2q-YfK">
+                                                <rect key="frame" x="0.0" y="117" width="374" height="31"/>
+                                                <subviews>
+                                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wGJ-Cx-CUu" customClass="RVS_Checkbox" customModule="RVS_Checkbox">
+                                                        <rect key="frame" x="0.0" y="0.0" width="51" height="31"/>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="boolean" keyPath="isUsingSFSymbols" value="YES"/>
+                                                        </userDefinedRuntimeAttributes>
+                                                        <connections>
+                                                            <action selector="caseSensitiveChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="m11-Ac-hYF"/>
+                                                        </connections>
+                                                    </switch>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eS4-GP-6kq">
+                                                        <rect key="frame" x="57" y="0.0" width="317" height="31"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                        <state key="normal" title="Case Sensitive">
+                                                            <color key="titleColor" name="Tint-6"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="caseSensitiveChanged:" destination="BYZ-38-t0r" eventType="touchUpInside" id="4Gb-l9-gxR"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="40" id="buo-mg-sU1"/>
+                                            <constraint firstItem="cfC-2q-YfK" firstAttribute="leading" secondItem="Apw-Fw-xhu" secondAttribute="leading" id="1Se-Ib-5dB"/>
+                                            <constraint firstItem="Zhf-oQ-gNi" firstAttribute="leading" secondItem="Apw-Fw-xhu" secondAttribute="leading" id="6ko-br-Gjn"/>
+                                            <constraint firstAttribute="trailing" secondItem="XXg-4d-dzi" secondAttribute="trailing" id="Dzo-GH-Fsv"/>
+                                            <constraint firstItem="avq-FT-o93" firstAttribute="leading" secondItem="Apw-Fw-xhu" secondAttribute="leading" id="GDD-QQ-2J9"/>
+                                            <constraint firstItem="XXg-4d-dzi" firstAttribute="leading" secondItem="Apw-Fw-xhu" secondAttribute="leading" id="HfV-qN-Lpd"/>
+                                            <constraint firstAttribute="trailing" secondItem="avq-FT-o93" secondAttribute="trailing" id="UJf-eh-kp0"/>
+                                            <constraint firstAttribute="trailing" secondItem="Zhf-oQ-gNi" secondAttribute="trailing" id="laD-at-mRy"/>
+                                            <constraint firstAttribute="trailing" secondItem="cfC-2q-YfK" secondAttribute="trailing" id="srX-8u-6WT"/>
                                         </constraints>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="boolean" keyPath="isThreeState" value="NO"/>
-                                            <userDefinedRuntimeAttribute type="boolean" keyPath="isUsingSFSymbols" value="YES"/>
-                                            <userDefinedRuntimeAttribute type="boolean" keyPath="isOn" value="YES"/>
-                                        </userDefinedRuntimeAttributes>
-                                        <connections>
-                                            <action selector="isOnChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="Zkz-rr-8kT"/>
-                                        </connections>
-                                    </view>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xhF-hN-zjH">
-                                        <rect key="frame" x="48" y="50" width="318" height="40"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                        <state key="normal" title="Is On">
-                                            <color key="titleColor" name="Tint-6"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="isOnChanged:" destination="BYZ-38-t0r" eventType="touchUpInside" id="0FX-FN-bbp"/>
-                                        </connections>
-                                    </button>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Th-5N-9tx" customClass="RVS_Checkbox" customModule="RVS_Checkbox">
-                                        <rect key="frame" x="8" y="98" width="40" height="40"/>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" secondItem="3Th-5N-9tx" secondAttribute="height" multiplier="1:1" id="6a5-P1-DLt"/>
-                                            <constraint firstAttribute="height" constant="40" id="otX-Zz-wcH"/>
-                                        </constraints>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="boolean" keyPath="isThreeState" value="NO"/>
-                                            <userDefinedRuntimeAttribute type="boolean" keyPath="isUsingSFSymbols" value="YES"/>
-                                            <userDefinedRuntimeAttribute type="boolean" keyPath="isOn" value="YES"/>
-                                        </userDefinedRuntimeAttributes>
-                                        <connections>
-                                            <action selector="wildcardAfterChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="U8b-By-DTY"/>
-                                        </connections>
-                                    </view>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wQ1-al-QHm">
-                                        <rect key="frame" x="48" y="98" width="318" height="40"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                        <state key="normal" title="Wildcard After">
-                                            <color key="titleColor" name="Tint-6"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="wildcardAfterChanged:" destination="BYZ-38-t0r" eventType="touchUpInside" id="6I1-06-3Zg"/>
-                                        </connections>
-                                    </button>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b1Y-NX-tDL" customClass="RVS_Checkbox" customModule="RVS_Checkbox">
-                                        <rect key="frame" x="8" y="146" width="40" height="40"/>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="40" id="Z66-i1-vq9"/>
-                                            <constraint firstAttribute="width" secondItem="b1Y-NX-tDL" secondAttribute="height" multiplier="1:1" id="rxw-70-Ef2"/>
-                                        </constraints>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="boolean" keyPath="isThreeState" value="NO"/>
-                                            <userDefinedRuntimeAttribute type="boolean" keyPath="isUsingSFSymbols" value="YES"/>
-                                            <userDefinedRuntimeAttribute type="boolean" keyPath="isOn" value="NO"/>
-                                        </userDefinedRuntimeAttributes>
-                                        <connections>
-                                            <action selector="wildcardBeforeChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="Gs7-O9-qv8"/>
-                                        </connections>
-                                    </view>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tTv-mn-jE4">
-                                        <rect key="frame" x="48" y="146" width="318" height="40"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                        <state key="normal" title="Wildcard Before">
-                                            <color key="titleColor" name="Tint-6"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="wildcardBeforeChanged:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Sdc-s3-jsb"/>
-                                        </connections>
-                                    </button>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lgI-24-arw" customClass="RVS_Checkbox" customModule="RVS_Checkbox">
-                                        <rect key="frame" x="8" y="194" width="40" height="40"/>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" secondItem="lgI-24-arw" secondAttribute="height" multiplier="1:1" id="UdZ-dA-FsX"/>
-                                            <constraint firstAttribute="height" constant="40" id="ybm-LZ-D19"/>
-                                        </constraints>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="boolean" keyPath="isThreeState" value="NO"/>
-                                            <userDefinedRuntimeAttribute type="boolean" keyPath="isUsingSFSymbols" value="YES"/>
-                                            <userDefinedRuntimeAttribute type="boolean" keyPath="isOn" value="NO"/>
-                                        </userDefinedRuntimeAttributes>
-                                        <connections>
-                                            <action selector="caseSensitiveChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="LHA-2i-jaY"/>
-                                        </connections>
-                                    </view>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eS4-GP-6kq">
-                                        <rect key="frame" x="48" y="194" width="318" height="40"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                        <state key="normal" title="Case Sensitive">
-                                            <color key="titleColor" name="Tint-6"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="caseSensitiveChanged:" destination="BYZ-38-t0r" eventType="touchUpInside" id="4Gb-l9-gxR"/>
-                                        </connections>
-                                    </button>
+                                    </stackView>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" text="5" borderStyle="roundedRect" textAlignment="right" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="O7n-gX-XUD">
-                                        <rect key="frame" x="8" y="242" width="80" height="34"/>
+                                        <rect key="frame" x="8" y="206" width="80" height="34"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="80" id="aPT-oX-Jjh"/>
                                             <constraint firstAttribute="height" constant="34" id="zDd-2x-uyC"/>
@@ -161,13 +169,13 @@
                                         </connections>
                                     </textField>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Maximum Suggestions" textAlignment="natural" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.25" translatesAutoresizingMaskIntoConstraints="NO" id="I49-2f-TcG">
-                                        <rect key="frame" x="96" y="242" width="270" height="34"/>
+                                        <rect key="frame" x="96" y="206" width="270" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="FyG-Uf-TN6">
-                                        <rect key="frame" x="0.0" y="284" width="374" height="31"/>
+                                        <rect key="frame" x="0.0" y="248" width="374" height="31"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="qrI-Fm-3K0"/>
                                         </constraints>
@@ -187,43 +195,21 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" name="Tint-6"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="eS4-GP-6kq" secondAttribute="trailing" constant="8" id="4i2-S0-Gem"/>
+                                    <constraint firstItem="Apw-Fw-xhu" firstAttribute="leading" secondItem="4Ea-8n-ipt" secondAttribute="leading" id="7bT-Qs-lgT"/>
                                     <constraint firstAttribute="trailing" secondItem="FyG-Uf-TN6" secondAttribute="trailing" id="7ra-42-XnV"/>
-                                    <constraint firstAttribute="trailing" secondItem="wQ1-al-QHm" secondAttribute="trailing" constant="8" id="AgA-VR-5vH"/>
                                     <constraint firstItem="FyG-Uf-TN6" firstAttribute="leading" secondItem="4Ea-8n-ipt" secondAttribute="leading" id="Bc7-18-Jwz"/>
-                                    <constraint firstItem="IJU-3J-iBp" firstAttribute="width" secondItem="IJU-3J-iBp" secondAttribute="height" multiplier="1:1" id="Bsz-6A-UPK"/>
-                                    <constraint firstItem="eS4-GP-6kq" firstAttribute="centerY" secondItem="lgI-24-arw" secondAttribute="centerY" id="GIq-It-4pj"/>
-                                    <constraint firstAttribute="trailing" secondItem="tTv-mn-jE4" secondAttribute="trailing" constant="8" id="GKm-dH-HJd"/>
-                                    <constraint firstItem="O7n-gX-XUD" firstAttribute="top" secondItem="lgI-24-arw" secondAttribute="bottom" constant="8" id="IhM-U0-hzl"/>
                                     <constraint firstItem="I49-2f-TcG" firstAttribute="height" secondItem="O7n-gX-XUD" secondAttribute="height" id="LCf-W9-VT6"/>
-                                    <constraint firstItem="xhF-hN-zjH" firstAttribute="centerY" secondItem="IJU-3J-iBp" secondAttribute="centerY" id="Ls0-hf-sKj"/>
-                                    <constraint firstItem="wQ1-al-QHm" firstAttribute="leading" secondItem="3Th-5N-9tx" secondAttribute="trailing" id="MCx-GS-LmN"/>
                                     <constraint firstItem="F5V-Vh-dDr" firstAttribute="leading" secondItem="4Ea-8n-ipt" secondAttribute="leading" constant="8" id="NLu-CQ-tcb"/>
-                                    <constraint firstItem="IJU-3J-iBp" firstAttribute="top" secondItem="F5V-Vh-dDr" secondAttribute="bottom" constant="8" id="OqT-Ws-ZRe"/>
+                                    <constraint firstItem="Apw-Fw-xhu" firstAttribute="bottom" secondItem="O7n-gX-XUD" secondAttribute="top" constant="-8" id="OqE-io-J5B"/>
                                     <constraint firstItem="I49-2f-TcG" firstAttribute="leading" secondItem="O7n-gX-XUD" secondAttribute="trailing" constant="8" id="P8s-4F-Of5"/>
-                                    <constraint firstItem="tTv-mn-jE4" firstAttribute="top" secondItem="wQ1-al-QHm" secondAttribute="bottom" constant="8" symbolic="YES" id="RHO-5a-kMW"/>
-                                    <constraint firstItem="eS4-GP-6kq" firstAttribute="leading" secondItem="lgI-24-arw" secondAttribute="trailing" id="VA2-re-3bY"/>
-                                    <constraint firstItem="tTv-mn-jE4" firstAttribute="height" secondItem="b1Y-NX-tDL" secondAttribute="height" id="VGx-ge-fiR"/>
                                     <constraint firstItem="O7n-gX-XUD" firstAttribute="leading" secondItem="4Ea-8n-ipt" secondAttribute="leading" constant="8" id="YIf-Wa-B7b"/>
                                     <constraint firstAttribute="trailing" secondItem="F5V-Vh-dDr" secondAttribute="trailing" constant="8" id="ZD9-bK-qC1"/>
-                                    <constraint firstItem="eS4-GP-6kq" firstAttribute="height" secondItem="lgI-24-arw" secondAttribute="height" id="d78-bB-0TN"/>
                                     <constraint firstItem="I49-2f-TcG" firstAttribute="centerY" secondItem="O7n-gX-XUD" secondAttribute="centerY" id="dQo-ra-hh1"/>
-                                    <constraint firstItem="lgI-24-arw" firstAttribute="top" secondItem="b1Y-NX-tDL" secondAttribute="bottom" constant="8" symbolic="YES" id="dj5-QI-QEa"/>
-                                    <constraint firstItem="3Th-5N-9tx" firstAttribute="leading" secondItem="4Ea-8n-ipt" secondAttribute="leading" constant="8" id="geM-de-NWL"/>
-                                    <constraint firstItem="3Th-5N-9tx" firstAttribute="top" secondItem="IJU-3J-iBp" secondAttribute="bottom" constant="8" id="iU4-Ch-ubG"/>
-                                    <constraint firstItem="b1Y-NX-tDL" firstAttribute="leading" secondItem="4Ea-8n-ipt" secondAttribute="leading" constant="8" id="kS2-PV-cqQ"/>
-                                    <constraint firstItem="xhF-hN-zjH" firstAttribute="leading" secondItem="IJU-3J-iBp" secondAttribute="trailing" id="l2i-rv-qdg"/>
                                     <constraint firstAttribute="trailing" secondItem="I49-2f-TcG" secondAttribute="trailing" constant="8" id="lLJ-BL-s2Q"/>
-                                    <constraint firstItem="IJU-3J-iBp" firstAttribute="leading" secondItem="4Ea-8n-ipt" secondAttribute="leading" constant="8" id="n5f-wu-8Zw"/>
-                                    <constraint firstItem="lgI-24-arw" firstAttribute="leading" secondItem="4Ea-8n-ipt" secondAttribute="leading" constant="8" id="nNE-2H-SGf"/>
-                                    <constraint firstItem="xhF-hN-zjH" firstAttribute="height" secondItem="IJU-3J-iBp" secondAttribute="height" id="p8z-py-FcV"/>
+                                    <constraint firstAttribute="trailing" secondItem="Apw-Fw-xhu" secondAttribute="trailing" id="n2D-gX-kZC"/>
                                     <constraint firstAttribute="bottom" secondItem="FyG-Uf-TN6" secondAttribute="bottom" id="rt7-gf-fav"/>
                                     <constraint firstItem="F5V-Vh-dDr" firstAttribute="top" secondItem="4Ea-8n-ipt" secondAttribute="top" constant="8" id="sjy-w7-hHF"/>
-                                    <constraint firstAttribute="trailing" secondItem="xhF-hN-zjH" secondAttribute="trailing" constant="8" id="tcZ-WH-WUD"/>
-                                    <constraint firstItem="tTv-mn-jE4" firstAttribute="leading" secondItem="b1Y-NX-tDL" secondAttribute="trailing" id="teM-1R-AUm"/>
-                                    <constraint firstItem="wQ1-al-QHm" firstAttribute="centerY" secondItem="3Th-5N-9tx" secondAttribute="centerY" id="u8V-ll-OEn"/>
-                                    <constraint firstItem="wQ1-al-QHm" firstAttribute="height" secondItem="3Th-5N-9tx" secondAttribute="height" id="uje-Qa-FeR"/>
-                                    <constraint firstItem="tTv-mn-jE4" firstAttribute="centerY" secondItem="b1Y-NX-tDL" secondAttribute="centerY" id="v0z-58-3tk"/>
+                                    <constraint firstItem="Apw-Fw-xhu" firstAttribute="top" secondItem="F5V-Vh-dDr" secondAttribute="bottom" constant="8" id="uuH-kA-gwq"/>
                                     <constraint firstItem="FyG-Uf-TN6" firstAttribute="top" secondItem="O7n-gX-XUD" secondAttribute="bottom" constant="8" id="wCH-Ce-6sX"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
@@ -233,13 +219,13 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="30" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Dzy-Uq-xKy">
-                                <rect key="frame" x="20" y="395" width="374" height="467"/>
+                                <rect key="frame" x="20" y="363" width="374" height="499"/>
                                 <color key="backgroundColor" red="0.0" green="0.32162809370000001" blue="0.99987620119999998" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="separatorColor" red="0.0" green="0.32162809370000001" blue="0.99987620119999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="sample-text-cell" id="Rp9-iz-KgG" customClass="RVS_AutofillTextField_Test_Harness_ViewController_TableCell" customModule="RVS_AutofillTextField_Test_Harness__Framework_" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="44.5" width="374" height="30"/>
+                                        <rect key="frame" x="0.0" y="50" width="374" height="30"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Rp9-iz-KgG" id="frP-3S-CIc">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="30"/>
@@ -278,7 +264,7 @@
                                 </connections>
                             </tableView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sample Text:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CAd-ej-7KI">
-                                <rect key="frame" x="20" y="366" width="374" height="21"/>
+                                <rect key="frame" x="20" y="334" width="374" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="zG2-pf-IeV"/>
                                 </constraints>
@@ -317,10 +303,10 @@
                     <connections>
                         <outlet property="autofillTextField" destination="F5V-Vh-dDr" id="3Rs-dP-nko"/>
                         <outlet property="colorSegmentedControl" destination="FyG-Uf-TN6" id="6zQ-cm-HTu"/>
-                        <outlet property="isCaseSensitiveCheckbox" destination="lgI-24-arw" id="9rM-6l-230"/>
-                        <outlet property="isOnCheckbox" destination="IJU-3J-iBp" id="oTv-9J-QgN"/>
-                        <outlet property="isWildcardAfterCheckbox" destination="3Th-5N-9tx" id="Zqs-um-dH9"/>
-                        <outlet property="isWildcardBeforeCheckbox" destination="b1Y-NX-tDL" id="y8P-K5-inB"/>
+                        <outlet property="isCaseSensitiveCheckbox" destination="wGJ-Cx-CUu" id="0kg-Dj-Kfj"/>
+                        <outlet property="isOnCheckbox" destination="0a5-PU-JZR" id="M5X-q9-7Uj"/>
+                        <outlet property="isWildcardAfterCheckbox" destination="4hi-6f-cQq" id="I8r-hl-zhe"/>
+                        <outlet property="isWildcardBeforeCheckbox" destination="NYu-j7-G10" id="DIT-iO-2fy"/>
                         <outlet property="maximumResultCount" destination="O7n-gX-XUD" id="P6c-5h-M7r"/>
                         <outlet property="sampleTable" destination="Dzy-Uq-xKy" id="MgI-MI-IuZ"/>
                     </connections>
@@ -336,6 +322,9 @@
         </scene>
     </scenes>
     <designables>
+        <designable name="0a5-PU-JZR">
+            <size key="intrinsicContentSize" width="49" height="31"/>
+        </designable>
         <designable name="F5V-Vh-dDr">
             <size key="intrinsicContentSize" width="171" height="34"/>
         </designable>
@@ -347,13 +336,13 @@
             <color red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="linkColor">
-            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemIndigoColor">
-            <color red="0.34509803921568627" green="0.33725490196078434" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.34509803919999998" green="0.33725490200000002" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

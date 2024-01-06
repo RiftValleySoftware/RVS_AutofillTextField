@@ -11,10 +11,13 @@
          location = "group:CHANGELOG.md">
       </FileRef>
       <FileRef
-         location = "group:Package.swift">
+         location = "group:PRIVACY.md">
       </FileRef>
       <FileRef
-         location = "group:.swiftlint.yml">
+         location = "group:PrivacyInfo.xcprivacy">
+      </FileRef>
+      <FileRef
+         location = "group:Package.swift">
       </FileRef>
       <FileRef
          location = "group:jazzy.command">

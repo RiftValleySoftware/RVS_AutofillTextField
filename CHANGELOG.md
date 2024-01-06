@@ -1,5 +1,13 @@
 # RVS_AutofillTextField Change Log
 
+## 1.3.6
+
+- **January 6, 2024**
+
+- Updated to use the new "UISwitch" checkbox class.
+- Updated to latest tools.
+- Added privacy declarations.
+
 ## 1.3.5
 
 - **January 8, 2023**
