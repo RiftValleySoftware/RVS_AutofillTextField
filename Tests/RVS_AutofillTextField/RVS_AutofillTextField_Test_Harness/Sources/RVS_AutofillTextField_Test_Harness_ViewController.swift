@@ -1,6 +1,6 @@
 /* ###################################################################################################################################### */
 /**
- © Copyright 2021, The Great Rift Valley Software Company.
+ © Copyright 2021-2026, The Great Rift Valley Software Company.
  
  MIT License
  
@@ -386,7 +386,7 @@ extension RVS_AutofillTextField_Test_Harness_ViewController {
      Called when text changes in one of the table rows. This is an observer callback, from the table rows.
      
      - parameter inText: The new text.
-     - parameter row: The 0-based row index of the changed text
+     - parameter inRow: The 0-based row index of the changed text
      */
     func textChanged(_ inText: String, row inRow: Int) {
         testingTextDictionary[inRow] = inText
@@ -412,7 +412,7 @@ extension RVS_AutofillTextField_Test_Harness_ViewController: UITableViewDataSour
      This creates one row for our test string table.
      
      - parameter inTableView: The table view instance.
-     - parameter cellForRowAt: The 0-based cell index (section is ignored, and assumed to be 0).
+     - parameter inIndexPath: The 0-based cell index (section is ignored, and assumed to be 0).
      - returns: A new table row instance.
      */
     func tableView(_ inTableView: UITableView, cellForRowAt inIndexPath: IndexPath) -> UITableViewCell {
@@ -439,7 +439,7 @@ extension RVS_AutofillTextField_Test_Harness_ViewController: RVS_AutofillTextFie
      This is called when the user selects one of the autofill choices.
      In this app, all we do is print to the debug console.
      - parameter inAutofillTextField: The text field instance that the user affected.
-     - parameter selectionWasMade: The data item, with the string and the refCon.
+     - parameter inSelectedItem: The data item, with the string and the refCon.
      */
     func autoFillTextField(_ inAutofillTextField: RVS_AutofillTextField, selectionWasMade inSelectedItem: RVS_AutofillTextFieldDataSourceType) {
         print("The user selected this: \(inSelectedItem.debugDescription)")

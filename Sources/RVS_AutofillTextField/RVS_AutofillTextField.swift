@@ -1,6 +1,6 @@
 /* ###################################################################################################################################### */
 /**
- © Copyright 2021, The Great Rift Valley Software Company.
+ © Copyright 2021-2026, The Great Rift Valley Software Company.
  
  MIT License
  
@@ -18,7 +18,7 @@
  
  The Great Rift Valley Software Company: https://riftvalleysoftware.com
  
- Version 1.3.6
+ Version 1.3.7
  */
 
 import UIKit
@@ -467,7 +467,7 @@ extension RVS_AutofillTextField: UITableViewDataSource {
      The text is attributed, so the match is made slightly more prominent than the unmatched text.
  
      - parameter inTableView: The table view.
-     - parameter cellForRowAt: The index of the cell to be returned (section will always be 0).
+     - parameter inIndexPath: The index of the cell to be returned (section will always be 0).
      - returns: A new, simple, default cell, with an attributed text content.
      */
     public func tableView(_ inTableView: UITableView, cellForRowAt inIndexPath: IndexPath) -> UITableViewCell {
@@ -519,7 +519,7 @@ extension RVS_AutofillTextField: UITableViewDelegate {
      This reacts to the user selecting a suggested text item.
      It sets the edit field text to the selected text, and closes the table.
      - parameter inTableView: The table view.
-     - parameter didSelectRowAt: The index of the selected row,
+     - parameter inIndexPath: The index of the selected row,
      */
     public func tableView(_ inTableView: UITableView, didSelectRowAt inIndexPath: IndexPath) {
         (delegate as? RVS_AutofillTextFieldDelegate)?.autoFillTextField(self, selectionWasMade: _currentAutoFill[inIndexPath.row])
@@ -559,8 +559,8 @@ public class RVS_AutofillTextFieldDataSourceType {
     /**
      Standard initializer
      
-     - parameter value: Required (and must be non-blank). The String value.
-     - parameter refCon: Optional (default is nil). This is an arbitrary data item that is associated with this instance. It should be noted that this will be a strong reference to classes.
+     - parameter inValue: Required (and must be non-blank). The String value.
+     - parameter inRefCon: Optional (default is nil). This is an arbitrary data item that is associated with this instance. It should be noted that this will be a strong reference to classes.
      */
     public init(value inValue: String, refCon inRefCon: Any? = nil) {
         precondition(!inValue.isEmpty, "Value Must Be Non-Blank!")
